@@ -215,6 +215,24 @@
     	
     });
     
+
+	    $('.resetForm').on("submit", function() {
+	    	var newPassword = $('.newPassword').val();
+	    	var confirmPassword = $('.confirmPassword').val();
+	    	if(newPassword == confirmPassword){
+	    		$.ajax({
+	        		url: './resetsubmit?newPassword='+newPassword,
+	        		type: 'POST',
+	        		dataType: 'TEXT',
+	        		processData: false,
+	        		contentType: false,
+	        		success: function(data){
+	        	    	showAlert('success');
+	        		}
+	        	});
+	    	}
+	});
+    
 })(jQuery);
 
 function clearFormData(selector){

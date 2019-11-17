@@ -16,64 +16,85 @@ import com.protean.student.StudentPortal.repository.StudentDao;
 
 @Service
 public class StudentUserDetailsService implements UserDetailsService {
-	
+
 	@Autowired
 	private StudentDao studentDao;
-	
+
 	@Autowired
 	private RegistrationDao registerDao;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		RegisterUserDetails userDetails = studentDao.findByUserName(username);
-		if(userDetails == null)
+		if (userDetails == null)
 			throw new UsernameNotFoundException("User name invalid");
 		return new UserDetailsImpl(userDetails);
 	}
-	
+
 	public void registerUser(RegisterUserDetails registerDetails) {
 		registerDetails.setProfileID(GenarateProfileID(registerDetails));
 		registerDao.save(registerDetails);
 		registerDao.updateRewards(registerDetails.getRefcode());
 	}
-	
-	public JSONObject registerValidityChecker(String userName,String email) {
+
+	public JSONObject registerValidityChecker(String userName, String email) {
 		RegisterUserDetails registerDetails = registerDao.findByUserName(userName);
 		RegisterUserDetails registerDetails1 = registerDao.findByEmail(email);
 		JSONObject jsObj = new JSONObject();
-		if(registerDetails != null) {
+		if (registerDetails != null) {
 			jsObj.put("userName", "invalid");
-		}else {
+		} else {
 			jsObj.put("userName", "valid");
 		}
-		if(registerDetails1 != null) {
+		if (registerDetails1 != null) {
 			jsObj.put("email", "invalid");
-		}else {
+		} else {
 			jsObj.put("email", "valid");
 		}
 		return jsObj;
 	}
-	
+
 	public RegisterUserDetails getLogonDetails(String userName) {
 		RegisterUserDetails regDetails = registerDao.findByUserName(userName);
 		return regDetails;
 	}
-	
+
+	/**
+	 * check the mail id is already existing in DB
+	 * @param email
+	 * @return
+	 */
 	public RegisterUserDetails forgotPassword(String email) {
 		RegisterUserDetails registerDetails = registerDao.findByEmail(email);
 		return registerDetails;
 	}
 
 	public String GenarateProfileID(RegisterUserDetails registerDetails) {
-		String profileID="";
+		String profileID = "";
 		Date dob = registerDetails.getUserDob();
-		String name = registerDetails.getFirstName().substring(0,1).toUpperCase()+registerDetails.getLastName().substring(0,1).toUpperCase();
-	    System.out.println(dob);
-	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-	    String dobdate = formatter.format(dob);
-	    profileID= registerDetails.getCity().substring(0,3).toUpperCase()+dobdate.substring(8,10)+ dobdate.substring(5,7)+dobdate.substring(2,4)+ name;
+		String name = registerDetails.getFirstName().substring(0, 1).toUpperCase()
+				+ registerDetails.getLastName().substring(0, 1).toUpperCase();
+		System.out.println(dob);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		String dobdate = formatter.format(dob);
+		profileID = registerDetails.getCity().substring(0, 3).toUpperCase() + dobdate.substring(8, 10)
+				+ dobdate.substring(5, 7) + dobdate.substring(2, 4) + name;
 
 		return profileID;
-		
+
+	}
+
+	
+	/**
+	 * update password 
+	 * @param userDetails
+	 */
+	public void updateUserDetails(RegisterUserDetails userDetails) {
+		RegisterUserDetails studentDetails = registerDao.getPersonByEmail(userDetails.getEmail());
+		long userId = studentDetails.getUserId();
+		studentDetails.setUserId(userId);
+		studentDetails.setPassword(userDetails.getPassword());
+		registerDao.updatePassword(userId, userDetails.getPassword());
+		registerDao.save(studentDetails);
 	}
 }

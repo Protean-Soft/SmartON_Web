@@ -12,18 +12,26 @@ import com.protean.student.StudentPortal.model.RegisterUserDetails;
 
 @Repository
 public interface RegistrationDao extends JpaRepository<RegisterUserDetails, Integer> {
-	
+
 	@Transactional
-    @Modifying
-    @Query(value = "UPDATE user_details SET rewpoints = ( SELECT count(*) FROM user_details WHERE refcode=:profileID) WHERE ProfileID = :profileID",nativeQuery = true)
-   
+	@Modifying
+	@Query(value = "UPDATE user_details SET rewpoints = ( "
+			+ "SELECT count(*) FROM user_details WHERE refcode=:profileID) WHERE ProfileID = :profileID", nativeQuery = true)
+
 	void updateRewards(@Param("profileID") String profileID);
 
-	
 	public RegisterUserDetails findByUserName(String userName);
-	
+
 	public RegisterUserDetails findByEmail(String email);
-	
-	
+
+	@Transactional
+	@Modifying
+	@Query(value = "SELECT userId FROM user_details WHERE email =:email", nativeQuery = true)
+	public RegisterUserDetails getPersonByEmail(@Param("email") String email);
+
+	@Transactional
+	@Modifying
+	@Query(value = "UPDATE user_credentials SET password =:password WHERE userId =:id", nativeQuery = true)
+	void updatePassword(@Param("id") long userId, @Param("password") String password);
 
 }
