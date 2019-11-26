@@ -37,6 +37,9 @@
 					</span>
 
 					<div class="wrap-input100 validate-input m-b-23">
+					
+						<input type="text" id="user_email" value="${email}" />
+					
 						<span class="label-input100">New Password</span>
 						<input class="newPassword" type="text" name="new_password" placeholder="New Password">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
@@ -46,6 +49,7 @@
 						<span class="label-input100">Confirm Password</span>
 						<input class="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm Password">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
+						
 					</div>
 					
 					<div class="container-login100-form-btn">

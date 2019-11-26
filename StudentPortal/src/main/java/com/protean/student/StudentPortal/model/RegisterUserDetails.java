@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="user_details")
 public class RegisterUserDetails {
-	private Long userId;
+	private int userId;
 	private String firstName;
 	private String lastName;
 	private String userName;
@@ -36,10 +36,10 @@ public class RegisterUserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="userid",unique = true)
-	public Long getUserId() {
+	public int getUserId() {
 		return userId;
 	}
-	public void setUserId(Long userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 	@Column(name="firstname")

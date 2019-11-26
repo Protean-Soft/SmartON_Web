@@ -24,14 +24,14 @@ public interface RegistrationDao extends JpaRepository<RegisterUserDetails, Inte
 
 	public RegisterUserDetails findByEmail(String email);
 
-	@Transactional
+	/**@Transactional
 	@Modifying
 	@Query(value = "SELECT userId FROM user_details WHERE email =:email", nativeQuery = true)
-	public RegisterUserDetails getPersonByEmail(@Param("email") String email);
+	public int getPersonByEmail(@Param("email") String email);*/
 
 	@Transactional
 	@Modifying
-	@Query(value = "UPDATE user_credentials SET password =:password WHERE userId =:id", nativeQuery = true)
+	@Query(value = "UPDATE user_details SET password =:password WHERE userId =:id", nativeQuery = true)
 	void updatePassword(@Param("id") long userId, @Param("password") String password);
 
 }

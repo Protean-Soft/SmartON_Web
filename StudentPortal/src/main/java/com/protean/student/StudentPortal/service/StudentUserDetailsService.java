@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.json.JSONObject;
+import org.springframework.aop.ThrowsAdvice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.protean.student.StudentPortal.model.RegisterUserDetails;
+import com.protean.student.StudentPortal.model.StudentUserDetails;
 import com.protean.student.StudentPortal.repository.RegistrationDao;
 import com.protean.student.StudentPortal.repository.StudentDao;
 
@@ -61,6 +63,7 @@ public class StudentUserDetailsService implements UserDetailsService {
 
 	/**
 	 * check the mail id is already existing in DB
+	 * 
 	 * @param email
 	 * @return
 	 */
@@ -84,17 +87,23 @@ public class StudentUserDetailsService implements UserDetailsService {
 
 	}
 
-	
 	/**
-	 * update password 
+	 * update password
+	 * 
 	 * @param userDetails
 	 */
 	public void updateUserDetails(RegisterUserDetails userDetails) {
-		RegisterUserDetails studentDetails = registerDao.getPersonByEmail(userDetails.getEmail());
-		long userId = studentDetails.getUserId();
-		studentDetails.setUserId(userId);
-		studentDetails.setPassword(userDetails.getPassword());
-		registerDao.updatePassword(userId, userDetails.getPassword());
-		registerDao.save(studentDetails);
+		System.out.println("mail " + userDetails.getEmail() + "pass " + userDetails.getPassword());
+		// RegisterUserDetails studentDetails = null;
+		RegisterUserDetails studentId = registerDao.findByEmail(userDetails.getEmail()); // registerDao.getPersonByEmail(userDetails.getEmail());
+	
+			
+			//System.out.println("After query exe " + studentId.getEmail());
+			//System.out.println("user ID " + studentId.getUserId());
+			// studentDetails.setUserId(studentId.getUserId());
+			System.out.println("Encrypted password :: " + userDetails.getPassword());
+			// studentDetails.setPassword(userDetails.getPassword());
+			registerDao.updatePassword(studentId.getUserId(), userDetails.getPassword());
+		
 	}
 }

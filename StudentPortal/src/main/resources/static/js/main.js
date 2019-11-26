@@ -219,9 +219,11 @@
 	    $('.resetForm').on("submit", function() {
 	    	var newPassword = $('.newPassword').val();
 	    	var confirmPassword = $('.confirmPassword').val();
+	    	var userEmail = $("#user_email").val();
 	    	if(newPassword == confirmPassword){
+	    		console.log("New password : " + newPassword);
 	    		$.ajax({
-	        		url: './resetsubmit?newPassword='+newPassword,
+	        		url: './resetsubmit?newPassword='+newPassword+'&email='+userEmail,
 	        		type: 'POST',
 	        		dataType: 'TEXT',
 	        		processData: false,

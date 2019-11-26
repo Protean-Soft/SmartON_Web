@@ -19,6 +19,13 @@ public class MailSenderService {
 	public MailSenderService(JavaMailSender javaMailSender) {
 		this.jms = javaMailSender;
 	}
+	
+	
+	/**
+	 * Send email after successful sign-in
+	 * @param registerUserDetails
+	 * @throws MessagingException
+	 */
 
 	public void sendEmail(RegisterUserDetails registerUserDetails) throws MessagingException {
 		SimpleMailMessage msg = new SimpleMailMessage();
@@ -34,6 +41,27 @@ public class MailSenderService {
 
 		msg.setText(body);
 		jms.send(msg);
+	}
+	
+	
+	public void sendEmail(String email) {
+		
+	}
+	
+	/**
+	 * Send reset password url to student email
+	 * @param email
+	 * @param appUrl
+	 */
+
+	public void sendEmail(String email, String appUrl) {
+		SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
+		passwordResetEmail.setTo(email);
+		passwordResetEmail.setSubject("Password Reset Request");
+		passwordResetEmail.setText(
+				"To reset your password, click the link below:\n" + appUrl + "/reset?email='" + email + "'");
+
+		jms.send(passwordResetEmail);
 
 	}
 }
