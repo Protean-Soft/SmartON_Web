@@ -52,7 +52,7 @@
             else {
                 $(this).removeClass('has-val');
             }
-        })    
+        }) 
     })
   
   
@@ -202,18 +202,43 @@
             showValidate(input[i]);
             return false;
         }else{
-        	var email = $('#forgotEmail').val();
+        	var email = $('#forgotEmail').val();        	
+        	
         	$.ajax({
         		url: './forgotPassword',
 	    		type: 'POST',
 	    		data: 'forgotEmail='+email,
 	    		dataType: 'JSON',
 	    		success: function(data){
+	    			
 	    		}
         	});
         }
     	
     });
+    
+    /**
+     * Send reset link to student email
+     * 
+     */
+    $('#reset').on("submit", function() {
+    	var newPassword = $('#newPassword').val();
+    	var confirmPassword = $('#confirmPassword').val();
+    	var userEmail = $("#user_email").val();
+    	if(newPassword == confirmPassword){
+    		console.log("New password : " + newPassword);
+    		$.ajax({
+        		url: './resetsubmit?newPassword='+newPassword+'&email='+userEmail,
+        		type: 'POST',
+        		dataType: 'TEXT',
+        		processData: false,
+        		contentType: false,
+        		success: function(data){
+        	    	showAlert('success');
+        		}
+        	});
+    	}
+});
     
 })(jQuery);
 

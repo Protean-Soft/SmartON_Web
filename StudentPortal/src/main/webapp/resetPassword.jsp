@@ -31,31 +31,30 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-				<form class="login100-form resetForm" action="resetpassword" method="POST">
+				<form class="login100-form resetForm" action="resetsubmit" method="POST">
 					<span class="login100-form-title p-b-49">
 						<img src="images/PROTEANSOFT_SHORTLOGO.jpg" alt="Product Logo" style="max-height:40px;max-width:40px;">&nbsp;&nbsp;Tag #
 					</span>
-
+					<input type="text" id="user_email" value="${email}" />
+						<br/>
+						<br/>
 					<div class="wrap-input100 validate-input m-b-23">
-					
-						<input type="text" id="user_email" value="${email}" />
-					
-						<span class="label-input100">New Password</span>
-						<input class="newPassword" type="text" name="new_password" placeholder="New Password">
+						
+						<input id="newPassword" type="text" name="new_password" placeholder="New Password">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
-
+					<br>
 					<div class="wrap-input100 validate-input" data-validate="Password is required">
-						<span class="label-input100">Confirm Password</span>
-						<input class="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm Password">
+						
+						<input id="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm Password">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 						
 					</div>
-					
+					<br/><br/>
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
-							<button class="login100-form-btn">
+							<button class="login100-form-btn" id = "reset">
 								Reset
 							</button>
 						</div>
