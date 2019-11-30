@@ -52,8 +52,8 @@
             else {
                 $(this).removeClass('has-val');
             }
-        });    
-    });
+        }) 
+    })
   
   
     /*==================================================================
@@ -203,14 +203,14 @@
             return false;
         }else{
         	var email = $('#forgotEmail').val();        	
-        	alert("Forgot password :" + email);
+        	
         	$.ajax({
         		url: './forgotPassword',
 	    		type: 'POST',
 	    		data: 'forgotEmail='+email,
 	    		dataType: 'JSON',
 	    		success: function(data){
-	    			alert("Success");
+	    			
 	    		}
         	});
         }
