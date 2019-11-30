@@ -108,21 +108,6 @@ public class StudentPortalController {
 		return jsObj.toString();
 	}
 	
-	@RequestMapping("/forgotPassword")
-	@ResponseBody
-	public String forgotPassword(@RequestParam(name="forgotEmail") String email) {
-		System.out.println(email);
-		RegisterUserDetails regObj = studentService.forgotPassword(email);
-		String isValid = "valid";
-		if(regObj != null) {
-			//send mail
-			//mailSender.sendEmail(email);
-		}else {
-			isValid = "invalid";
-		}
-		return isValid;
-	}
-	
 	@RequestMapping("/login-error")
     public String login(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession(false);
