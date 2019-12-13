@@ -3,6 +3,7 @@
     "use strict";
 	
 	$(document).ready(function(){
+		
       var date_input=$('.date'); 
       var options={
         format: 'mm/dd/yyyy',
@@ -31,6 +32,47 @@
 				}
 			}
 		});
+	  
+	  /**
+	     * Send reset link to student email
+	     * 
+	     */
+	  
+	  $('#reset').on('click', function() {
+	    	var newPassword = $('#newPassword').val();
+	    	var confirmPassword = $('#confirmPassword').val();
+	    	var userEmail = $("#user_email").val();
+	    	//alert(userEmail);
+	    	if(newPassword == confirmPassword){
+	    		console.log("New password : " + newPassword);
+	    		$.ajax({
+	        		url: '/resetsubmit?newPassword='+newPassword+'&email='+userEmail,
+	        		type: 'POST',
+	        		dataType: 'TEXT',
+	        		processData: false,
+	        		contentType: false,
+	        		success: function(data){
+	        	    	showAlert('success');
+	        		}
+	    	
+	    		});
+	    	}
+	    }); 
+	    
+	    $('#loadUserData').on('click',function(){
+	    	var userName = $("#userName").val();
+	    	if(userName != null){
+		    	$.ajax({
+		    		url: '/userDetails?userName=' + userName,
+		    		type : 'GET',
+		    		success:function(data){
+		    			
+		    		}
+		    	});
+	    	} else {
+	    		showAlert('Invalid userName!');
+	    	}
+	    });	
     })
 	
 	function showAlert(type){
@@ -215,30 +257,7 @@
         	});
         }
     	
-    });
-    
-    /**
-     * Send reset link to student email
-     * 
-     */
-    $('#reset').on("submit", function() {
-    	var newPassword = $('#newPassword').val();
-    	var confirmPassword = $('#confirmPassword').val();
-    	var userEmail = $("#user_email").val();
-    	if(newPassword == confirmPassword){
-    		console.log("New password : " + newPassword);
-    		$.ajax({
-        		url: './resetsubmit?newPassword='+newPassword+'&email='+userEmail,
-        		type: 'POST',
-        		dataType: 'TEXT',
-        		processData: false,
-        		contentType: false,
-        		success: function(data){
-        	    	showAlert('success');
-        		}
-        	});
-    	}
-});
+    });   
     
 })(jQuery);
 

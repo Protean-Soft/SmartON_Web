@@ -1,5 +1,9 @@
 package com.protean.student.StudentPortal.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -9,8 +13,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.protean.student.StudentPortal.model.ImageModel;
 import com.protean.student.StudentPortal.model.RegisterUserDetails;
+import com.protean.student.StudentPortal.repository.ImageRepository;
 import com.protean.student.StudentPortal.repository.RegistrationDao;
 import com.protean.student.StudentPortal.repository.StudentDao;
 
@@ -22,6 +29,9 @@ public class StudentUserDetailsService implements UserDetailsService {
 	
 	@Autowired
 	private RegistrationDao registerDao;
+	
+	@Autowired
+	private ImageRepository imageRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -101,7 +111,20 @@ public class StudentUserDetailsService implements UserDetailsService {
 	 */
 	public void updateUserCredentials(RegisterUserDetails userDetails) {
 		RegisterUserDetails studentId = registerDao.findByEmail(userDetails.getEmail());
+		System.out.println("Update passwird " + studentId.getUserId());
 		registerDao.updatePassword(studentId.getUserId(), userDetails.getPassword());		
 	}
+	
+	
+	public void saveImage(ImageModel model) {
+		/*byte[] bytes = file.getBytes();
+		Path path = Paths.get("/upload"+ file.getOriginalFilename());
+		Files.write(path, bytes);*/
+		imageRepository.save(model);
+		
+	}
+	
+	
+	
 	
 }

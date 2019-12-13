@@ -13,13 +13,10 @@ import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.protean.student.StudentPortal.model.RegisterUserDetails;
 import com.protean.student.StudentPortal.model.TransactionDetails;
-import com.protean.student.StudentPortal.repository.PaymentDao;
-import com.protean.student.StudentPortal.repository.RegistrationDao;
 import com.protean.student.StudentPortal.service.MailSenderService;
 import com.protean.student.StudentPortal.service.PaymentService;
 import com.protean.student.StudentPortal.service.StudentUserDetailsService;
@@ -35,9 +32,6 @@ public class StudentPortalController {
 	MailSenderService mailSender;
 	
 	@Autowired
-	RegistrationDao registrationDao;
-	
-	@Autowired
 	PaymentService paymentService;
 	
 	@RequestMapping("/")
@@ -47,6 +41,8 @@ public class StudentPortalController {
 		model.addAttribute("studentDetails", regDetails);
 		model.addAttribute("userName", userName);
 		String mailId = regDetails.getEmail();
+		long userId = regDetails.getUserId();
+		model.addAttribute("userId",userId);
 		TransactionDetails transDetails = paymentService.getByMailId(mailId);
 		if(transDetails != null) {
 			if(!transDetails.getStatus().equals("success") && transDetails.getProductinfo().equals("PremiumUser") && regDetails.getIsPremium().equals("premium")) {

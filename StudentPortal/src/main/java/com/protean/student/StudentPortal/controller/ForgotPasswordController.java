@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import com.protean.student.StudentPortal.model.RegisterUserDetails;
 import com.protean.student.StudentPortal.service.MailSenderService;
 import com.protean.student.StudentPortal.service.StudentUserDetailsService;
@@ -56,21 +55,23 @@ public class ForgotPasswordController {
 	 * @param resetPage
 	 * @return
 	 */
+	
 	@GetMapping("/reset")
 	public String displayPasswordPage(Model resetPage, @RequestParam("email") String userEmail) {
 		if (userEmail != null) {
 			System.out.println("Reset user email  " + userEmail.replaceAll("'", ""));
 			resetPage.addAttribute("email", userEmail.replaceAll("'", ""));
-
 		}
 		return "resetPassword.jsp";
 	}
 
 	// Process reset password form
 	@RequestMapping(value = "/resetsubmit", method = RequestMethod.POST)
-	public String setNewPassword(Model model, @RequestParam("email") String userEmail,
-			@RequestParam("newPassword") String password, RegisterUserDetails userDetails) {
-		if (userEmail != null) {			
+	public String setNewPassword(@RequestParam("email") String userEmail,
+			@RequestParam("newPassword") String password, RegisterUserDetails userDetails,Model model) {
+		System.out.println("final mail " + userEmail);
+		if (userEmail != null) {
+			System.out.println("inside cond mail " + userEmail);
 			String newPassword = new BCryptPasswordEncoder().encode(password);			
 			userDetails.setEmail(userEmail);
 			userDetails.setPassword(newPassword);			
