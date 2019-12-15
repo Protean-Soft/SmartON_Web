@@ -29,7 +29,7 @@ import com.protean.student.StudentPortal.repository.RegistrationDao;
 import com.protean.student.StudentPortal.service.EventDetailsService;
 import com.protean.student.StudentPortal.service.EventRegisterService;
 import com.protean.student.StudentPortal.service.MailSenderService;
-import com.protean.student.StudentPortal.service.commonUtils;
+import com.protean.student.StudentPortal.util.commonUtils;
 
 @RestController
 @RequestMapping("StudentPortal/Event")

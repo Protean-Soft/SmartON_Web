@@ -1,4 +1,4 @@
-package com.protean.student.StudentPortal.service;
+package com.protean.student.StudentPortal.util;
 
 import java.io.IOException;
 import java.text.ParseException;
