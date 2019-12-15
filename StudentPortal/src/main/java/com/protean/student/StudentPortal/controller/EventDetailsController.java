@@ -29,6 +29,7 @@ import com.protean.student.StudentPortal.repository.RegistrationDao;
 import com.protean.student.StudentPortal.service.EventDetailsService;
 import com.protean.student.StudentPortal.service.EventRegisterService;
 import com.protean.student.StudentPortal.service.MailSenderService;
+import com.protean.student.StudentPortal.service.commonUtils;
 
 @RestController
 @RequestMapping("StudentPortal/Event")
@@ -48,6 +49,9 @@ public class EventDetailsController {
 
 	@Autowired
 	MailSenderService mailSenderService;
+	
+	@Autowired
+	commonUtils commonutil;
 
 	/* Add multiple events */
 	@PostMapping(value = "/addEvent") /* Insert and update list of records */
@@ -59,21 +63,19 @@ public class EventDetailsController {
 	/* Add single event at a time */
 	@PostMapping(value = "/addEventDetail")
 	public EventDetails addEventDetail(@RequestParam("date") String date,@RequestParam("image") MultipartFile image,@Valid EventDetails eventdetails) throws ParseException, IOException {
-		byte[] data = image.getBytes();
+		byte[] data=commonutil.ConvertImagetoByte(image);
 		eventdetails.setEvenyImage(data);
-		Date date1=(Date) new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);  
-		System.out.println(date1);
+		Date date1=commonutil.ConvertStringtoByte(date);  
 		eventdetails.setEventDate(date1);
 		return eventDetailsService.addEventDetail(eventdetails);
 	}
 
 	@PostMapping(value = "/addEventDetailImage")
-	public EventDetails addEventDetailImage(@RequestParam("date") String date,@RequestParam("image") MultipartFile photo, @Valid EventDetails eventdetails) throws ParseException, IOException {
+	public EventDetails addEventDetailImage(@RequestParam("date") String date,@RequestParam("image") MultipartFile image, @Valid EventDetails eventdetails) throws ParseException, IOException {
 			
-		byte[] data = photo.getBytes();
+		byte[] data=commonutil.ConvertImagetoByte(image);
 		eventdetails.setEvenyImage(data);
-		Date date1=(Date) new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);  
-		System.out.println(date1);
+		Date date1=commonutil.ConvertStringtoByte(date);  
 		eventdetails.setEventDate(date1);
 		return eventDetailsService.addEventDetail(eventdetails);
 		//return evt;
@@ -114,10 +116,9 @@ public class EventDetailsController {
 	@PostMapping(value = "/updateEventDetail/{id}")
 	public EventDetails updateStudent(@RequestParam("date") String date,@RequestParam("image") MultipartFile image, @Validated EventDetails eventDetails) throws IOException, ParseException {
 		
-		byte[] data = image.getBytes();
+		byte[] data=commonutil.ConvertImagetoByte(image);
 		eventDetails.setEvenyImage(data);
-		Date date1=(Date) new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);  
-		System.out.println(date1);
+		Date date1=commonutil.ConvertStringtoByte(date);  
 		eventDetails.setEventDate(date1);
 		return eventDetailsService.updateEventDetails(eventDetails);
 	}
@@ -149,7 +150,7 @@ public class EventDetailsController {
 
 	/* Event Registration Sevice */
 	@PostMapping(value = "/addEventRegistrationDetail")
-	public EventRegister addEventRegistrationDetail(@RequestBody EventRegister eventregister) throws ParseException {
+	public String addEventRegistrationDetail(@RequestBody EventRegister eventregister) throws ParseException {
 
 		return eventRegisterDetailsService.addEventRegistrationDetail(eventregister);
 	}

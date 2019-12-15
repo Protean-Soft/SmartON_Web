@@ -13,6 +13,6 @@ public interface EventRegisterService {
 
 	public List<EventRegister> UpdateEventRegisterAttendence(List<EventRegister> evtregDetails);
 
-	public EventRegister addEventRegistrationDetail(EventRegister eventregister); 
+	public String addEventRegistrationDetail(EventRegister eventregister); 
 
 }

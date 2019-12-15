@@ -25,6 +25,13 @@ public interface RegistrationDao extends JpaRepository<RegisterUserDetails, Inte
 	
 	public RegisterUserDetails findByProfileID(String profileID);
 	
+	public RegisterUserDetails findByUserId(Long userId);
+
+	@Transactional
+    @Modifying
+    @Query(value = "update user_details set noofevtallowed=:noofevnts where userid=:userId",nativeQuery = true)
+	void updateNoofevent(@Param("noofevnts")Long noofevnts,@Param("userId") Long userId);
+	
 	
 
 }

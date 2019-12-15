@@ -10,6 +10,7 @@ import com.protean.student.StudentPortal.model.EventDetails;
 import com.protean.student.StudentPortal.model.EventRegister;
 import com.protean.student.StudentPortal.model.RegisterUserDetails;
 import com.protean.student.StudentPortal.repository.EventRegisterRepo;
+import com.protean.student.StudentPortal.repository.RegistrationDao;
 import com.protean.student.StudentPortal.service.EventRegisterService;
 
 @Service
@@ -18,26 +19,33 @@ public class EventRegisterServiceImpl implements EventRegisterService{
 	@Autowired
 	private EventRegisterRepo eventRegister;
 	
-	public EventRegister addEventRegistrationDetail(EventRegister eventregister) {
-		Long uaerId=(long) 1;
-		/*
-		 * int local=eventRegister.checknoAllowedEvt(uaerId);
-		 * System.out.println("local................."+local);
-		 */
-		/*
-		 * for(RegisterUserDetails item : local){
-		 * System.out.println(item.getNoofevtallowed()); }
-		 */
+	@Autowired
+	private RegistrationDao userdetails;
+	
+	public String addEventRegistrationDetail(EventRegister eventregister) {
+		String responseMsg="";
+		try {
+		Long userId=eventregister.getUserid();
 		
-		
-		/*
-		 * ListIterator<RegisterUserDetails> listItr = local.listIterator();
-		 * 
-		 * while(listItr.hasNext()) { RegisterUserDetails reg=listItr.next();
-		 * 
-		 * System.out.println("**********************"+reg.getNoofevtallowed()); }
-		 */
-		return eventRegister.save(eventregister);
+		  RegisterUserDetails userdetail=userdetails.findByUserId(userId);
+		  System.out.println("local................."+userdetail.getNoofevtallowed());
+		  
+		 if(userdetail!=null &&userdetail.getNoofevtallowed()>0 ) {
+			 Long noofevnts=userdetail.getNoofevtallowed()-1;
+		 userdetails.updateNoofevent(noofevnts,userId);
+		 eventRegister.save(eventregister);
+		 responseMsg= "Registration success";
+		 }else if(userdetail.getNoofevtallowed()==0) {
+			 responseMsg="User Exceed the Limit";
+		 }
+		}catch (Exception e) {
+			System.out.println("Exception in addEventRegistrationDetail::"+e);
+			responseMsg="Error";
+			e.printStackTrace();
+		}
+		return responseMsg;
+		 
+		 
 	}
 
 	@Override
