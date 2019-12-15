@@ -92,4 +92,16 @@ public class StudentUserDetailsService implements UserDetailsService {
 	public RegisterUserDetails getUserDetailsByProfileId(String profileId) {
 		return registerDao.findByProfileID(profileId);
 	}
+	
+	
+	/**
+	 * update password
+	 * 
+	 * @param userDetails
+	 */
+	public void updateUserCredentials(RegisterUserDetails userDetails) {
+		RegisterUserDetails studentId = registerDao.findByEmail(userDetails.getEmail());
+		registerDao.updatePassword(studentId.getUserId(), userDetails.getPassword());		
+	}
+	
 }
