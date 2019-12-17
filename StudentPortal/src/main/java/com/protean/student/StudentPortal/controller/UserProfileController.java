@@ -1,0 +1,159 @@
+package com.protean.student.StudentPortal.controller;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.protean.student.StudentPortal.model.ImageModel;
+import com.protean.student.StudentPortal.model.RegisterUserDetails;
+import com.protean.student.StudentPortal.repository.ImageRepository;
+import com.protean.student.StudentPortal.service.StudentUserDetailsService;
+
+@RestController
+@RequestMapping("tag/userProfile")
+public class UserProfileController {
+
+	private final static long OFFER_POINTS = 10000L;
+	
+	@Autowired
+	StudentUserDetailsService studentService;
+	
+	@Autowired
+	ImageRepository imageRepository;
+
+
+	/**
+	 * Fetch user details
+	 * @param userName
+	 * @param model
+	 * @param userDetails
+	 * @return
+	 * @throws JsonProcessingException
+	 */
+	
+	@GetMapping(value="/userDetails",produces = MediaType.APPLICATION_JSON_VALUE)
+	public RegisterUserDetails retrieveUserDetailsByName(@RequestParam("userName") String userName,
+			Model model,RegisterUserDetails userDetails) throws JsonProcessingException {
+		
+		System.out.println("username " + userName);
+			userDetails = studentService.getLogonDetails(userName);
+			//imageRepository.findByStudentId(userId);
+			//userDetails = (RegisterUserDetails) studentService.loadUserByUsername(userName);
+		
+		if(userDetails != null) {
+			ObjectMapper map = new ObjectMapper();
+			model.addAttribute("userdetails",  userDetails.toString());
+			System.out.println("retrieve user details :::: " + userDetails.getEmail()  + map.writeValueAsString(userDetails));
+			return userDetails;
+		}  else {
+			System.out.println(" User details not found .... ");
+		}
+		return userDetails;		
+	}
+	
+	/**
+	 * update user details 
+	 * @param userName
+	 * @return
+	 */
+	
+	@PostMapping(value="/updateUserDetails",produces = MediaType.APPLICATION_JSON_VALUE)
+	public RegisterUserDetails updateDetails (@RequestParam("userId") long userId,@RequestParam("collegeName") String collegeName,
+			@RequestParam("userName") String userName,@RequestParam("firstName") String firstName,
+			@RequestParam("lastName") String lastName,@RequestParam("email") String email,
+			@RequestParam("phoneNo") String mobileNum,@RequestParam("city") String city,@RequestParam("state") String state,
+			@RequestParam("country") String country) {
+		
+		RegisterUserDetails userDetails = new RegisterUserDetails(userId,firstName,lastName,userName,mobileNum,city,state);
+		
+		return studentService.updateUserDetailsData(userDetails);
+		
+	}
+	
+	
+	/**
+	 * Get reward points for user
+	 * @param userName
+	 * @param rewardEnable
+	 * @return
+	 */
+	
+	@GetMapping("/retrieveUserRewards")
+	public boolean retrieveRewards(@RequestParam("userName") String userName, Model rewardEnable) {
+		boolean reedemRewards = false;
+		RegisterUserDetails rewardPoints = (RegisterUserDetails) studentService.loadUserByUsername(userName);
+		if (rewardPoints.getRewpoints() == OFFER_POINTS) {
+			reedemRewards = true;
+		}
+		rewardEnable.addAttribute("loadRewardPage", reedemRewards);
+		return reedemRewards;
+
+	}
+	 
+	/**
+	 * Upload profile pic
+	 * @param pic
+	 * @param studentId
+	 * @param model
+	 * @return
+	 * @throws JsonProcessingException
+	 */
+	
+	@PostMapping(value = "/uploadImage",consumes = {"multipart/form-data"},
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ImageModel uploadMultiPartUpload(@RequestParam("pic") MultipartFile pic,
+			@RequestParam("id") Long studentId,Model model ) throws JsonProcessingException {
+		
+		System.out.println("pic " + pic);
+		
+			if (pic != null && studentId != null) {
+				ImageModel imageModel = new ImageModel();
+				byte[] bytePic = null;
+				try {
+					bytePic = pic.getBytes();
+					//Path path = Paths.get(uploadDirectory + pic.getOriginalFilename());
+					//Files.write(path, bytePic);
+				} catch (IOException e) {
+					System.out.println(" Upload image Exception " + e.getMessage());
+					e.printStackTrace();
+				}			
+	           
+				imageModel.setPic(bytePic);
+				imageModel.setStudentId(studentId);
+				
+				return studentService.saveImage(imageModel);				
+			} else {
+				System.out.println( "Not able to find the user.... contact admin !!");
+				return null;
+			}
+			
+		
+	}
+	
+	/**
+	 * Fetch profile pic for user
+	 * @param response
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	
+	@GetMapping(value = "/getProfilePic")
+	public ImageModel getStudentPhoto(HttpServletResponse response, @RequestParam("userId") long id) throws Exception {
+		return studentService.loadProfilePic(id);
+	}
+
+}
