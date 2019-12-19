@@ -28,11 +28,13 @@ public interface EventDetailsService {
 	public int deleteEventDetail(Long eventid);
 
 	
-	List<EventDetails> findAllByDeletedflag(Long flag);
+	
 
 	
 	  public List<EventDetails> getOngoingEventsByCatogery(String catogery, String
 	  type);
+
+	List<EventDetails> findAllByDeletedflag();
 
 	
 	 

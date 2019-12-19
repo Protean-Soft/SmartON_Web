@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -11,7 +12,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.mail.MailException;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.protean.student.StudentPortal.model.EventDetails;
 import com.protean.student.StudentPortal.model.EventRegister;
@@ -86,16 +90,32 @@ public class EventDetailsController {
 
 	/* List event details based on event id */
 	@GetMapping(value = "/getEventDetail/{id}")
-	public EventDetails getEventById(@PathVariable Long id) {
-		return eventDetailsService.getEventById(id);
+	public String getEventById(@PathVariable Long id,Model model) {
+		EventDetails evt=eventDetailsService.getEventById(id);
+		model.addAttribute(evt);
+		return "confirmation.jsp";
+				
 	}
 
 	/* List out all ongoing events */
-	@GetMapping(value = "getOngoingEvents")
+	@GetMapping(value = "getOngoingEvents",produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<EventDetails> getAllNonDeletedEvents() {
-		long flag = 0;
+		List<EventDetails> evt=eventDetailsService.findAllByDeletedflag();
+		Iterator ir=evt.listIterator();
+		while(ir.hasNext()) {
+			System.out.println(evt.get(1));
+			
+			EventDetails evtdet=(EventDetails) ir.next();
+			System.out.println(evtdet.getEventid()+"===="+evtdet.getEventName()+"======="+evtdet.getEventImage());
+			/*
+			 * String base64Encoded = new String(evtdet.getEventImage(), "UTF-8");
+			 * System.out.println("After conversion............"+base64Encoded);
+			 */
+			
+			
+		}
 		
-		return eventDetailsService.findAllByDeletedflag(flag);
+		return eventDetailsService.findAllByDeletedflag();
 	}
 
 	/* Listout event based on catagory and type of events */

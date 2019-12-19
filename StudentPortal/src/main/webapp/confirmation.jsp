@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +15,7 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
   <!-- Material Design Bootstrap -->
   <link rel="stylesheet" href="css/mdb.min.css">
   <!-- Your custom styles (optional) -->
@@ -25,7 +27,6 @@
 
   <!--Double navigation-->
   <header>
-  		<input type="hidden" id="userId" value = <% out.println(session.getAttribute("userId")); %> />  
     <!-- Sidebar navigation -->
     <div id="slide-out" class="side-nav sn-bg-4">
       <ul class="custom-scrollbar">
@@ -114,7 +115,7 @@
           <a class="nav-link"><i class="far fa-comments"></i> <span class="clearfix d-none d-sm-inline-block">Support</span></a>
         </li>
         <li class="nav-item">
-         <span class="nav-link clearfix d-none d-sm-inline-block">Welcome Mr <% out.println(session.getAttribute("fullName")); %> </span>
+         <span class="nav-link clearfix d-none d-sm-inline-block">Welcome Mr Putin </span>
         </li>
         <!--<li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -127,11 +128,11 @@
             <a class="dropdown-item" href="#">Something else here</a>
           </div>
         </li>-->
-      <li class="nav-item avatar dropdown">      	
+      <li class="nav-item avatar dropdown">
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           <img src="img/cust/Photo/photo2.jpg" class="rounded-circle z-depth-0"
-            alt="avatar image" id="navbar_profile">
+            alt="avatar image">
         </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="#"><i class="far fa-user"></i> My Account</a>
@@ -160,7 +161,7 @@
       <!--Body-->
       <div class="modal-body text-center mb-1">
 
-        <h5 class="mt-1 mb-2"><span><% out.println(session.getAttribute("fullName")); %></span></h5>
+        <h5 class="mt-1 mb-2">Vladimir Putin</h5>
 
         <div class="md-form ml-0 mr-0">
           <input type="text" type="text" id="form29" class="form-control form-control-sm validate ml-0">
@@ -192,216 +193,135 @@
 
 
 
-<main style="padding-top: 5%; background-image: url(img/cust/Banner/bg7.jpg); background-attachment: fixed;">
+<main style="padding-top: 5%;">
 
-<!--<div class="container-fluid">
+
+
+<!-- News jumbotron -->
+<div class="jumbotron text-center hoverable p-4" style="margin: 2% !important;">
+
+  <!-- Grid row -->
   <div class="row">
-	<div class="card card-image" style="background-image: url(img/cust/Banner/sb10.jpg);">
 
-	    <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
-		<div>
-		    <h2 class="card-title pt-2"><i class="far fa-user"></i> <strong> User Profile</strong></h2>
-		</div>
-	    </div>
-	</div>
-  </div>
-</div>--></br></br>
+    <!-- Grid column -->
+    <div class="col-md-4 offset-md-1 mx-3 my-3">
 
+      <!-- Featured image -->
+      <div class="view overlay">
+        <img src="https://mdbootstrap.com/img/Photos/Others/laptop-sm.jpg" class="img-fluid" alt="Sample image for first version of blog listing">
+        <a>
+          <div class="mask rgba-white-slight"></div>
+        </a>
+      </div>
 
-
-<div class="container">
-<div class="row">
-    <div class="col-md-7">
-<!-- Material form register -->
-<div class="card">
-
-    <h5 class="card-header info-color white-text text-center py-4 peach-gradient">
-        <strong>User Profile Details</strong>
-    </h5>
-
-    <!--Card content-->
-    <div class="card-body px-lg-5 pt-0">
-
-        <!-- Form -->
-        <form class="text-center" style="color: #757575;" action="/userDetails" id="userDetailsForm" method="post">
-			<input type="hidden" id="userId" name="userId" value = <% out.println(session.getAttribute("userId")); %>>
-			<input type="hidden" id="userName" value = <%out.println(session.getAttribute("userName")); %> />
-			
-            <div class="form-row">
-                <div class="col">
-                    <!-- First name -->
-                    <div class="md-form">                        
-                        <label for="collegeName">College Name</label>
-                        <input type="text" id="collegeName" name="collegeName" class="form-control">
-                    </div>
-                </div>
-                <div class="col">
-                    <!-- Last name -->
-                    <div class="md-form">
-                     	<label for="userName">User Name</label>
-                        <input type="text" id="userName" name="userName" class="form-control" value = <% out.println(session.getAttribute("userName")); %>>                       
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="col">
-                    <!-- First name -->
-                    <div class="md-form">
-                    	<label for="firstName">First Name</label>
-                        <input type="text" id="firstName" name="firstName" class="form-control">                        
-                    </div>
-                </div>
-                <div class="col">
-                    <!-- Last name -->
-                    <div class="md-form">
-                    	<label for="lastName">Last Name</label>
-                        <input type="text" id="lastName" name="lastName" class="form-control">                        
-                    </div>
-                </div>
-            </div>
-
-            <!-- E-mail -->
-            <div class="md-form mt-0">
-            	<label for="mailID">E-mail</label>
-                <input type="email" name="email" id="mailID" class="form-control">                
-            </div>
-
-            <!-- Phone number -->
-            <div class="md-form">
-            	<label for="phoneNo">Phone Number</label>
-                <input type="text" id="phoneNo" name="phoneNo" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock">                
-                <!--<small id="materialRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">
-                    Optional - for two step authentication
-                </small>-->
-            </div>
-
-            <div class="form-row">
-                <div class="col">
-                    <!-- First name -->
-                    <div class="md-form">
-                    	<label for="city">City</label>
-                        <input type="text" id="city" name="city" class="form-control">                        
-                    </div>
-                </div>
-                <div class="col">
-                    <!-- Last name -->
-                    <div class="md-form">
-                    	<label for="state">State</label>
-                        <input type="text" id="state" name="state" class="form-control">                        
-                    </div>
-                </div>
-               <!--  <div class="col">
-                    Last name
-                    <div class="md-form">
-                    	 <label for="country">Country</label>
-                        <input type="text" id="counrty" name= "country" class="form-control">                       
-                    </div>
-                </div> -->
-            </div>
-
-            <!-- Newsletter -->
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="materialRegisterFormNewsletter">
-                <label class="form-check-label" for="materialRegisterFormNewsletter">Subscribe to our newsletter <em>or</em> updates</label>
-            </div>
-
-            <!-- Sign up button -->
-            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" id="updateProfile">Update Profile</button>
-
-             <hr>
-
-            <!-- Terms of service -->
-            <p>I agree to our
-		        <a href="" target="_blank">terms of service</a>
-
-		</form>
-		<!-- Form -->
-
-	    </div>
-
-	</div>
-	<!-- Material form register -->
     </div>
+    <!-- Grid column -->
 
+    <!-- Grid column -->
+    <div class="col-md-7 text-md-left ml-3 mt-3">
 
-    <div class="col-md-5">
-	<!-- Card -->
-	<div class="card testimonial-card">
+        <h2 class="h2-responsive text-center text-md-left product-name font-weight-bold dark-grey-text mb-1 ml-xl-0 ml-4">Web Designing - Angular</h2>
+        <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">Attendes: 324</span>
+	<span id="rateMe1"></span>
+	
+        <!--<span class="badge badge-success product mb-4 ml-2">SALE</span>-->
 
-	  <!-- Background color -->
-	  <div class="card-up indigo peach-gradient"></div>
+        <!--<h3>
+          <span class="red-text font-weight-bold">
+            <strong>$1449</strong>
+          </span>
+          <span class="grey-text">
+            <small>
+              <s>$1789</s>
+            </small>
+          </span>
+        </h3>-->
+	<p class="font-weight-normal"><i class="fas fa-map-marker-alt pr-2"></i></i>Venue: Sipcot, Chennai</p>
+	<p class="font-weight-normal"><i class="fas fa-certificate pr-2"></i>Category: Web Designing</p>
+	<p class="font-weight-normal"><i class="fas fa-book-reader pr-2"></i>Type: Angular</p>
+	<p class="font-weight-normal"><i class="far fa-clock pr-2"></i>Duration: 15 Hours</p>
 
-	  <!-- Avatar -->
-	  <div class="avatar mx-auto white">
-	    <img src="img/cust/Photo/photo2.jpg" class="rounded-circle" alt="woman avatar" id="show_profilePic">
-	  </div>
+      <p class="font-weight-normal">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque, totam
+        rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
+        dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur.</p>
 
-	  <!-- Content -->
-	  <div class="card-body">
-	    <!-- Name -->
-	    <h4 class="card-title"> <% out.println(session.getAttribute("fullName")); %></h4>
-		<form class="md-form" action="tag/userProfile/uploadImage" method="post"  enctype="multipart/form-data" id="profile_form">
-		  <input type="hidden" name = "id" value="${userId }">	
-		  <div class="file-field">
-		    <a class="btn-floating purple-gradient mt-0 float-left">
-		      <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
-		      <input type="file" name = "pic" id="profile_pic">
-		    </a>
-		    <div class="file-path-wrapper">
-		      <input class="file-path validate" type="text" placeholder="Upload your photo">
-		    </div>
-		  </div>
-		</form>
-	    <!-- Quotation -->
-	    <p><i class="fas fa-quote-left"></i> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci <i class="fas fa-quote-right"></i></p>
+      <a class="btn btn-success" data-toggle="modal" data-target="#modalPush">Book Now</a>
 
-	    <hr> 	
-            <!--<a type="button" class="btn-floating btn-fb btn-sm">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <a type="button" class="btn-floating btn-tw btn-sm">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a type="button" class="btn-floating btn-li btn-sm">
-                <i class="fab fa-linkedin-in"></i>
-            </a>
-            <a type="button" class="btn-floating btn-git btn-sm">
-                <i class="fab fa-github"></i>
-            </a>-->
-
-
-	<div style="padding-top: 3%;">
-	<p style="float:left;">Profile Completion:</p>
-		<div class="progress md-progress">
-		    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisciLorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisciLorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci"></div>
-		</div>
-		<div class="progress md-progress">
-		    <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisciLorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisciLorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci"></div>
-		</div>
-		<div class="progress md-progress">
-		    <div class="progress-bar bg-danger" role="progressbar" style="width: 25%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisciLorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisciLorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci"></div>
-		</div>
-
-	</div>
-		<div class="card">
-		  <div class="card-header">
-		    Hey, Complete your profile to get extra Tag Money
-		  </div>
-		  <ul class="list-group list-group-flush">
-		    <li class="list-group-item" style="font-size: 15px; font-family: sans-serif;"><i class="far fa-hand-point-right"></i> Atten 3 Events and Get # Money 150</li>
-		    <li class="list-group-item" style="font-size: 15px; font-family: sans-serif;"><i class="far fa-hand-point-right"></i> Atten 6 Events and Get # Money 250</li>
-		    <li class="list-group-item" style="font-size: 15px; font-family: sans-serif;"><i class="far fa-hand-point-right"></i> Refer 3 Friends and Get # Money 250</li>
-		    <li class="list-group-item" style="font-size: 15px; font-family: sans-serif;"><i class="far fa-hand-point-right"></i> Refer 6 Friends and Get # Money 350</li>
-		  </ul>
-		</div>
-	  </div>
-	</div>
-	<!-- Card -->
     </div>
-  </div>
-</div></br>
+    <!-- Grid column -->
 
+  </div>
+  <!-- Grid row -->
+
+</div>
+<!-- News jumbotron -->
+
+
+
+
+<!--Modal: modalPush-->
+<div class="modal fade" id="modalPush" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-info" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <p class="heading">Booking Confirmation</p>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+
+        <i class="fas fa-bell fa-4x animated rotateIn mb-4"></i>
+
+        <p>Once You Booked a Seat for this Event, You can’t be cancelled and Your No.of Events will less by 1 in current renewal</p>
+	<p> Do you wat to continue ?</p>
+
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer flex-center">
+        <a data-toggle="modal" data-target="#modalPushSuccess" class="btn btn-info">Yes</a>
+        <a type="button" class="btn btn-outline-info waves-effect" data-dismiss="modal">No</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!--Modal: modalPush-->
+
+
+<!--Modal: modalPush-->
+<div class="modal fade" id="modalPushSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-info" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <p class="heading">Booked</p>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+
+	<i class="fas fa-check fa-4x animated rotateIn mb-4"></i>
+
+        <p> Thank you for booking. Instructions to join next Event </p>
+	<p> You have booked # of Event(s), Still you can book # of Event(s) for this renewal.</p>
+
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer flex-center">
+        <a href="confirmation.html" class="btn btn-info">Done</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!--Modal: modalPush-->
 
 
 <!-- Footer -->
@@ -543,21 +463,22 @@
 </main>
 
   <!-- jQuery -->
-  <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
   <!-- Bootstrap tooltips -->
-  <script src="vendor/bootstrap/js/popper.js"></script>	
+  <script type="text/javascript" src="js/popper.min.js"></script>
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <!-- MDB core JavaScript -->
-  <script type="text/javascript" src="vendor/bootstrap/js/mdb.min.js"></script>
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+  <script src="js/addons/rating.min.js"></script>  
+  <script src="js/eventregister.js"></script>  
   <!-- Your custom scripts (optional) -->
-  <script type="text/javascript" src="js/userProfile.js"></script>
   <script type="text/javascript">
-  
-			$(document).ready(function() {
-				$(".button-collapse").sideNav();
-			});
-		</script>
+	$(".button-collapse").sideNav();
+        $(document).ready(function() {
+  	   $('#rateMe1').mdbRate();
+	});
+  </script>
 
 </body>
 </html>
