@@ -35,8 +35,8 @@ import com.protean.student.StudentPortal.util.commonUtils;
 @RequestMapping("StudentPortal/Event")
 public class EventDetailsController {
 
-	 @Value("${spring.application.uploadDirectory}")
-	   private String uploadDirectory;
+	 /*@Value("${spring.application.uploadDirectory}")
+	   private String uploadDirectory;*/
 
 	@Autowired(required = true)
 	EventDetailsService eventDetailsService;

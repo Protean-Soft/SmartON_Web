@@ -3,6 +3,8 @@ package com.protean.student.StudentPortal.service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.validation.Valid;
+
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +12,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.protean.student.StudentPortal.model.ImageModel;
 import com.protean.student.StudentPortal.model.RegisterUserDetails;
+import com.protean.student.StudentPortal.repository.ImageRepository;
 import com.protean.student.StudentPortal.repository.RegistrationDao;
 import com.protean.student.StudentPortal.repository.StudentDao;
 
@@ -22,6 +28,9 @@ public class StudentUserDetailsService implements UserDetailsService {
 	
 	@Autowired
 	private RegistrationDao registerDao;
+	
+	@Autowired
+	private ImageRepository imageRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -102,6 +111,23 @@ public class StudentUserDetailsService implements UserDetailsService {
 	public void updateUserCredentials(RegisterUserDetails userDetails) {
 		RegisterUserDetails studentId = registerDao.findByEmail(userDetails.getEmail());
 		registerDao.updatePassword(studentId.getUserId(), userDetails.getPassword());		
+	}
+	
+	public ImageModel saveImage(ImageModel model) {
+		return imageRepository.save(model);		
+	}
+
+	public ImageModel loadProfilePic(Long studentId) {
+		ImageModel studentPic =  imageRepository.findByStudentId(studentId);
+		System.out.println("student pic : " + studentPic.getPic());
+		return studentPic;
+	}
+
+	public Integer updateUserDetailsData(RegisterUserDetails updateUserDetails) {
+
+		return registerDao.updateUserDetails(updateUserDetails.getUserId(), updateUserDetails.getFirstName(),
+				updateUserDetails.getLastName(), updateUserDetails.getUserName(), updateUserDetails.getMobileNum(),
+				updateUserDetails.getCity(), updateUserDetails.getState());
 	}
 	
 }

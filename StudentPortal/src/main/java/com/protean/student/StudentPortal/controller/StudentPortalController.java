@@ -46,7 +46,10 @@ public class StudentPortalController {
 		RegisterUserDetails regDetails = studentService.getLogonDetails(userName);
 		model.addAttribute("studentDetails", regDetails);
 		model.addAttribute("userName", userName);
+		model.addAttribute("fullName",regDetails.getFirstName() + " " + regDetails.getLastName());
 		String mailId = regDetails.getEmail();
+		long userId = regDetails.getUserId();
+		model.addAttribute("userId",userId);
 		TransactionDetails transDetails = paymentService.getByMailId(mailId);
 		if(transDetails != null) {
 			if(!transDetails.getStatus().equals("success") && transDetails.getProductinfo().equals("PremiumUser") && regDetails.getIsPremium().equals("premium")) {
@@ -57,7 +60,7 @@ public class StudentPortalController {
 			regDetails.setIsPremium("guest");
 			studentService.updateUserDetails(regDetails);
 		}
-		return "dashboard1.jsp";
+		return "index.jsp";
 	}
 	
 	@RequestMapping("/login")
