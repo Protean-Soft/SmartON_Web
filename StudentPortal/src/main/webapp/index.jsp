@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
-<html lang="en">
+ <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,12 +13,15 @@
   <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <!-- Material Design Bootstrap -->
   <link rel="stylesheet" href="css/mdb.min.css">
   <!-- Your custom styles (optional) -->
   <link rel="stylesheet" href="css/style.css">
+ 
 <style>
 .feedback {
   background-color : #31B0D5;
@@ -36,7 +40,7 @@
 </head>
 
 <body class="hidden-sn mdb-skin">
-
+<div id='PopUp'></div>
   <!--Double navigation-->
   <header>
     <!-- Sidebar navigation -->
@@ -127,7 +131,6 @@
           <a class="nav-link"><i class="far fa-comments"></i> <span class="clearfix d-none d-sm-inline-block">Support</span></a>
         </li>
         <li class="nav-item">
-       
         <%
         	Object userId = request.getAttribute("userId");
         	Object fullName = request.getAttribute("fullName");
@@ -153,11 +156,11 @@
       <li class="nav-item avatar dropdown">
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          <img src="img/cust/Photo/photo2.jpg" id="navbar_profile" class="rounded-circle z-depth-0"
+          <img src="img/cust/Photo/photo2.jpg"" class="rounded-circle z-depth-0"
             alt="avatar image">
         </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="../profile.jsp"><i class="far fa-user" id="user_account"></i> My Account</a>
+            <a class="dropdown-item" href="../profile.jsp"><i class="far fa-user"></i> My Account</a>
             <a class="dropdown-item" href="#"><i class="fas fa-key"></i> Change Password</a>
             <a class="dropdown-item" href="#"><i class="fas fa-fingerprint"></i> Log Off</a>
           </div>
@@ -183,7 +186,7 @@
       <!--Body-->
       <div class="modal-body text-center mb-1">
 
-        <h5 class="mt-1 mb-2"> ${fullName} </h5>
+        <h5 class="mt-1 mb-2">Vladimir Putin</h5>
 
         <div class="md-form ml-0 mr-0">
           <input type="text" type="text" id="form29" class="form-control form-control-sm validate ml-0">
@@ -276,7 +279,7 @@
               <a class="nav-link active font-weight-bold" data-toggle="tab" href="#panel11" role="tab">ALL</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link font-weight-bold" data-toggle="tab" href="#panel12" role="tab">TECHNICALS</a>
+              <a class="nav-link font-weight-bold" data-toggle="tab" href="#panel12" role="tab" onClick="callEventsbyType()">TECHNICALS</a>
             </li>
             <li class="nav-item">
               <a class="nav-link font-weight-bold" data-toggle="tab" href="#panel13" role="tab">LIFE STYLE CHOICES</a>
@@ -293,10 +296,14 @@
     <!--First row-->
 
 <!--Tab panels-->
+
 <div class="tab-content">
  <!--Panel 1-->
  <div class="tab-pane fade show in active" id="panel11" role="tabpanel">
   <div class="row" style="padding:1%;">
+  
+   <c:forEach var="listOfEvents" items="${listOfEvt}"  varStatus="loopCounter">
+   <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
     <div class="col-md">
 
 	<!-- Card Narrower -->
@@ -304,7 +311,7 @@
 
 	  <!-- Card image -->
 	  <div class="view view-cascade overlay">
-	    <img  class="card-img-top" src="img/cust/Card/card1.jpg" alt="Card image cap">
+	    <img id="image-${loopCounter.index}" class="card-img-top" src="data:image/jpg;base64,${listOfEvents.eventImage}" alt="Card image cap">
 	    <a>
 	      <div class="mask rgba-white-slight"></div>
 	    </a>
@@ -314,13 +321,16 @@
 	  <div class="card-body card-body-cascade text-center">
 
 	    <!-- Title -->
-	    <h4 class="card-title"><strong>Alison Belmont</strong></h4>
-	    <!-- Subtitle -->
-	    <h5 class="blue-text pb-2"><strong>Graffiti Artist</strong></h5>
-	    <!-- Text -->
-	    <p class="card-text">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam rem aperiam. </p>
+	   
+   
 
-	    <a class="btn btn-unique">Book Now</a>
+	    <h4 class="card-title"><strong><c:out value="${listOfEvents.eventName}"/></strong></h4>
+	    <!-- Subtitle -->
+	    <h5 class="blue-text pb-2"><strong><c:out value="${listOfEvents.eventOrgName}"/></strong></h5>
+	    <!-- Text -->
+	    <p class="card-text"><c:out value="${listOfEvents.eventDescription}"/></p>
+
+	    <a class="btn btn-unique" onClick="registerEvent(${listOfEvents.eventid})">Book Now</a>
 	    <!-- Linkedin -->
 	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
 	    <!-- Twitter -->
@@ -332,264 +342,45 @@
 	</div>
 	<!-- Card Narrower -->
     </div>
-    <div class="col-md">
-	<!-- Card Narrower -->
-	<div class="card card-cascade narrower" style="padding:1%;">
-
-	  <!-- Card image -->
-	  <div class="view view-cascade overlay">
-	    <img  class="card-img-top" src="img/cust/Card/card1.jpg" alt="Card image cap">
-	    <a>
-	      <div class="mask rgba-white-slight"></div>
-	    </a>
-	  </div>
-
-	  <!-- Card content -->
-	  <div class="card-body card-body-cascade text-center">
-
-	    <!-- Title -->
-	    <h4 class="card-title"><strong>Alison Belmont</strong></h4>
-	    <!-- Subtitle -->
-	    <h5 class="blue-text pb-2"><strong>Graffiti Artist</strong></h5>
-	    <!-- Text -->
-	    <p class="card-text">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam rem aperiam. </p>
-
-	    <a class="btn btn-unique">Book Now</a>
-	    <!-- Linkedin -->
-	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
-	    <!-- Twitter -->
-	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
-	    <!-- Dribbble -->
-	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
-
-	  </div>
-	</div>
-	<!-- Card Narrower -->
+    </c:forEach>
     </div>
-    <div class="col-md">
-	<!-- Card Narrower -->
-	<div class="card card-cascade narrower" style="padding:1%;">
-
-	  <!-- Card image -->
-	  <div class="view view-cascade overlay">
-	    <img  class="card-img-top" src="img/cust/Card/card1.jpg" alt="Card image cap">
-	    <a>
-	      <div class="mask rgba-white-slight"></div>
-	    </a>
-	  </div>
-
-	  <!-- Card content -->
-	  <div class="card-body card-body-cascade text-center">
-
-	    <!-- Title -->
-	    <h4 class="card-title"><strong>Alison Belmont</strong></h4>
-	    <!-- Subtitle -->
-	    <h5 class="blue-text pb-2"><strong>Graffiti Artist</strong></h5>
-	    <!-- Text -->
-	    <p class="card-text">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam rem aperiam. </p>
-
-	    <a class="btn btn-unique">Book Now</a>
-	    <!-- Linkedin -->
-	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
-	    <!-- Twitter -->
-	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
-	    <!-- Dribbble -->
-	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
-
-	  </div>
-	</div>
-	<!-- Card Narrower -->
-    </div>
-  </div>
 
   <div class="row" style="padding:1%;">
-    <div class="col-md">
-
-	<!-- Card Narrower -->
-	<div class="card card-cascade narrower" style="padding:1%;">
-
-	  <!-- Card image -->
-	  <div class="view view-cascade overlay">
-	    <img  class="card-img-top" src="img/cust/Card/card1.jpg" alt="Card image cap">
-	    <a>
-	      <div class="mask rgba-white-slight"></div>
-	    </a>
-	  </div>
-
-	  <!-- Card content -->
-	  <div class="card-body card-body-cascade text-center">
-
-	    <!-- Title -->
-	    <h4 class="card-title"><strong>Alison Belmont</strong></h4>
-	    <!-- Subtitle -->
-	    <h5 class="blue-text pb-2"><strong>Graffiti Artist</strong></h5>
-	    <!-- Text -->
-	    <p class="card-text">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam rem aperiam. </p>
-
-	    <a class="btn btn-unique">Book Now</a>
-	    <!-- Linkedin -->
-	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
-	    <!-- Twitter -->
-	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
-	    <!-- Dribbble -->
-	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
-
-	  </div>
-	</div>
-	<!-- Card Narrower -->
     </div>
-    <div class="col-md">
-	<!-- Card Narrower -->
-	<div class="card card-cascade narrower" style="padding:1%;">
-
-	  <!-- Card image -->
-	  <div class="view view-cascade overlay">
-	    <img  class="card-img-top" src="img/cust/Card/card1.jpg" alt="Card image cap">
-	    <a>
-	      <div class="mask rgba-white-slight"></div>
-	    </a>
-	  </div>
-
-	  <!-- Card content -->
-	  <div class="card-body card-body-cascade text-center">
-
-	    <!-- Title -->
-	    <h4 class="card-title"><strong>Alison Belmont</strong></h4>
-	    <!-- Subtitle -->
-	    <h5 class="blue-text pb-2"><strong>Graffiti Artist</strong></h5>
-	    <!-- Text -->
-	    <p class="card-text">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam rem aperiam. </p>
-
-	    <a class="btn btn-unique">Book Now</a>
-	    <!-- Linkedin -->
-	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
-	    <!-- Twitter -->
-	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
-	    <!-- Dribbble -->
-	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
-
-	  </div>
-	</div>
-	<!-- Card Narrower -->
-    </div>
-    <div class="col-md">
-	<!-- Card Narrower -->
-	<div class="card card-cascade narrower" style="padding:1%;">
-
-	  <!-- Card image -->
-	  <div class="view view-cascade overlay">
-	    <img  class="card-img-top" src="img/cust/Card/card1.jpg" alt="Card image cap">
-	    <a>
-	      <div class="mask rgba-white-slight"></div>
-	    </a>
-	  </div>
-
-	  <!-- Card content -->
-	  <div class="card-body card-body-cascade text-center">
-
-	    <!-- Title -->
-	    <h4 class="card-title"><strong>Alison Belmont</strong></h4>
-	    <!-- Subtitle -->
-	    <h5 class="blue-text pb-2"><strong>Graffiti Artist</strong></h5>
-	    <!-- Text -->
-	    <p class="card-text">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam rem aperiam. </p>
-
-	    <a class="btn btn-unique">Book Now</a>
-	    <!-- Linkedin -->
-	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
-	    <!-- Twitter -->
-	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
-	    <!-- Dribbble -->
-	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
-
-	  </div>
-	</div>
-	<!-- Card Narrower -->
-    </div>
-  </div>
  </div>
 
 <!--Panel 2-->
  <div class="tab-pane fade" id="panel12" role="tabpanel">
   <div class="row" style="padding:1%;">
-    <div class="col-md">
-	<!-- Card Narrower -->
-	<div class="card card-cascade narrower" style="padding:1%;">
-	  <!-- Card image -->
-	  <div class="view view-cascade overlay">
-	    <img  class="card-img-top" src="img/cust/Card/card3.jpg" alt="Card image cap">
-	    <a>
-	      <div class="mask rgba-white-slight"></div>
-	    </a>
-	  </div>
-	  <!-- Card content -->
-	  <div class="card-body card-body-cascade text-center">
-	    <!-- Title -->
-	    <h4 class="card-title"><strong>Alison Belmont</strong></h4>
-	    <!-- Subtitle -->
-	    <h5 class="blue-text pb-2"><strong>Graffiti Artist</strong></h5>
-	    <!-- Text -->
-	    <p class="card-text">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam rem aperiam. </p>
-	    <a class="btn btn-unique">Book Now</a>
-	    <!-- Linkedin -->
-	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
-	    <!-- Twitter -->
-	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
-	    <!-- Dribbble -->
-	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
-	  </div>
-	</div>
-	<!-- Card Narrower -->
-    </div>
+  <div id="products_table"></div>
+    <c:forEach var="listOfEvents1" items="${listOfEvt}"  varStatus="loopCounter">
+   <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
+   <div class="col-md">
 
-    <div class="col-md">
 	<!-- Card Narrower -->
 	<div class="card card-cascade narrower" style="padding:1%;">
-	  <!-- Card image -->
-	  <div class="view view-cascade overlay">
-	    <img  class="card-img-top" src="img/cust/Card/card3.jpg" alt="Card image cap">
-	    <a>
-	      <div class="mask rgba-white-slight"></div>
-	    </a>
-	  </div>
-	  <!-- Card content -->
-	  <div class="card-body card-body-cascade text-center">
-	    <!-- Title -->
-	    <h4 class="card-title"><strong>Alison Belmont</strong></h4>
-	    <!-- Subtitle -->
-	    <h5 class="blue-text pb-2"><strong>Graffiti Artist</strong></h5>
-	    <!-- Text -->
-	    <p class="card-text">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam rem aperiam. </p>
-	    <a class="btn btn-unique">Book Now</a>
-	    <!-- Linkedin -->
-	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
-	    <!-- Twitter -->
-	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
-	    <!-- Dribbble -->
-	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
-	  </div>
-	</div>
-	<!-- Card Narrower -->
-    </div>
 
-    <div class="col-md">
-	<!-- Card Narrower -->
-	<div class="card card-cascade narrower" style="padding:1%;">
 	  <!-- Card image -->
 	  <div class="view view-cascade overlay">
-	    <img  class="card-img-top" src="img/cust/Card/card3.jpg" alt="Card image cap">
+	    <img  class="card-img-top" src="data:image/png;base64,<c:out value='${listOfEvents1.eventImage}'/>" alt="Card image cap">
 	    <a>
 	      <div class="mask rgba-white-slight"></div>
 	    </a>
 	  </div>
+
 	  <!-- Card content -->
 	  <div class="card-body card-body-cascade text-center">
+
 	    <!-- Title -->
-	    <h4 class="card-title"><strong>Alison Belmont</strong></h4>
+	   
+    
+
+	    <h4 class="card-title"><strong><c:out value="${listOfEvents1.eventName}"/><c:out value="${loopCounter.index}"/></strong></h4>
 	    <!-- Subtitle -->
-	    <h5 class="blue-text pb-2"><strong>Graffiti Artist</strong></h5>
+	    <h5 class="blue-text pb-2"><strong><c:out value="${listOfEvents1.eventType}"/></strong></h5>
 	    <!-- Text -->
-	    <p class="card-text">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam rem aperiam. </p>
+	    <p class="card-text"><c:out value="${listOfEvents1.eventCatogery}"/></p>
+
 	    <a class="btn btn-unique">Book Now</a>
 	    <!-- Linkedin -->
 	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
@@ -597,203 +388,27 @@
 	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
 	    <!-- Dribbble -->
 	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
+
 	  </div>
 	</div>
 	<!-- Card Narrower -->
     </div>
+  
+ </c:forEach>
+    
+
+    
   </div>
+ </div>
+ 
+	<!-- Card Narrower -->
+    </div>
+
  </div>
 
 <!--Panel 3-->
- <div class="tab-pane fade" id="panel13" role="tabpanel">
-  <div class="row" style="padding:1%;">
-    <div class="col-md">
-	<!-- Card Narrower -->
-	<div class="card card-cascade narrower" style="padding:1%;">
-	  <!-- Card image -->
-	  <div class="view view-cascade overlay">
-	    <img  class="card-img-top" src="img/cust/Card/card4.jpg" alt="Card image cap">
-	    <a>
-	      <div class="mask rgba-white-slight"></div>
-	    </a>
-	  </div>
-	  <!-- Card content -->
-	  <div class="card-body card-body-cascade text-center">
-	    <!-- Title -->
-	    <h4 class="card-title"><strong>Alison Belmont</strong></h4>
-	    <!-- Subtitle -->
-	    <h5 class="blue-text pb-2"><strong>Graffiti Artist</strong></h5>
-	    <!-- Text -->
-	    <p class="card-text">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam rem aperiam. </p>
-	    <a class="btn btn-unique">Book Now</a>
-	    <!-- Linkedin -->
-	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
-	    <!-- Twitter -->
-	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
-	    <!-- Dribbble -->
-	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
-	  </div>
-	</div>
-	<!-- Card Narrower -->
-    </div>
-
-    <div class="col-md">
-	<!-- Card Narrower -->
-	<div class="card card-cascade narrower" style="padding:1%;">
-	  <!-- Card image -->
-	  <div class="view view-cascade overlay">
-	    <img  class="card-img-top" src="img/cust/Card/card4.jpg" alt="Card image cap">
-	    <a>
-	      <div class="mask rgba-white-slight"></div>
-	    </a>
-	  </div>
-	  <!-- Card content -->
-	  <div class="card-body card-body-cascade text-center">
-	    <!-- Title -->
-	    <h4 class="card-title"><strong>Alison Belmont</strong></h4>
-	    <!-- Subtitle -->
-	    <h5 class="blue-text pb-2"><strong>Graffiti Artist</strong></h5>
-	    <!-- Text -->
-	    <p class="card-text">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam rem aperiam. </p>
-	    <a class="btn btn-unique">Book Now</a>
-	    <!-- Linkedin -->
-	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
-	    <!-- Twitter -->
-	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
-	    <!-- Dribbble -->
-	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
-	  </div>
-	</div>
-	<!-- Card Narrower -->
-    </div>
-
-    <div class="col-md">
-	<!-- Card Narrower -->
-	<div class="card card-cascade narrower" style="padding:1%;">
-	  <!-- Card image -->
-	  <div class="view view-cascade overlay">
-	    <img  class="card-img-top" src="img/cust/Card/card4.jpg" alt="Card image cap">
-	    <a>
-	      <div class="mask rgba-white-slight"></div>
-	    </a>
-	  </div>
-	  <!-- Card content -->
-	  <div class="card-body card-body-cascade text-center">
-	    <!-- Title -->
-	    <h4 class="card-title"><strong>Alison Belmont</strong></h4>
-	    <!-- Subtitle -->
-	    <h5 class="blue-text pb-2"><strong>Graffiti Artist</strong></h5>
-	    <!-- Text -->
-	    <p class="card-text">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam rem aperiam. </p>
-	    <a class="btn btn-unique">Book Now</a>
-	    <!-- Linkedin -->
-	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
-	    <!-- Twitter -->
-	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
-	    <!-- Dribbble -->
-	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
-	  </div>
-	</div>
-	<!-- Card Narrower -->
-    </div>
-  </div>
+ <!--Panel 4-->
  </div>
-
-<!--Panel 4-->
- <div class="tab-pane fade" id="panel14" role="tabpanel">
-  <div class="row" style="padding:1%;">
-    <div class="col-md">
-	<!-- Card Narrower -->
-	<div class="card card-cascade narrower" style="padding:1%;">
-	  <!-- Card image -->
-	  <div class="view view-cascade overlay">
-	    <img  class="card-img-top" src="img/cust/Card/card1.jpg" alt="Card image cap">
-	    <a>
-	      <div class="mask rgba-white-slight"></div>
-	    </a>
-	  </div>
-	  <!-- Card content -->
-	  <div class="card-body card-body-cascade text-center">
-	    <!-- Title -->
-	    <h4 class="card-title"><strong>Alison Belmont</strong></h4>
-	    <!-- Subtitle -->
-	    <h5 class="blue-text pb-2"><strong>Graffiti Artist</strong></h5>
-	    <!-- Text -->
-	    <p class="card-text">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam rem aperiam. </p>
-	    <a class="btn btn-unique">Book Now</a>
-	    <!-- Linkedin -->
-	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
-	    <!-- Twitter -->
-	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
-	    <!-- Dribbble -->
-	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
-	  </div>
-	</div>
-	<!-- Card Narrower -->
-    </div>
-
-    <div class="col-md">
-	<!-- Card Narrower -->
-	<div class="card card-cascade narrower" style="padding:1%;">
-	  <!-- Card image -->
-	  <div class="view view-cascade overlay">
-	    <img  class="card-img-top" src="img/cust/Card/card1.jpg" alt="Card image cap">
-	    <a>
-	      <div class="mask rgba-white-slight"></div>
-	    </a>
-	  </div>
-	  <!-- Card content -->
-	  <div class="card-body card-body-cascade text-center">
-	    <!-- Title -->
-	    <h4 class="card-title"><strong>Alison Belmont</strong></h4>
-	    <!-- Subtitle -->
-	    <h5 class="blue-text pb-2"><strong>Graffiti Artist</strong></h5>
-	    <!-- Text -->
-	    <p class="card-text">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam rem aperiam. </p>
-	    <a class="btn btn-unique">Book Now</a>
-	    <!-- Linkedin -->
-	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
-	    <!-- Twitter -->
-	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
-	    <!-- Dribbble -->
-	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
-	  </div>
-	</div>
-	<!-- Card Narrower -->
-    </div>
-
-    <div class="col-md">
-	<!-- Card Narrower -->
-	<div class="card card-cascade narrower" style="padding:1%;">
-	  <!-- Card image -->
-	  <div class="view view-cascade overlay">
-	    <img  class="card-img-top" src="img/cust/Card/card1.jpg" alt="Card image cap">
-	    <a>
-	      <div class="mask rgba-white-slight"></div>
-	    </a>
-	  </div>
-	  <!-- Card content -->
-	  <div class="card-body card-body-cascade text-center">
-	    <!-- Title -->
-	    <h4 class="card-title"><strong>Alison Belmont</strong></h4>
-	    <!-- Subtitle -->
-	    <h5 class="blue-text pb-2"><strong>Graffiti Artist</strong></h5>
-	    <!-- Text -->
-	    <p class="card-text">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam rem aperiam. </p>
-	    <a class="btn btn-unique">Book Now</a>
-	    <!-- Linkedin -->
-	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
-	    <!-- Twitter -->
-	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
-	    <!-- Dribbble -->
-	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
-	  </div>
-	</div>
-	<!-- Card Narrower -->
-    </div>
-  </div>
- </div>
-</div>
 
 
     <div class="text-center mt-4 mb-5">
@@ -1154,7 +769,7 @@
       <div class="col-md-7 col-lg-8">
 
         <!--Copyright-->
-        <p class="text-center text-md-left">Â© 2018 Copyright:
+        <p class="text-center text-md-left">© 2018 Copyright:
           <a href="#">
             <strong> SmartAnt Technologies Private Limited</strong>
           </a>
@@ -1205,9 +820,12 @@
 <!-- Footer -->
 
 </main>
-
- <!-- jQuery -->
-  <script src="http://localhost:8080/vendor/jquery/jquery-3.2.1.min.js"></script>
+   <script type="text/javascript" src="js/eventregister.js"></script>
+   
+   
+   
+   <!-- jQuery -->
+  <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
   <!-- Bootstrap tooltips -->
   <script src="vendor/bootstrap/js/popper.js"></script>	
   <!-- Bootstrap core JavaScript -->
@@ -1215,8 +833,8 @@
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="vendor/bootstrap/js/mdb.min.js"></script>
 
-  <!-- Your custom scripts (optional) -->
-  <script type="text/javascript">
+  
+<script type="text/javascript">
  
 			$(document).ready(function() {
 				$(".button-collapse").sideNav();
@@ -1238,6 +856,11 @@
 					}
 				});	
 			});
+  </script>
+  <script type="text/javascript">
+  
+$(".button-collapse").sideNav();
+	
   </script>
 
 </body>

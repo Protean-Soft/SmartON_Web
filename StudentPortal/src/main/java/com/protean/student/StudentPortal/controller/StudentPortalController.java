@@ -1,11 +1,16 @@
 package com.protean.student.StudentPortal.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,10 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.protean.student.StudentPortal.model.EventDetails;
 import com.protean.student.StudentPortal.model.RegisterUserDetails;
 import com.protean.student.StudentPortal.model.TransactionDetails;
 import com.protean.student.StudentPortal.repository.PaymentDao;
 import com.protean.student.StudentPortal.repository.RegistrationDao;
+import com.protean.student.StudentPortal.service.EventDetailsServiceImpl;
 import com.protean.student.StudentPortal.service.MailSenderService;
 import com.protean.student.StudentPortal.service.PaymentService;
 import com.protean.student.StudentPortal.service.StudentUserDetailsService;
@@ -40,8 +47,11 @@ public class StudentPortalController {
 	@Autowired
 	PaymentService paymentService;
 	
-	@RequestMapping("/")
-	public String home(Authentication authentication,Model model){
+	@Autowired 
+	EventDetailsServiceImpl event;
+	
+	@RequestMapping(value="/",produces = MediaType.APPLICATION_JSON_VALUE)
+	public String home(Authentication authentication,Model model) throws UnsupportedEncodingException{
 		String userName = authentication.getName();
 		RegisterUserDetails regDetails = studentService.getLogonDetails(userName);
 		model.addAttribute("studentDetails", regDetails);
@@ -60,6 +70,23 @@ public class StudentPortalController {
 			regDetails.setIsPremium("guest");
 			studentService.updateUserDetails(regDetails);
 		}
+		
+		List<EventDetails> evt=event.findAllByDeletedflag();
+		Iterator ir=evt.listIterator();
+		while(ir.hasNext()) {
+			System.out.println(evt.get(1));
+			
+			EventDetails evtdet=(EventDetails) ir.next();
+			System.out.println(evtdet.getEventid()+"===="+evtdet.getEventName()+"======="+evtdet.getEventImage());
+			/*
+			 * String base64Encoded = new String(evtdet.getEventImage(), "UTF-8");
+			 * System.out.println("After conversion............"+base64Encoded);
+			 */
+			
+			
+		}
+		
+		model.addAttribute("listOfEvt",evt);
 		return "index.jsp";
 	}
 	

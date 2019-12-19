@@ -1,6 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +10,7 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
   <!-- Material Design Bootstrap -->
   <link rel="stylesheet" href="css/mdb.min.css">
   <!-- Your custom styles (optional) -->
@@ -25,7 +22,6 @@
 
   <!--Double navigation-->
   <header>
-  		<input type="hidden" id="userId" value = <% out.println(session.getAttribute("userId")); %> />  
     <!-- Sidebar navigation -->
     <div id="slide-out" class="side-nav sn-bg-4">
       <ul class="custom-scrollbar">
@@ -114,7 +110,7 @@
           <a class="nav-link"><i class="far fa-comments"></i> <span class="clearfix d-none d-sm-inline-block">Support</span></a>
         </li>
         <li class="nav-item">
-         <span class="nav-link clearfix d-none d-sm-inline-block">Welcome Mr <% out.println(session.getAttribute("fullName")); %> </span>
+         <span class="nav-link clearfix d-none d-sm-inline-block">Welcome Mr Putin </span>
         </li>
         <!--<li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -127,11 +123,11 @@
             <a class="dropdown-item" href="#">Something else here</a>
           </div>
         </li>-->
-      <li class="nav-item avatar dropdown">      	
+      <li class="nav-item avatar dropdown">
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           <img src="img/cust/Photo/photo2.jpg" class="rounded-circle z-depth-0"
-            alt="avatar image" id="navbar_profile">
+            alt="avatar image">
         </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="#"><i class="far fa-user"></i> My Account</a>
@@ -160,7 +156,7 @@
       <!--Body-->
       <div class="modal-body text-center mb-1">
 
-        <h5 class="mt-1 mb-2"><span><% out.println(session.getAttribute("fullName")); %></span></h5>
+        <h5 class="mt-1 mb-2">Vladimir Putin</h5>
 
         <div class="md-form ml-0 mr-0">
           <input type="text" type="text" id="form29" class="form-control form-control-sm validate ml-0">
@@ -223,23 +219,21 @@
     <div class="card-body px-lg-5 pt-0">
 
         <!-- Form -->
-        <form class="text-center" style="color: #757575;" action="/userDetails" id="userDetailsForm" method="post">
-			<input type="hidden" id="userId" name="userId" value = <% out.println(session.getAttribute("userId")); %>>
-			<input type="hidden" id="userName" value = <%out.println(session.getAttribute("userName")); %> />
-			
+        <form class="text-center" style="color: #757575;" action="#!">
+
             <div class="form-row">
                 <div class="col">
                     <!-- First name -->
-                    <div class="md-form">                        
+                    <div class="md-form">
+                        <input type="text" id="collegeName" class="form-control">
                         <label for="collegeName">College Name</label>
-                        <input type="text" id="collegeName" name="collegeName" class="form-control">
                     </div>
                 </div>
                 <div class="col">
                     <!-- Last name -->
                     <div class="md-form">
-                     	<label for="userName">User Name</label>
-                        <input type="text" id="userName" name="userName" class="form-control" value = <% out.println(session.getAttribute("userName")); %>>                       
+                        <input type="text" id="userName" class="form-control">
+                        <label for="userName">User Name</label>
                     </div>
                 </div>
             </div>
@@ -248,29 +242,29 @@
                 <div class="col">
                     <!-- First name -->
                     <div class="md-form">
-                    	<label for="firstName">First Name</label>
-                        <input type="text" id="firstName" name="firstName" class="form-control">                        
+                        <input type="text" id="firstName" class="form-control">
+                        <label for="firstName">First Name</label>
                     </div>
                 </div>
                 <div class="col">
                     <!-- Last name -->
                     <div class="md-form">
-                    	<label for="lastName">Last Name</label>
-                        <input type="text" id="lastName" name="lastName" class="form-control">                        
+                        <input type="text" id="lastName" class="form-control">
+                        <label for="lastName">Last Name</label>
                     </div>
                 </div>
             </div>
 
             <!-- E-mail -->
             <div class="md-form mt-0">
-            	<label for="mailID">E-mail</label>
-                <input type="email" name="email" id="mailID" class="form-control">                
+                <input type="email" id="mailID" class="form-control">
+                <label for="mailID">E-mail</label>
             </div>
 
             <!-- Phone number -->
             <div class="md-form">
-            	<label for="phoneNo">Phone Number</label>
-                <input type="text" id="phoneNo" name="phoneNo" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock">                
+                <input type="password" id="phoneNo" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock">
+                <label for="phoneNo">Phone Number</label>
                 <!--<small id="materialRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">
                     Optional - for two step authentication
                 </small>-->
@@ -280,24 +274,24 @@
                 <div class="col">
                     <!-- First name -->
                     <div class="md-form">
-                    	<label for="city">City</label>
-                        <input type="text" id="city" name="city" class="form-control">                        
+                        <input type="text" id="city" class="form-control">
+                        <label for="city">City</label>
                     </div>
                 </div>
                 <div class="col">
                     <!-- Last name -->
                     <div class="md-form">
-                    	<label for="state">State</label>
-                        <input type="text" id="state" name="state" class="form-control">                        
+                        <input type="text" id="state" class="form-control">
+                        <label for="state">State</label>
                     </div>
                 </div>
-               <!--  <div class="col">
-                    Last name
+                <div class="col">
+                    <!-- Last name -->
                     <div class="md-form">
-                    	 <label for="country">Country</label>
-                        <input type="text" id="counrty" name= "country" class="form-control">                       
+                        <input type="text" id="counrty" class="form-control">
+                        <label for="pinCode">Pin Code</label>
                     </div>
-                </div> -->
+                </div>
             </div>
 
             <!-- Newsletter -->
@@ -307,7 +301,7 @@
             </div>
 
             <!-- Sign up button -->
-            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" id="updateProfile">Update Profile</button>
+            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Update Profile</button>
 
              <hr>
 
@@ -334,19 +328,18 @@
 
 	  <!-- Avatar -->
 	  <div class="avatar mx-auto white">
-	    <img src="img/cust/Photo/photo2.jpg" class="rounded-circle" alt="woman avatar" id="show_profilePic">
+	    <img src="img/cust/Photo/photo2.jpg" class="rounded-circle" alt="woman avatar">
 	  </div>
 
 	  <!-- Content -->
 	  <div class="card-body">
 	    <!-- Name -->
-	    <h4 class="card-title"> <% out.println(session.getAttribute("fullName")); %></h4>
-		<form class="md-form" action="tag/userProfile/uploadImage" method="post"  enctype="multipart/form-data" id="profile_form">
-		  <input type="hidden" name = "id" value="${userId }">	
+	    <h4 class="card-title">Vladimir Putin</h4>
+		<form class="md-form">
 		  <div class="file-field">
 		    <a class="btn-floating purple-gradient mt-0 float-left">
 		      <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
-		      <input type="file" name = "pic" id="profile_pic">
+		      <input type="file">
 		    </a>
 		    <div class="file-path-wrapper">
 		      <input class="file-path validate" type="text" placeholder="Upload your photo">
@@ -543,21 +536,17 @@
 </main>
 
   <!-- jQuery -->
-  <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
   <!-- Bootstrap tooltips -->
-  <script src="vendor/bootstrap/js/popper.js"></script>	
+  <script type="text/javascript" src="js/popper.min.js"></script>
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <!-- MDB core JavaScript -->
-  <script type="text/javascript" src="vendor/bootstrap/js/mdb.min.js"></script>
+  <script type="text/javascript" src="js/mdb.min.js"></script>
   <!-- Your custom scripts (optional) -->
-  <script type="text/javascript" src="js/userProfile.js"></script>
   <script type="text/javascript">
-  
-			$(document).ready(function() {
-				$(".button-collapse").sideNav();
-			});
-		</script>
+	$(".button-collapse").sideNav();
+  </script>
 
 </body>
 </html>
