@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.protean.student.StudentPortal.model.ImageModel;
 import com.protean.student.StudentPortal.model.RegisterUserDetails;
 import com.protean.student.StudentPortal.repository.ImageRepository;
@@ -121,7 +123,8 @@ public class StudentUserDetailsService implements UserDetailsService {
 		return studentPic;
 	}
 
-	public RegisterUserDetails updateUserDetailsData(@Valid RegisterUserDetails updateUserDetails) {
+	public Integer updateUserDetailsData(RegisterUserDetails updateUserDetails) {
+
 		return registerDao.updateUserDetails(updateUserDetails.getUserId(), updateUserDetails.getFirstName(),
 				updateUserDetails.getLastName(), updateUserDetails.getUserName(), updateUserDetails.getMobileNum(),
 				updateUserDetails.getCity(), updateUserDetails.getState());

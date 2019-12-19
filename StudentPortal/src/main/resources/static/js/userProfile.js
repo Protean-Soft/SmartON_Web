@@ -35,19 +35,20 @@ $(document).ready(function() {
 	   * ========== UPDATE USER DETAILS ==========
 	   */
 
-		/*$("#updatProfile").on("click",function(){
-			var userDetailsForm = new FormData("#userDetailsForm")[0];
-			alert(userDetailsForm);
+		$("#userDetailsForm").on("submit",function(){
+			var userId =  $("#userId").val()
+			var userDetailsForm = $('#userDetailsForm').serialize(); 
+			userDetailsForm +"&userId=" + userId;		
 			$.ajax({
-				url : 'tag/userProfile/updateUserDetails,
-				type : 'POST',
+				url : 'tag/userProfile/updateUserDetails',
+				type : 'POST',	
 				data : userDetailsForm,
-				success : function(data) {
-					console.log("user details " + data);
-
+				success : function(data) {					
+					alert("user details " + JSON.stringify(data));
+					location.reload();
 				}
 			});
-		});*/
+		});
 		
 		/** 
 		 * ========== PROFILE PICTURE CHANGE ===========

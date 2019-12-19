@@ -223,8 +223,8 @@
     <div class="card-body px-lg-5 pt-0">
 
         <!-- Form -->
-        <form class="text-center" style="color: #757575;" action="/userDetails" id="userDetailsForm">
-			<input type="hidden" id="userid" value = <% out.println(session.getAttribute("userId")); %>>
+        <form class="text-center" style="color: #757575;" action="/userDetails" id="userDetailsForm" method="post">
+			<input type="hidden" id="userId" name="userId" value = <% out.println(session.getAttribute("userId")); %>>
 			<input type="hidden" id="userName" value = <%out.println(session.getAttribute("userName")); %> />
 			
             <div class="form-row">
@@ -232,7 +232,7 @@
                     <!-- First name -->
                     <div class="md-form">                        
                         <label for="collegeName">College Name</label>
-                        <input type="text" id="collegeName" name="colleageName" class="form-control">
+                        <input type="text" id="collegeName" name="collegeName" class="form-control">
                     </div>
                 </div>
                 <div class="col">
@@ -264,7 +264,7 @@
             <!-- E-mail -->
             <div class="md-form mt-0">
             	<label for="mailID">E-mail</label>
-                <input type="email" id="mailID" class="form-control">                
+                <input type="email" name="email" id="mailID" class="form-control">                
             </div>
 
             <!-- Phone number -->
@@ -291,13 +291,13 @@
                         <input type="text" id="state" name="state" class="form-control">                        
                     </div>
                 </div>
-                <div class="col">
-                    <!-- Last name -->
+               <!--  <div class="col">
+                    Last name
                     <div class="md-form">
                     	 <label for="country">Country</label>
                         <input type="text" id="counrty" name= "country" class="form-control">                       
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <!-- Newsletter -->
@@ -307,7 +307,7 @@
             </div>
 
             <!-- Sign up button -->
-            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" id="updatProfile">Update Profile</button>
+            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" id="updateProfile">Update Profile</button>
 
              <hr>
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,7 +49,7 @@ public class UserProfileController {
 	public RegisterUserDetails retrieveUserDetailsByName(@RequestParam("userName") String userName,
 			Model model,RegisterUserDetails userDetails) throws JsonProcessingException {
 		
-		System.out.println("username " + userName);
+		//System.out.println("username " + userName);
 			userDetails = studentService.getLogonDetails(userName);
 			//imageRepository.findByStudentId(userId);
 			//userDetails = (RegisterUserDetails) studentService.loadUserByUsername(userName);
@@ -56,7 +57,7 @@ public class UserProfileController {
 		if(userDetails != null) {
 			ObjectMapper map = new ObjectMapper();
 			model.addAttribute("userdetails",  userDetails.toString());
-			System.out.println("retrieve user details :::: " + userDetails.getEmail()  + map.writeValueAsString(userDetails));
+			//System.out.println("retrieve user details :::: " + userDetails.getEmail()  + map.writeValueAsString(userDetails));
 			return userDetails;
 		}  else {
 			System.out.println(" User details not found .... ");
@@ -68,19 +69,21 @@ public class UserProfileController {
 	 * update user details 
 	 * @param userName
 	 * @return
+	 * @throws JsonProcessingException 
 	 */
 	
 	@PostMapping(value="/updateUserDetails",produces = MediaType.APPLICATION_JSON_VALUE)
-	public RegisterUserDetails updateDetails (@RequestParam("userId") long userId,@RequestParam("collegeName") String collegeName,
+	public Integer updateDetails (@RequestParam("userId") Long userId,@RequestParam("collegeName") String collegeName,
 			@RequestParam("userName") String userName,@RequestParam("firstName") String firstName,
 			@RequestParam("lastName") String lastName,@RequestParam("email") String email,
-			@RequestParam("phoneNo") String mobileNum,@RequestParam("city") String city,@RequestParam("state") String state,
-			@RequestParam("country") String country) {
+			@RequestParam("phoneNo") String mobileNum,@RequestParam("city") String city,@RequestParam("state") String state
+			/*@RequestParam("country") String country*/,ModelAndView view) {
 		
 		RegisterUserDetails userDetails = new RegisterUserDetails(userId,firstName,lastName,userName,mobileNum,city,state);
+		int response = studentService.updateUserDetailsData(userDetails);
+		//System.out.println("REsponse : " + response);
 		
-		return studentService.updateUserDetailsData(userDetails);
-		
+		return response;
 	}
 	
 	
@@ -117,7 +120,7 @@ public class UserProfileController {
 	public ImageModel uploadMultiPartUpload(@RequestParam("pic") MultipartFile pic,
 			@RequestParam("id") Long studentId,Model model ) throws JsonProcessingException {
 		
-		System.out.println("pic " + pic);
+		//System.out.println("pic " + pic);
 		
 			if (pic != null && studentId != null) {
 				ImageModel imageModel = new ImageModel();
