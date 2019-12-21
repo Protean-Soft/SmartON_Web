@@ -82,13 +82,13 @@ public class StudentPortalController {
 		List<EventDetails> evt1=new ArrayList<EventDetails>();
 		Iterator ir=evt.listIterator();
 		while(ir.hasNext()) {
-			System.out.println(evt.get(1));
+			//System.out.println(evt.get(1));
 			
 			EventDetails evtdet=(EventDetails) ir.next();
 			System.out.println(evtdet.getEventid()+"===="+evtdet.getEventName()+"======="+evtdet.getEventImage());
 			if(evtdet.getEventImage()!=null) {
-				//String base64Image=common.Covertbase64(evtdet.getEventImage());
-			//evtdet.setBase64Image(base64Image);
+				String base64Image=common.Covertbase64(evtdet.getEventImage());
+			evtdet.setBase64Image(base64Image);
 			}
 			evt1.add(evtdet);
 			

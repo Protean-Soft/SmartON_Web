@@ -11,7 +11,9 @@ import com.protean.student.StudentPortal.model.EventRegister;
 import com.protean.student.StudentPortal.model.RegisterUserDetails;
 import com.protean.student.StudentPortal.repository.EventRegisterRepo;
 import com.protean.student.StudentPortal.repository.RegistrationDao;
+import com.protean.student.StudentPortal.service.EventDetailsService;
 import com.protean.student.StudentPortal.service.EventRegisterService;
+import com.protean.student.StudentPortal.service.MailSenderService;
 
 @Service
 public class EventRegisterServiceImpl implements EventRegisterService{
@@ -21,6 +23,14 @@ public class EventRegisterServiceImpl implements EventRegisterService{
 	
 	@Autowired
 	private RegistrationDao userdetails;
+	
+	@Autowired
+	private EventDetailsService eventdetail;
+	
+	@Autowired
+	MailSenderService mailSender;
+	
+	
 	
 	public String addEventRegistrationDetail(EventRegister eventregister) {
 		String responseMsg="";
@@ -32,12 +42,15 @@ public class EventRegisterServiceImpl implements EventRegisterService{
 		  System.out.println(userdetail);
 		  System.out.println("local................."+userdetail.getNoofevtallowed());
 		  
-		 if(userdetail!=null &&userdetail.getNoofevtallowed()>0 ) {
+		 if(userdetail!=null &&userdetail.getNoofevtallowed()>0 &&userdetail.getNoofevtallowed()!=null  ) {
 			 Long noofevnts=userdetail.getNoofevtallowed()-1;
 		 userdetails.updateNoofevent(noofevnts,userId);
 		 eventregister.setIscancelled(false);
 		 eventregister.setDeletedflag(deletedflag);
+		 
 		 eventRegister.save(eventregister);
+		EventDetails evtdet= eventdetail.getEventById(eventregister.getEventid());
+		mailSender.sendEmailRegisterevent(userdetail,evtdet);
 		 responseMsg= "Registration success";
 		 }else if(userdetail.getNoofevtallowed()==0) {
 			 responseMsg="UserExceedtheLimit";
