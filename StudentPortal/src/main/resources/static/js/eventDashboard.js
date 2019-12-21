@@ -1,24 +1,5 @@
 
-function getEventdetais(eventId,userId){
-	var eventid = $("#eventid1").val();
-	console.log("Enterd registerEvent.............."+JSON.stringify(eventId));
-	$.ajax({
-		url: './StudentPortal/Event/getEventDetail/'+eventId+"/"+userId,
-		type: 'GET',
-		success: function(data){
-			var rowObj = data;
-			console.log(rowObj.length);
-			$("#eventtitle").text(rowObj[0].eventName);
-			$("#venue").text("Venue: "+rowObj[0].eventVenue);
-			$("#category").text("Category: "+rowObj[0].eventCatogery);
-			$("#type").text("Type: "+rowObj[0].eventType);
-			$("#duration").text("Duration: "+rowObj[0].eventDuration);
-			$("#description").text(rowObj[0].event_description);
-			$("#show_eventPic").attr("src", "data:image/png;base64," + rowObj[0].eventImage);
-			}
-	
-});
-}
+
 function callEventsbyType(){
 	var samp='';
 	var final='';
@@ -50,11 +31,31 @@ function callEventsbyType(){
 }
 
 
+function registerEvent(eventId){
+	console.log("Enterd registerEvent..............");
+	/*$.ajax({
+		url: './StudentPortal/Event/getEventDetail/'+eventId,
+		type: 'GET',
+		success: function(data){
+			var rowObj = data;
+			console.log("rowObj====="+rowObj.eventid+"========="+$("#userId").val());
+			//window.open("/confirmation.jsp");
+	window.location.href="/confirmation.jsp?eventid="+eventId+"&userid="+$("#userId").val();
+	
+	$("#eventId").val(rowObj.eventid);
+		}
+	
+	
+	
+	// jQuery("#PopUp").load("confirmation.jsp");
+	});*/
+	window.location.href="/confirmation.jsp?eventid="+eventId+"&userid="+$("#userId").val();
+
+}
 
 
-
-function registerEvent(){
-	console.log("registerEventin registerevent*****************************");
+function registerEvent12(){
+	console.log("Entered in registerevent.....");
 	var formData =  $('#registerForm1').serialize();  
 	
 	console.log(formData);
@@ -65,22 +66,10 @@ function registerEvent(){
 		/*dataType: 'TEXT',
 		processData: false,
 		contentType: false,	*/ 	
-		success : function(data) {
-		alert("Limit exceed...."+data);
-		
-		if(reponse!="UserExceedtheLimit"){
-			$("#modalPushSuccess").show();
-			
-		}else{
-			$("#modalPushSuccess").hide();
-			$("#modalPushFaliure").show();
-			
-		}
-		
+		success : function(response) {				
 			//$("#show_profilePic").attr("src", "data:image/png;base64," + response.pic);
 		},
 		error : function() {
-			alert("Limit exceed*******************");
 		}
 	});
 	

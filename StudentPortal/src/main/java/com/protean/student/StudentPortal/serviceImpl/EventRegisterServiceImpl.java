@@ -24,28 +24,42 @@ public class EventRegisterServiceImpl implements EventRegisterService{
 	
 	public String addEventRegistrationDetail(EventRegister eventregister) {
 		String responseMsg="";
+		Long deletedflag=(long) 0;
 		try {
 		Long userId=eventregister.getUserid();
 		
 		  RegisterUserDetails userdetail=userdetails.findByUserId(userId);
+		  System.out.println(userdetail);
 		  System.out.println("local................."+userdetail.getNoofevtallowed());
 		  
 		 if(userdetail!=null &&userdetail.getNoofevtallowed()>0 ) {
 			 Long noofevnts=userdetail.getNoofevtallowed()-1;
 		 userdetails.updateNoofevent(noofevnts,userId);
+		 eventregister.setIscancelled(false);
+		 eventregister.setDeletedflag(deletedflag);
 		 eventRegister.save(eventregister);
 		 responseMsg= "Registration success";
 		 }else if(userdetail.getNoofevtallowed()==0) {
-			 responseMsg="User Exceed the Limit";
+			 responseMsg="UserExceedtheLimit";
 		 }
 		}catch (Exception e) {
 			System.out.println("Exception in addEventRegistrationDetail::"+e);
 			responseMsg="Error";
 			e.printStackTrace();
 		}
+		System.out.println("responseMsg............"+responseMsg);
 		return responseMsg;
 		 
 		 
+	}
+	
+	
+	@Override
+	public Long getnoofregistration(Long id) {
+		System.out.println("========="+id);
+		 
+		return eventRegister.countByuserid(id);
+		
 	}
 
 	@Override
