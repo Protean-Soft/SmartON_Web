@@ -71,3 +71,4 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	            .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**","/images/**","/fonts/**","/vendor/**","/demo/**","/img/**","/scss/**","/checkValidData","/registerUser","/forgotPassword","/securePay","/paymentSuccess","/reset**","/resetsubmit**","/verifyUserPayment","/StudentPortal/Event/**");
 	
 }
+}
