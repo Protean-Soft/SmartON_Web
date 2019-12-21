@@ -3,6 +3,23 @@
     "use strict";
 	
 	$(document).ready(function(){
+	  var cur_loc = $(location).attr('href');
+	  if(cur_loc.indexOf('paymentSuccess') != -1){
+		  customAlert('success','Payment completed! You have registered successfully.');
+		  cur_loc.replace('paymentSuccess','login');
+		  //window.location = cur_loc;
+	  }
+	  if($('#login_error').val() != ""){
+		  $.alert({
+			    title: 'Login Error!',
+			    content: 'UserName / Password is invalid',
+			    type: 'red'
+			});
+	  }
+	  $("#loginButton").click(function(event){
+		    event.preventDefault();
+		    verifyUserPayment();
+		});
       var date_input=$('.date'); 
       var options={
         format: 'mm/dd/yyyy',
@@ -37,9 +54,28 @@
 		if(type == 'success'){
 			$('.alertDiv').html('<div class="alert alert-success" style="text-align:center;"><strong>Success</strong> Data Saved Successfully.</div>');
 		}
+		if(type == 'paymentSuccess'){
+			$('.alertDiv').html('<div class="alert alert-success" style="text-align:center;"><strong>Success</strong> Payment Succesful. </div>');
+		}
 		$('.alertDiv').slideDown();
 		$('.alertDiv').delay(2000).slideUp( "slow", function() {
 		});
+	}
+	
+	function customAlert(type,text){
+		if(type == 'success'){
+			$.alert({
+			    title: 'Success!',
+			    content: text,
+			    type: 'green'
+			});
+		}else if(type == 'fail'){
+			$.alert({
+			    title: 'Fail!',
+			    content: text,
+			    type: 'red'
+			});
+		}
 	}
 
      /*==================================================================
@@ -52,7 +88,7 @@
             else {
                 $(this).removeClass('has-val');
             }
-        }) 
+        })    
     })
   
   
@@ -119,6 +155,7 @@
     }
     
     function validateRegForm(tagme){
+    	$('#preloader').show();
     	var userName = $('#userName').val();
     	var email = $('#email').val();
     	$.ajax({
@@ -129,25 +166,33 @@
     		success: function(data){
     			if(data.userName == 'valid' && data.email == 'valid'){
     				var formData = new FormData($('#registerForm')[0]);
-    				$.ajax({
-    		    		url: './registerUser',
-    		    		type: 'POST',
-    		    		data: formData,
-    		    		dataType: 'TEXT',
-    		    		processData: false,
-    		    		contentType: false,
-    		    		success: function(data){
-    		    			$('#preloader').hide();
-    		    			if($('input[name=isPremium]:checked').val() == 'premium'){
-    		    				paymentIntegration();
-    		    			}else{
-    		    				$('.close').click();
-        		    	    	showAlert('success');
-    		    			}
-    		    		}
-    		    	});
+    				if($('input[name=isPremium]:checked').val() == 'premium'){
+	    				$.confirm({
+	    				    title: 'Payment Confirmation!',
+	    				    content: 'You are about to register as a Premium User, Press confirm to proceed to the payment of Rs.10000',
+	    				    type: 'orange',
+	    				    buttons: {
+	    				        confirm: {
+	    				        	btnClass: 'btn-green',
+	    				        	action: function () {
+		    				        	registerUserData(formData,'premium');
+		    				        }
+	    				        },
+	    				        cancel: {
+	    				        	btnClass: 'btn-red',
+	    				        	action: function () {
+		    				        	$('#preloader').hide();
+		    				        	$('#guest').prop('checked',true);
+		    				        }
+	    				        }
+	    				    }
+	    				});
+    				}else{
+    					registerUserData(formData,'guest');
+    				}
     				
     			}else{
+    				$('#preloader').hide();
     				if(data.userName == 'invalid'){
     					$('#userName').parent().attr('data-validate','Username is already taken');
     					showValidate($('#userName'));
@@ -162,6 +207,27 @@
     	
     	
     }
+    
+    function registerUserData(formData,role){
+    	$.ajax({
+    		url: './registerUser',
+    		type: 'POST',
+    		data: formData,
+    		dataType: 'TEXT',
+    		processData: false,
+    		contentType: false,
+    		success: function(data){
+    			$('#preloader').hide();
+    			if(role == 'premium'){
+    				paymentIntegration();
+    			}else{
+    				$('.clearForm').click();
+    				customAlert('success','You have tagged yourself successfully.');
+    			}
+    		}
+    	});
+    }
+    
     function sendmail(){
     	$.ajax({
     		url: './sendMail',
@@ -177,8 +243,8 @@
     		}
     	});
     }
+    
     $('#registerBtn').click(function(){
-    	$('#preloader').show();
     	$('#registerForm').find('input[type=text],input[type=password],select').each(function(){
     		hideValidate($(this));
     	});
@@ -202,15 +268,13 @@
             showValidate(input[i]);
             return false;
         }else{
-        	var email = $('#forgotEmail').val();        	
-        	
+        	var email = $('#forgotEmail').val();
         	$.ajax({
         		url: './forgotPassword',
 	    		type: 'POST',
 	    		data: 'forgotEmail='+email,
 	    		dataType: 'JSON',
 	    		success: function(data){
-	    			
 	    		}
         	});
         }
@@ -250,7 +314,6 @@ function clearFormData(selector){
 
 function paymentIntegration(){
 	var data = 'key=rMKXzU&hash_string=&hash=&txnid=&amount=10000&firstname='+$('#firstName').val()+'&email='+$('#email').val()+'&phone='+$('#mobileNum').val()+'&productinfo=PremiumUser'+'&surl=http://localhost:8080/paymentSuccess&furl=http://localhost:8080/login&service_provider=payu_paisa';
-	//alert(data)
 	$.ajax({
 		url: './securePay',
 		type: 'POST',
@@ -258,6 +321,60 @@ function paymentIntegration(){
 		dataType: 'TEXT',
 		success: function(data){
 			$('#payFormDiv').html(data);
+		}
+	});
+}
+
+function verifyUserPayment(){
+	var userName = $('#loginUserName').val();
+	var password = $('#loginPassword').val();
+	$.ajax({
+		url: './verifyUserPayment',
+		type: 'POST',
+		data: 'userName='+userName+'&passWord='+password,
+		dataType: 'JSON',
+		success: function(data){
+			if(data.validation == 'login-error'){
+				$.alert({
+				    title: 'Login Error!',
+				    content: 'UserName / Password is invalid',
+				    type: 'red'
+				});
+			}else if(data.acknwlge == 'acknowledged'){
+				$("#logonForm").submit();
+			}else{
+				$.confirm({
+					columnClass: 'col-md-6 col-md-offset-3',
+				    title: 'Membership Confirmation!',
+				    content: 'You have regstered yourself as Premium User, but the premium amount Rs.10000 has not been paid yet',
+				    type: 'orange',
+				    buttons: {
+				        confirm: {
+				        	text: 'Proceed to pay',
+				        	btnClass: 'btn-green',
+				        	action: function () {
+    				        	var formdata = 'key=rMKXzU&hash_string=&hash=&txnid=&amount=10000&firstname='+data.firstName+'&email='+data.email+'&phone='+data.mobile+'&productinfo=PremiumUser'+'&surl=http://localhost:8080/paymentSuccess&furl=http://localhost:8080/login&service_provider=payu_paisa';
+    				        	$.ajax({
+    				        		url: './securePay',
+    				        		type: 'POST',
+    				        		data: formdata,
+    				        		dataType: 'TEXT',
+    				        		success: function(page){
+    				        			$('#payFormDiv').html(page);
+    				        		}
+    				        	});
+    				        }
+				        },
+				        cancel: {
+				        	text: 'Continue as guest',
+				        	btnClass: 'btn-orange',
+				        	action: function () {
+				        		$("#logonForm").submit();
+    				        }
+				        }
+				    }
+				});
+			}
 		}
 	});
 }
