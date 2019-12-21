@@ -30,9 +30,23 @@ public class RegisterUserDetails {
 	private String profileID;
 	private String refcode;
 	private Long rewpoints;
+	private Long noofevtallowed;
+
+	public RegisterUserDetails() {
+		super();
+	}
 	
-
-
+	public RegisterUserDetails(Long userId, String firstName, String lastName, String userName, String mobileNum,
+			String city, String state) {
+		super();
+		this.userId = userId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userName = userName;
+		this.mobileNum = mobileNum;
+		this.city = city;
+		this.state = state;
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="userid",unique = true)
@@ -146,5 +160,12 @@ public class RegisterUserDetails {
 	}
 	public void setRewpoints(Long rewpoints) {
 		this.rewpoints = rewpoints;
+	}
+	@Column(name="noofevtallowed")
+	public Long getNoofevtallowed() {
+		return noofevtallowed;
+	}
+	public void setNoofevtallowed(Long noofevtallowed) {
+		this.noofevtallowed = noofevtallowed;
 	}
 }
