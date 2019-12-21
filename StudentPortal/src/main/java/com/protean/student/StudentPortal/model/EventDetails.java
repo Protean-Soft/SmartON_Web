@@ -17,9 +17,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Table(name="event_details")
 public class EventDetails {
 	
+    private String base64Image;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "eventid",unique = true)
+	@Column(name = "eventid")
 	private Long eventid;
 	
 	@Column(name="event_duration")
@@ -234,6 +236,14 @@ public class EventDetails {
 
 	public void setEventImage(byte[] eventImage) {
 		this.eventImage = eventImage;
+	}
+
+	public String getBase64Image() {
+		return base64Image;
+	}
+
+	public void setBase64Image(String base64Image) {
+		this.base64Image = base64Image;
 	}
 
 	

@@ -3,6 +3,7 @@ package com.protean.student.StudentPortal.util;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 
 import org.springframework.stereotype.Component;
@@ -32,6 +33,14 @@ public class commonUtils {
 			e.printStackTrace();
 		}  
 		return Changeddate;
+		
+	}
+	
+	public String Covertbase64(byte[] byteval) {
+		
+		String base64Image = Base64.getEncoder().encodeToString(byteval);
+		System.out.println("base64Image============"+base64Image);
+		return base64Image;
 		
 	}
 
