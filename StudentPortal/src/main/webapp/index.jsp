@@ -311,7 +311,7 @@
 
 	  <!-- Card image -->
 	  <div class="view view-cascade overlay">
-	    <img id="image-${loopCounter.index}" class="card-img-top" src="data:image/jpg;base64,${listOfEvents.base64Image}" alt="Card image cap">
+	    <img id="image-${loopCounter.index}" class="card-img-top" src="data:image/jpg;base64,${listOfEvents.eventImage}" alt="Card image cap">
 	    <a>
 	      <div class="mask rgba-white-slight"></div>
 	    </a>
