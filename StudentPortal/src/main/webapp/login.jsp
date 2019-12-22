@@ -25,6 +25,7 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery-confirm.css">
 <!--===============================================================================================-->
 </head>
 <body>
@@ -35,25 +36,26 @@
 		</div>
 		<div style="width:100%;display:none;" class="alertDiv"></div>
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-				<c:if test="${not empty errorMessage}">
+				<%-- <c:if test="${not empty errorMessage}">
 					  <div style="width:100%;text-align:center" class="alert alert-danger alert-dismissible fade show">
 						    <span>Username / Password is Invalid.</span>
 						</div>
-				</c:if>
-				<form class="login100-form validate-form" action="login" method="POST">
+				</c:if> --%>
+				<input type="hidden" id="login_error" value="${errorMessage}">
+				<form class="login100-form validate-form" id="logonForm" action="login" method="POST">
 					<span class="login100-form-title p-b-49">
 						<img src="images/PROTEANSOFT_SHORTLOGO.jpg" alt="Product Logo" style="max-height:40px;max-width:40px;">&nbsp;&nbsp;Tag #
 					</span>
 
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is required">
 						<span class="label-input100">Username</span>
-						<input class="input100" type="text" name="username" placeholder="Username">
+						<input class="input100" id="loginUserName" type="text" name="username" placeholder="Username">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Password is required">
 						<span class="label-input100">Password</span>
-						<input class="input100" type="password" name="password" placeholder="Password">
+						<input class="input100" id="loginPassword" type="password" name="password" placeholder="Password">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
 					
@@ -66,7 +68,7 @@
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
-							<button class="login100-form-btn">
+							<button id="loginButton" class="login100-form-btn">
 								Login
 							</button>
 						</div>
@@ -314,6 +316,7 @@
 	
 	<!--===============================================================================================-->
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="vendor/jquery/jquery-confirm.js"></script>
 <!--===============================================================================================-->
 	<script src="vendor/animsition/js/animsition.min.js"></script>
 <!--===============================================================================================-->

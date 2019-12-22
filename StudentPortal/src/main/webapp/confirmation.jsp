@@ -22,9 +22,14 @@
   <link rel="stylesheet" href="css/style.css">
 
 </head>
-
-<body class="hidden-sn mdb-skin">
-
+   <%
+        	String eventid =(String)request.getParameter("eventid");
+            String userid =(String)request.getParameter("userid");
+        
+        	
+        %> 
+       <body class="hidden-sn mdb-skin">
+ 
   <!--Double navigation-->
   <header>
     <!-- Sidebar navigation -->
@@ -208,7 +213,7 @@
 
       <!-- Featured image -->
       <div class="view overlay">
-        <img src="https://mdbootstrap.com/img/Photos/Others/laptop-sm.jpg" class="img-fluid" alt="Sample image for first version of blog listing">
+        <img id="show_eventPic"  class="img-fluid" alt="Sample image for first version of blog listing">
         <a>
           <div class="mask rgba-white-slight"></div>
         </a>
@@ -220,8 +225,8 @@
     <!-- Grid column -->
     <div class="col-md-7 text-md-left ml-3 mt-3">
 
-        <h2 class="h2-responsive text-center text-md-left product-name font-weight-bold dark-grey-text mb-1 ml-xl-0 ml-4">Web Designing - Angular</h2>
-        <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">Attendes: 324</span>
+        <h2 class="h2-responsive text-center text-md-left product-name font-weight-bold dark-grey-text mb-1 ml-xl-0 ml-4" id="eventtitle"></h2>
+        <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">Attendes: <span id="attendes" ></span></span>
 	<span id="rateMe1"></span>
 	
         <!--<span class="badge badge-success product mb-4 ml-2">SALE</span>-->
@@ -236,14 +241,12 @@
             </small>
           </span>
         </h3>-->
-	<p class="font-weight-normal"><i class="fas fa-map-marker-alt pr-2"></i></i>Venue: Sipcot, Chennai</p>
-	<p class="font-weight-normal"><i class="fas fa-certificate pr-2"></i>Category: Web Designing</p>
-	<p class="font-weight-normal"><i class="fas fa-book-reader pr-2"></i>Type: Angular</p>
-	<p class="font-weight-normal"><i class="far fa-clock pr-2"></i>Duration: 15 Hours</p>
+	<p class="font-weight-normal"><i class="fas fa-map-marker-alt pr-2" > </i> <span id="venue" ></span></p>
+	<p class="font-weight-normal"><i class="fas fa-certificate pr-2"></i><span id="category"></span></p>
+	<p class="font-weight-normal"><i class="fas fa-book-reader pr-2"></i><span id="type"></span></p>
+	<p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span id="duration"></span></p>
 
-      <p class="font-weight-normal">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque, totam
-        rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
-        dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur.</p>
+      <p class="font-weight-normal"><span id="description"></span></p>
 
       <a class="btn btn-success" data-toggle="modal" data-target="#modalPush">Book Now</a>
 
@@ -275,15 +278,20 @@
 
         <i class="fas fa-bell fa-4x animated rotateIn mb-4"></i>
 
-        <p>Once You Booked a Seat for this Event, You can’t be cancelled and Your No.of Events will less by 1 in current renewal</p>
+        <p>Once You Booked a Seat for this Event, You can't be cancelled and Your No.of Events will less by 1 in current renewal</p>
 	<p> Do you wat to continue ?</p>
 
       </div>
 
       <!--Footer-->
       <div class="modal-footer flex-center">
-        <a data-toggle="modal" data-target="#modalPushSuccess" class="btn btn-info">Yes</a>
+      <form  class="md-form"   id="registerForm1">
+       <input type="hidden" id="eventid" name="eventId" value = '<%=eventid%>' /> 
+     <input type="hidden" id="userid" name="userId"  value = '<%=userid%>' /> 
+       
+        <a data-toggle="modal" onclick="registerEvent()" class="btn btn-info" id="conformationbtn">Yes</a>
         <a type="button" class="btn btn-outline-info waves-effect" data-dismiss="modal">No</a>
+        </form>
       </div>
     </div>
     <!--/.Content-->
@@ -309,7 +317,7 @@
 	<i class="fas fa-check fa-4x animated rotateIn mb-4"></i>
 
         <p> Thank you for booking. Instructions to join next Event </p>
-	<p> You have booked # of Event(s), Still you can book # of Event(s) for this renewal.</p>
+	<p> You have booked <span id="noofeventattend"></span>of Event(s), Still you can book <span id="noofeventyettoattend"></span> of Event(s) for this renewal.</p>
 
       </div>
 
@@ -321,6 +329,35 @@
     <!--/.Content-->
   </div>
 </div>
+
+<div class="modal fade" id="modalPushFaliure" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-info" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <p class="heading">Faliure</p>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+
+	<i class="fas fa-check fa-4x animated rotateIn mb-4"></i>
+
+        <p> Thanks for Interest. </p>
+	
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer flex-center">
+        <a href="confirmation.html" class="btn btn-info">Done</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+
 <!--Modal: modalPush-->
 
 
@@ -476,6 +513,9 @@
   <script type="text/javascript">
 	$(".button-collapse").sideNav();
         $(document).ready(function() {
+        	 var eventid1 = '<%=eventid%>';
+        	 var userid1 = '<%=userid%>';
+        	 getEventdetais(eventid1,userid1);
   	   $('#rateMe1').mdbRate();
 	});
   </script>

@@ -1,6 +1,8 @@
 package com.protean.student.StudentPortal.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,11 +19,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.protean.student.StudentPortal.model.EventDetails;
+import com.protean.student.StudentPortal.model.EventRegister;
 import com.protean.student.StudentPortal.model.RegisterUserDetails;
 import com.protean.student.StudentPortal.model.TransactionDetails;
 import com.protean.student.StudentPortal.repository.PaymentDao;
@@ -30,6 +34,8 @@ import com.protean.student.StudentPortal.service.EventDetailsServiceImpl;
 import com.protean.student.StudentPortal.service.MailSenderService;
 import com.protean.student.StudentPortal.service.PaymentService;
 import com.protean.student.StudentPortal.service.StudentUserDetailsService;
+import com.protean.student.StudentPortal.serviceImpl.EventRegisterServiceImpl;
+import com.protean.student.StudentPortal.util.commonUtils;
 
 @Controller
 public class StudentPortalController {
@@ -49,6 +55,14 @@ public class StudentPortalController {
 	
 	@Autowired 
 	EventDetailsServiceImpl event;
+	
+	
+	@Autowired 
+	EventRegisterServiceImpl evtreg;
+	 
+	
+	@Autowired
+	commonUtils common;
 	
 	@RequestMapping(value="/",produces = MediaType.APPLICATION_JSON_VALUE)
 	public String home(Authentication authentication,Model model) throws UnsupportedEncodingException{
@@ -72,21 +86,23 @@ public class StudentPortalController {
 		}
 		
 		List<EventDetails> evt=event.findAllByDeletedflag();
+		 List<Long> evtbyUser=evtreg.getEventRegisterEventByuserId(userId); 
+	    System.out.println("evtbyUser........."+evtbyUser);
+		List<EventDetails> evt1=new ArrayList<EventDetails>();
 		Iterator ir=evt.listIterator();
 		while(ir.hasNext()) {
-			System.out.println(evt.get(1));
-			
 			EventDetails evtdet=(EventDetails) ir.next();
 			System.out.println(evtdet.getEventid()+"===="+evtdet.getEventName()+"======="+evtdet.getEventImage());
-			/*
-			 * String base64Encoded = new String(evtdet.getEventImage(), "UTF-8");
-			 * System.out.println("After conversion............"+base64Encoded);
-			 */
+			if(evtdet.getEventImage()!=null) {
+				String base64Image=common.Covertbase64(evtdet.getEventImage());
+			evtdet.setBase64Image(base64Image);
+			}
+			evt1.add(evtdet);
 			
-			
+					
 		}
-		
-		model.addAttribute("listOfEvt",evt);
+		model.addAttribute("attenevts", evtbyUser);
+		model.addAttribute("listOfEvt",evt1);
 		return "index.jsp";
 	}
 	
@@ -104,6 +120,19 @@ public class StudentPortalController {
 	 * @RequestMapping("/register") public String register(){
 	 * System.out.println("register"); return "register.html"; }
 	 */
+	
+
+	/* List event details based on event id */
+	@RequestMapping(value="/getEventDetail/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+	//@GetMapping(value = "/getEventDetail/{id}")
+	public String getEventById(@PathVariable Long id,Model model) {
+		System.out.println("Enterd into eventdetail");
+		EventDetails evt=event.getEventById(id);
+		model.addAttribute(evt);
+		System.out.println("Response...."+evt);		
+		return "confirmation.jsp";
+				
+	}
 	
 	@RequestMapping("/registerUser")
 	@ResponseBody

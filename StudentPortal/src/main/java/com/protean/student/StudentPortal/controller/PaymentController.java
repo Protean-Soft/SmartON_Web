@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,16 +50,7 @@ public class PaymentController {
 		
 		String htmlResponse = "";
 		Map<String, String> values = integrationKit.hashCalMethod(paymentDetails);
-		/*
-		 * JSONObject jsObj = new JSONObject(values); jsObj.put("amount",
-		 * paymentDetails.getAmount()); jsObj.put("firstname",
-		 * paymentDetails.getFirstname()); jsObj.put("email",
-		 * paymentDetails.getEmail()); jsObj.put("phone", paymentDetails.getPhone());
-		 * jsObj.put("productinfo", paymentDetails.getProductinfo()); jsObj.put("surl",
-		 * paymentDetails.getSurl()); jsObj.put("furl", paymentDetails.getFurl());
-		 */
-        //PrintWriter writer = response.getWriter();
-// build HTML code
+		// build HTML code
 		session.setAttribute("transactionId", values.get("txnid"));
         htmlResponse = "<div>"
                 + "        <form id=\"payuform\" action=\"" + values.get("action") + "\"  name=\"payuform\" method=POST >\n"
@@ -158,6 +151,7 @@ public class PaymentController {
 		try {
 			String txnId = session.getAttribute("transactionId").toString();
 			String link = "https://www.payumoney.com/payment/op/getPaymentResponse?merchantKey=rMKXzU&merchantTransactionIds="+txnId;
+			//String link = "https://www.payumoney.com/sandbox/payment/op/getPaymentResponse?merchantKey=rMKXzU&merchantTransactionIds="+txnId;
 			URL url = new URL(link);
 	        HttpURLConnection postConnection = (HttpURLConnection) url.openConnection();
 		    postConnection.setRequestMethod("POST");
@@ -209,6 +203,7 @@ public class PaymentController {
 		try {
 			String txnId = session.getAttribute("transactionId").toString();
 			String link = "https://www.payumoney.com/payment/op/getPaymentResponse?merchantKey=rMKXzU&merchantTransactionIds="+txnId;
+			//String link = "https://www.payumoney.com/sandbox/payment/op/getPaymentResponse?merchantKey=rMKXzU&merchantTransactionIds="+txnId;
 			URL url = new URL(link);
 	        HttpURLConnection postConnection = (HttpURLConnection) url.openConnection();
 		    postConnection.setRequestMethod("POST");
@@ -247,6 +242,42 @@ public class PaymentController {
 			session.removeAttribute("transactionId");
 		}
 		return "login.jsp";
+	}
+	
+	@RequestMapping("/verifyUserPayment")
+	@ResponseBody
+	public String verifyPayment(String userName, String passWord) {
+		String verify = "acknowledged";
+		String returnObj = "";
+		RegisterUserDetails regDetails = studentService.getLogonDetails(userName);
+		JSONObject obj = new JSONObject();
+		if(regDetails != null) {
+			if(BCrypt.checkpw(passWord, regDetails.getPassword())) {
+				obj.put("firstName", regDetails.getFirstName());
+				obj.put("email", regDetails.getEmail());
+				obj.put("mobile", regDetails.getMobileNum());
+				if(regDetails != null) {
+					TransactionDetails transDetails = paymentService.getByMailId(regDetails.getEmail());
+					if(transDetails != null) {
+						if(!transDetails.getStatus().equals("success") && transDetails.getProductinfo().equals("PremiumUser") && regDetails.getIsPremium().equals("premium")) {
+							verify = "negative";
+						}
+					}else if(regDetails.getIsPremium().equals("premium")) {
+						verify = "negative";
+					}
+				}
+				obj.put("acknwlge", verify);
+				returnObj = obj.toString();
+			}else {
+				obj.put("validation", "login-error");
+				returnObj = obj.toString();
+			}
+		}else {
+			obj.put("validation", "login-error");
+			returnObj = obj.toString();
+		}
+		
+		return returnObj;
 	}
 
 }

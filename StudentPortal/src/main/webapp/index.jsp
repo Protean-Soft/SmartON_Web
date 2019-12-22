@@ -279,7 +279,7 @@
               <a class="nav-link active font-weight-bold" data-toggle="tab" href="#panel11" role="tab">ALL</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link font-weight-bold" data-toggle="tab" href="#panel12" role="tab" onClick="callEventsbyType()">TECHNICALS</a>
+              <a class="nav-link font-weight-bold" data-toggle="tab" href="#panel12" role="tab" >TECHNICALS</a>
             </li>
             <li class="nav-item">
               <a class="nav-link font-weight-bold" data-toggle="tab" href="#panel13" role="tab">LIFE STYLE CHOICES</a>
@@ -303,7 +303,7 @@
   <div class="row" style="padding:1%;">
   
    <c:forEach var="listOfEvents" items="${listOfEvt}"  varStatus="loopCounter">
-   <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
+     <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
     <div class="col-md">
 
 	<!-- Card Narrower -->
@@ -311,7 +311,7 @@
 
 	  <!-- Card image -->
 	  <div class="view view-cascade overlay">
-	    <img id="image-${loopCounter.index}" class="card-img-top" src="data:image/jpg;base64,${listOfEvents.eventImage}" alt="Card image cap">
+	    <img id="image-${loopCounter.index}" class="card-img-top" src="data:image/jpg;base64,${listOfEvents.base64Image}" alt="Card image cap">
 	    <a>
 	      <div class="mask rgba-white-slight"></div>
 	    </a>
@@ -329,8 +329,18 @@
 	    <h5 class="blue-text pb-2"><strong><c:out value="${listOfEvents.eventOrgName}"/></strong></h5>
 	    <!-- Text -->
 	    <p class="card-text"><c:out value="${listOfEvents.eventDescription}"/></p>
+	  
 
-	    <a class="btn btn-unique" onClick="registerEvent(${listOfEvents.eventid})">Book Now</a>
+<%-- <c:if test="${fn:contains(attenevts,listOfEvents.eventid)}"> --%>
+    <c:choose>
+    <c:when test="${fn:contains(attenevts,listOfEvents.eventid)==true}">
+	    <button class="btn btn-unique" disabled onClick="registerEvent(${listOfEvents.eventid})">Book Now</button>
+	    </c:when>    
+    <c:otherwise>
+     <a class="btn btn-unique" onClick="registerEvent(${listOfEvents.eventid})">Book Now</a>
+ </c:otherwise>
+ </c:choose>
+	 <%--    </c:if> --%>
 	    <!-- Linkedin -->
 	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
 	    <!-- Twitter -->
@@ -342,6 +352,7 @@
 	</div>
 	<!-- Card Narrower -->
     </div>
+  
     </c:forEach>
     </div>
 
@@ -350,10 +361,16 @@
  </div>
 
 <!--Panel 2-->
+
  <div class="tab-pane fade" id="panel12" role="tabpanel">
-  <div class="row" style="padding:1%;">
-  <div id="products_table"></div>
+  <span id="products_table"></span>
+  
+ 
+    
+    <div class="row" style="padding:1%;">
+    
     <c:forEach var="listOfEvents1" items="${listOfEvt}"  varStatus="loopCounter">
+    <c:if test="${listOfEvents1.eventCatogery=='Workshop'}">
    <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
    <div class="col-md">
 
@@ -362,7 +379,7 @@
 
 	  <!-- Card image -->
 	  <div class="view view-cascade overlay">
-	    <img  class="card-img-top" src="data:image/png;base64,<c:out value='${listOfEvents1.eventImage}'/>" alt="Card image cap">
+	    <img  class="card-img-top" src="data:image/png;base64,<c:out value='${listOfEvents1.base64Image}'/>" alt="Card image cap">
 	    <a>
 	      <div class="mask rgba-white-slight"></div>
 	    </a>
@@ -393,21 +410,135 @@
 	</div>
 	<!-- Card Narrower -->
     </div>
-  
- </c:forEach>
-    
+  </c:if>
+ </c:forEach> 
+      </div>
+
+  <div class="row" style="padding:1%;">
+    </div>
 
     
-  </div>
+  
  </div>
  
 	<!-- Card Narrower -->
-    </div>
-
- </div>
+  
 
 <!--Panel 3-->
+<div class="tab-pane fade" id="panel13" role="tabpanel">
+  <span id="products_table"></span>
+  
+ 
+    
+    <div class="row" style="padding:1%;">
+    
+    <c:forEach var="listOfEvents1" items="${listOfEvt}"  varStatus="loopCounter">
+    <c:if test="${listOfEvents1.eventCatogery=='LIFE STYLE CHOICES'}">
+   <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
+   <div class="col-md">
+
+	<!-- Card Narrower -->
+	<div class="card card-cascade narrower" style="padding:1%;">
+
+	  <!-- Card image -->
+	  <div class="view view-cascade overlay">
+	    <img  class="card-img-top" src="data:image/png;base64,<c:out value='${listOfEvents1.base64Image}'/>" alt="Card image cap">
+	    <a>
+	      <div class="mask rgba-white-slight"></div>
+	    </a>
+	  </div>
+
+	  <!-- Card content -->
+	  <div class="card-body card-body-cascade text-center">
+
+	    <!-- Title -->
+	   
+    
+
+	    <h4 class="card-title"><strong><c:out value="${listOfEvents1.eventName}"/><c:out value="${loopCounter.index}"/></strong></h4>
+	    <!-- Subtitle -->
+	    <h5 class="blue-text pb-2"><strong><c:out value="${listOfEvents1.eventType}"/></strong></h5>
+	    <!-- Text -->
+	    <p class="card-text"><c:out value="${listOfEvents1.eventCatogery}"/></p>
+
+	    <a class="btn btn-unique">Book Now</a>
+	    <!-- Linkedin -->
+	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
+	    <!-- Twitter -->
+	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
+	    <!-- Dribbble -->
+	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
+
+	  </div>
+	</div>
+	<!-- Card Narrower -->
+    </div>
+  </c:if>
+ </c:forEach> </div>
+    
+<div class="row" style="padding:1%;">
+    </div>
+    
+  
+ </div>
  <!--Panel 4-->
+ <div class="tab-pane fade" id="panel14" role="tabpanel">
+  <span id="products_table"></span>
+  
+ 
+    
+    <div class="row" style="padding:1%;">
+    
+    <c:forEach var="listOfEvents1" items="${listOfEvt}"  varStatus="loopCounter">
+    <c:if test="${listOfEvents1.eventCatogery=='PERSONALITY DEVELOPMENTS'}">
+   <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
+   <div class="col-md">
+
+	<!-- Card Narrower -->
+	<div class="card card-cascade narrower" style="padding:1%;">
+
+	  <!-- Card image -->
+	  <div class="view view-cascade overlay">
+	    <img  class="card-img-top" src="data:image/png;base64,<c:out value='${listOfEvents1.base64Image}'/>" alt="Card image cap">
+	    <a>
+	      <div class="mask rgba-white-slight"></div>
+	    </a>
+	  </div>
+
+	  <!-- Card content -->
+	  <div class="card-body card-body-cascade text-center">
+
+	    <!-- Title -->
+	   
+    
+
+	    <h4 class="card-title"><strong><c:out value="${listOfEvents1.eventName}"/><c:out value="${loopCounter.index}"/></strong></h4>
+	    <!-- Subtitle -->
+	    <h5 class="blue-text pb-2"><strong><c:out value="${listOfEvents1.eventType}"/></strong></h5>
+	    <!-- Text -->
+	    <p class="card-text"><c:out value="${listOfEvents1.eventCatogery}"/></p>
+
+	    <a class="btn btn-unique">Book Now</a>
+	    <!-- Linkedin -->
+	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
+	    <!-- Twitter -->
+	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
+	    <!-- Dribbble -->
+	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
+
+	  </div>
+	</div>
+	<!-- Card Narrower -->
+    </div>
+  </c:if>
+ </c:forEach>  </div>
+
+  <div class="row" style="padding:1%;">
+    </div>
+
+    
+  
+ </div>
  </div>
 
 
@@ -820,7 +951,7 @@
 <!-- Footer -->
 
 </main>
-   <script type="text/javascript" src="js/eventregister.js"></script>
+   <script type="text/javascript" src="js/eventDashboard.js"></script>
    
    
    

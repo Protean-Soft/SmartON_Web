@@ -3,6 +3,7 @@ package com.protean.student.StudentPortal.controller;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.mail.MailException;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,6 +36,7 @@ import com.protean.student.StudentPortal.repository.RegistrationDao;
 import com.protean.student.StudentPortal.service.EventDetailsService;
 import com.protean.student.StudentPortal.service.EventRegisterService;
 import com.protean.student.StudentPortal.service.MailSenderService;
+import com.protean.student.StudentPortal.serviceImpl.EventRegisterServiceImpl;
 import com.protean.student.StudentPortal.util.commonUtils;
 
 @RestController
@@ -56,6 +60,9 @@ public class EventDetailsController {
 	
 	@Autowired
 	commonUtils commonutil;
+	
+	@Autowired
+	EventRegisterServiceImpl eventreg;
 
 	/* Add multiple events */
 	@PostMapping(value = "/addEvent") /* Insert and update list of records */
@@ -74,14 +81,14 @@ public class EventDetailsController {
 		return eventDetailsService.addEventDetail(eventdetails);
 	}
 
-	@PostMapping(value = "/addEventDetailImage")
-	public EventDetails addEventDetailImage(@RequestParam("date") String date,@RequestParam("image") MultipartFile image, @Valid EventDetails eventdetails) throws ParseException, IOException {
+	@PostMapping(value = "/updateEventDetailImage")
+	public String addEventDetailImage(@RequestParam("date") String date,@RequestParam("image") MultipartFile image, @Valid EventDetails eventdetails) throws ParseException, IOException {
 			
 		byte[] data=commonutil.ConvertImagetoByte(image);
 		eventdetails.setEvenyImage(data);
 		Date date1=commonutil.ConvertStringtoByte(date);  
 		eventdetails.setEventDate(date1);
-		return eventDetailsService.addEventDetail(eventdetails);
+		return eventDetailsService.addEventDetailUpdate(eventdetails);
 		//return evt;
 		
 
@@ -89,33 +96,57 @@ public class EventDetailsController {
 	}
 
 	/* List event details based on event id */
+	//@RequestMapping(value="/getEventDetail/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
 	@GetMapping(value = "/getEventDetail/{id}")
-	public String getEventById(@PathVariable Long id,Model model) {
+	public EventDetails getEventById(@PathVariable Long id,Model model) {
+		
 		EventDetails evt=eventDetailsService.getEventById(id);
+		
+		System.out.println("eventdetailbyid..."+evt);
 		model.addAttribute(evt);
-		return "confirmation.jsp";
+		return evt;
+				
+	}
+	
+	
+	@GetMapping(value = "/getEventDetail/{eventid}/{userid}")
+	public List getEventByevtIduserID(@PathVariable Long eventid,@PathVariable Long userid) {
+		List<Object> ls=new ArrayList();
+		EventDetails evt=eventDetailsService.getEventById(eventid);
+		/*System.out.println("No of events attennnnn...."+eventreg.getnoofregistration(id));
+		System.out.println("eventdetailbyid..."+evt);*/
+		Long noofeventatt=eventreg.getnoofregistrationstudent(userid);
+		Long noofeventattendence=eventreg.getnoofregistrationevent(eventid);
+System.out.println("noofeventatt=========="+noofeventatt);
+		ls.add(evt);
+		ls.add(noofeventatt);
+		ls.add(noofeventattendence);
+		//model.addAttribute(evt);
+		return ls;
 				
 	}
 
 	/* List out all ongoing events */
 	@GetMapping(value = "getOngoingEvents",produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<EventDetails> getAllNonDeletedEvents() {
+	@ResponseBody
+	public ModelAndView getAllNonDeletedEvents(ModelMap model) {
 		List<EventDetails> evt=eventDetailsService.findAllByDeletedflag();
+		List<EventDetails> evt1=new ArrayList<EventDetails>();
 		Iterator ir=evt.listIterator();
 		while(ir.hasNext()) {
-			System.out.println(evt.get(1));
-			
 			EventDetails evtdet=(EventDetails) ir.next();
 			System.out.println(evtdet.getEventid()+"===="+evtdet.getEventName()+"======="+evtdet.getEventImage());
-			/*
-			 * String base64Encoded = new String(evtdet.getEventImage(), "UTF-8");
-			 * System.out.println("After conversion............"+base64Encoded);
-			 */
-			
-			
+			if(evtdet.getEventImage()!=null) {
+				String base64Image=commonutil.Covertbase64(evtdet.getEventImage());
+			evtdet.setBase64Image(base64Image);
 		}
-		
-		return eventDetailsService.findAllByDeletedflag();
+			evt1.add(evtdet);
+		}
+		//ModelAndView model=new ModelAndView();
+		model.addAttribute("listOfEvt",evt1);
+		//model.setViewName("index.jsp");
+		return new ModelAndView("redirect:/index.jsp", model);
+		//return model;
 	}
 
 	/* Listout event based on catagory and type of events */
@@ -170,9 +201,16 @@ public class EventDetailsController {
 
 	/* Event Registration Sevice */
 	@PostMapping(value = "/addEventRegistrationDetail")
-	public String addEventRegistrationDetail(@RequestBody EventRegister eventregister) throws ParseException {
+	@ResponseBody
+	public String addEventRegistrationDetail(@RequestParam("eventId") Long eventId,@RequestParam("userId") Long userId) throws ParseException {
 
-		return eventRegisterDetailsService.addEventRegistrationDetail(eventregister);
+		EventRegister eventregister=new EventRegister();
+		eventregister.setEventid(eventId);
+		eventregister.setUserid(userId);
+		System.out.println("Ebtereed addEventRegistrationDetail..."+eventregister.getEventid());
+		String msg=eventRegisterDetailsService.addEventRegistrationDetail(eventregister);
+		System.out.println("Message...."+msg);
+		return msg;
 	}
 
 	/* Get Event Registration Details based on eventid */
@@ -181,7 +219,16 @@ public class EventDetailsController {
 		System.out.println("***************" + id);
 		return eventRegisterDetailsService.getEventRegisterDetailsByEventId(id);
 	}
-
+	
+	/* Get Event Registration Details based on useid */
+	
+	  @GetMapping(value = "/getRegisteredEventDetailByUserid/{id}") public
+	 List<Long> getEventRegisterEventByuserId(@PathVariable Long id) {
+	  System.out.println("***************" + id); 
+	List<Long> lstevtids= eventRegisterDetailsService.getEventRegisterEventByuserId(id); 
+	return lstevtids;
+	  }
+	 
 	/* Student Attendence sevice */
 	@PostMapping(value = "/UpdateEventRegisterAttendence")
 	public List<EventRegister> UpdateEventRegisterAttendence(@RequestBody List<EventRegister> evtregDetails) {
