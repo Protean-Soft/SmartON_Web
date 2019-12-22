@@ -127,8 +127,12 @@
           <a class="nav-link"><i class="far fa-comments"></i> <span class="clearfix d-none d-sm-inline-block">Support</span></a>
         </li>
         <li class="nav-item">
-       
-        <%
+        <input value=  "${studentDetails} " />
+       <%-- <c:forEach items="${studentDetails}" var="listItem">
+        		<c:out value = "${listItem}" />
+        			 <br />
+		</c:forEach>  --%>
+		<%
         	Object userId = request.getAttribute("userId");
         	Object fullName = request.getAttribute("fullName");
         	Object userName = request.getAttribute("userName");

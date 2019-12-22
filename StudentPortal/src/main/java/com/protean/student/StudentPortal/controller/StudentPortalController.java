@@ -47,6 +47,7 @@ public class StudentPortalController {
 		model.addAttribute("studentDetails", regDetails);
 		model.addAttribute("userName", userName);
 		model.addAttribute("fullName",regDetails.getFirstName() + " " + regDetails.getLastName());
+		model.addAttribute("rewardPoints", regDetails.getRewpoints());
 		String mailId = regDetails.getEmail();
 		long userId = regDetails.getUserId();
 		model.addAttribute("userId",userId);

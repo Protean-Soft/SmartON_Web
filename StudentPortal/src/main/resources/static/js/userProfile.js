@@ -45,7 +45,7 @@ $(document).ready(function() {
 				data : userDetailsForm,
 				success : function(data) {					
 					alert("user details " + JSON.stringify(data));
-					location.reload();
+					window.location.reload();
 				}
 			});
 		});

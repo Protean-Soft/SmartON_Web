@@ -9,6 +9,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 @Component
 public class commonUtils {
+	
+	public static String INVALID_USER_NAME = "Invalid username";
+	public static String USER_DETAILS_NOT_FOUND = "User details not available";
+	public static String UPLOAD_FAILED = "User profile upload failed";
 
 	
 	public byte[] ConvertImagetoByte(MultipartFile image) {

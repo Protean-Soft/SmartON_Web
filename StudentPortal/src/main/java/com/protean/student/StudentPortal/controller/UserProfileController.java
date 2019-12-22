@@ -1,9 +1,7 @@
 package com.protean.student.StudentPortal.controller;
 
 import java.io.IOException;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -17,11 +15,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.protean.student.StudentPortal.model.ImageModel;
+import com.protean.student.StudentPortal.model.InvalidUserDetailsException;
 import com.protean.student.StudentPortal.model.RegisterUserDetails;
+import com.protean.student.StudentPortal.model.ResourceNotFoundException;
 import com.protean.student.StudentPortal.repository.ImageRepository;
 import com.protean.student.StudentPortal.service.StudentUserDetailsService;
+import com.protean.student.StudentPortal.util.commonUtils;
 
 @RestController
 @RequestMapping("tag/userProfile")
@@ -42,27 +42,21 @@ public class UserProfileController {
 	 * @param model
 	 * @param userDetails
 	 * @return
-	 * @throws JsonProcessingException
+	 * @throws InvalidUserDetailsException 
 	 */
 	
-	@GetMapping(value="/userDetails",produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value="/userDetails",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
 	public RegisterUserDetails retrieveUserDetailsByName(@RequestParam("userName") String userName,
-			Model model,RegisterUserDetails userDetails) throws JsonProcessingException {
+			Model model) throws InvalidUserDetailsException {
 		
-		//System.out.println("username " + userName);
-			userDetails = studentService.getLogonDetails(userName);
-			//imageRepository.findByStudentId(userId);
-			//userDetails = (RegisterUserDetails) studentService.loadUserByUsername(userName);
-		
+		RegisterUserDetails userDetails = studentService.getLogonDetails(userName);	
 		if(userDetails != null) {
-			ObjectMapper map = new ObjectMapper();
-			model.addAttribute("userdetails",  userDetails.toString());
-			//System.out.println("retrieve user details :::: " + userDetails.getEmail()  + map.writeValueAsString(userDetails));
+			model.addAttribute("userdetails",  userDetails);
 			return userDetails;
 		}  else {
 			System.out.println(" User details not found .... ");
-		}
-		return userDetails;		
+			throw new InvalidUserDetailsException(commonUtils.INVALID_USER_NAME);
+		}		
 	}
 	
 	/**
@@ -77,13 +71,15 @@ public class UserProfileController {
 			@RequestParam("userName") String userName,@RequestParam("firstName") String firstName,
 			@RequestParam("lastName") String lastName,@RequestParam("email") String email,
 			@RequestParam("phoneNo") String mobileNum,@RequestParam("city") String city,@RequestParam("state") String state
-			/*@RequestParam("country") String country*/,ModelAndView view) {
+			,ModelAndView view) {
 		
 		RegisterUserDetails userDetails = new RegisterUserDetails(userId,firstName,lastName,userName,mobileNum,city,state);
-		int response = studentService.updateUserDetailsData(userDetails);
-		//System.out.println("REsponse : " + response);
-		
-		return response;
+		int response = studentService.updateUserDetailsData(userDetails);	
+		if(response == 1) {
+			return response;
+		} else {
+			return 0;
+		}
 	}
 	
 	
@@ -92,12 +88,16 @@ public class UserProfileController {
 	 * @param userName
 	 * @param rewardEnable
 	 * @return
+	 * @throws ResourceNotFoundException 
 	 */
 	
 	@GetMapping("/retrieveUserRewards")
-	public boolean retrieveRewards(@RequestParam("userName") String userName, Model rewardEnable) {
+	public boolean retrieveRewards(@RequestParam("userName") String userName, Model rewardEnable) throws ResourceNotFoundException {
 		boolean reedemRewards = false;
 		RegisterUserDetails rewardPoints = (RegisterUserDetails) studentService.loadUserByUsername(userName);
+		if(rewardPoints != null) {
+			throw new ResourceNotFoundException(userName);
+		}
 		if (rewardPoints.getRewpoints() == OFFER_POINTS) {
 			reedemRewards = true;
 		}
@@ -119,16 +119,12 @@ public class UserProfileController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ImageModel uploadMultiPartUpload(@RequestParam("pic") MultipartFile pic,
 			@RequestParam("id") Long studentId,Model model ) throws JsonProcessingException {
-		
-		//System.out.println("pic " + pic);
-		
-			if (pic != null && studentId != null) {
+			
+			 if (pic != null && studentId != null) {
 				ImageModel imageModel = new ImageModel();
 				byte[] bytePic = null;
 				try {
 					bytePic = pic.getBytes();
-					//Path path = Paths.get(uploadDirectory + pic.getOriginalFilename());
-					//Files.write(path, bytePic);
 				} catch (IOException e) {
 					System.out.println(" Upload image Exception " + e.getMessage());
 					e.printStackTrace();
@@ -155,8 +151,12 @@ public class UserProfileController {
 	 */
 	
 	@GetMapping(value = "/getProfilePic")
-	public ImageModel getStudentPhoto(HttpServletResponse response, @RequestParam("userId") long id) throws Exception {
-		return studentService.loadProfilePic(id);
+	public ImageModel getStudentPhoto(@RequestParam("userId") long id) {
+		Optional<ImageModel> studentId = imageRepository.findById(id);
+		if(studentId.isPresent()) {
+			return studentService.loadProfilePic(id);
+		} else {
+			return new ImageModel();
+		}		
 	}
-
 }

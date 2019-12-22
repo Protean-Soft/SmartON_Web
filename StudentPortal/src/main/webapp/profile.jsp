@@ -543,7 +543,7 @@
 </main>
 
   <!-- jQuery -->
-  <script src="http://localhost:8080/vendor/jquery/jquery-3.2.1.min.js"></script>
+  <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
   <!-- Bootstrap tooltips -->
   <script src="vendor/bootstrap/js/popper.js"></script>	
   <!-- Bootstrap core JavaScript -->
