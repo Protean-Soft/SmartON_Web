@@ -329,8 +329,18 @@
 	    <h5 class="blue-text pb-2"><strong><c:out value="${listOfEvents.eventOrgName}"/></strong></h5>
 	    <!-- Text -->
 	    <p class="card-text"><c:out value="${listOfEvents.eventDescription}"/></p>
+	    <p class="card-text"><c:out value="${fn:contains(attenevts,listOfEvents.eventid)}"/></p>
 
-	    <a class="btn btn-unique" onClick="registerEvent(${listOfEvents.eventid})">Book Now</a>
+<%-- <c:if test="${fn:contains(attenevts,listOfEvents.eventid)}"> --%>
+    <c:choose>
+    <c:when test="${fn:contains(attenevts,listOfEvents.eventid)==true}">
+	    <a class="btn btn-unique" disabled onClick="registerEvent(${listOfEvents.eventid})">Book Now</a>
+	    </c:when>    
+    <c:otherwise>
+     <a class="btn btn-unique" onClick="registerEvent(${listOfEvents.eventid})">Book Now</a>
+ </c:otherwise>
+ </c:choose>
+	 <%--    </c:if> --%>
 	    <!-- Linkedin -->
 	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
 	    <!-- Twitter -->

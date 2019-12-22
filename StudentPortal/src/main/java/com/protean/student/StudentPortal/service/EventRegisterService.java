@@ -17,6 +17,8 @@ public interface EventRegisterService {
 
 	Long getnoofregistrationstudent(Long id);
 
-	Long getnoofregistrationevent(Long id); 
+	Long getnoofregistrationevent(Long id);
+
+	List<Long> getEventRegisterEventByuserId(Long id); 
 
 }

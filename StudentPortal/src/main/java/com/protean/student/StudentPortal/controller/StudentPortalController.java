@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.protean.student.StudentPortal.model.EventDetails;
+import com.protean.student.StudentPortal.model.EventRegister;
 import com.protean.student.StudentPortal.model.RegisterUserDetails;
 import com.protean.student.StudentPortal.model.TransactionDetails;
 import com.protean.student.StudentPortal.repository.PaymentDao;
@@ -33,6 +34,7 @@ import com.protean.student.StudentPortal.service.EventDetailsServiceImpl;
 import com.protean.student.StudentPortal.service.MailSenderService;
 import com.protean.student.StudentPortal.service.PaymentService;
 import com.protean.student.StudentPortal.service.StudentUserDetailsService;
+import com.protean.student.StudentPortal.serviceImpl.EventRegisterServiceImpl;
 import com.protean.student.StudentPortal.util.commonUtils;
 
 @Controller
@@ -53,6 +55,11 @@ public class StudentPortalController {
 	
 	@Autowired 
 	EventDetailsServiceImpl event;
+	
+	
+	@Autowired 
+	EventRegisterServiceImpl evtreg;
+	 
 	
 	@Autowired
 	commonUtils common;
@@ -79,11 +86,11 @@ public class StudentPortalController {
 		}
 		
 		List<EventDetails> evt=event.findAllByDeletedflag();
+		 List<Long> evtbyUser=evtreg.getEventRegisterEventByuserId(userId); 
+	    System.out.println("evtbyUser........."+evtbyUser);
 		List<EventDetails> evt1=new ArrayList<EventDetails>();
 		Iterator ir=evt.listIterator();
 		while(ir.hasNext()) {
-			//System.out.println(evt.get(1));
-			
 			EventDetails evtdet=(EventDetails) ir.next();
 			System.out.println(evtdet.getEventid()+"===="+evtdet.getEventName()+"======="+evtdet.getEventImage());
 			if(evtdet.getEventImage()!=null) {
@@ -92,25 +99,9 @@ public class StudentPortalController {
 			}
 			evt1.add(evtdet);
 			
-			/*
-			 * int bytesRead = -1;
-			 * 
-			 * while ((bytesRead = inputStream.read(bytesRead)) != -1) {
-			 * outputStream.write(bytesRead, 0, bytesRead); }
-			 */
-		 
-	/*		byte[] imageBytes = outputStream.toByteArray();
-			 
-			String base64Image = Base64.getEncoder().encodeToString(imageBytes);*/
-			 
-			/*
-			 * String base64Encoded = new String(evtdet.getEventImage(), "UTF-8");
-			 * System.out.println("After conversion............"+base64Encoded);
-			 */
-			
-			
+					
 		}
-		
+		model.addAttribute("attenevts", evtbyUser);
 		model.addAttribute("listOfEvt",evt1);
 		return "index.jsp";
 	}
