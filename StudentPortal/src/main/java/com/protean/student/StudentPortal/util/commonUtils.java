@@ -43,7 +43,7 @@ public class commonUtils {
 	public String Covertbase64(byte[] byteval) {
 		
 		String base64Image = Base64.getEncoder().encodeToString(byteval);
-		System.out.println("base64Image============"+base64Image);
+		//System.out.println("base64Image============"+base64Image);
 		return base64Image;
 		
 	}
