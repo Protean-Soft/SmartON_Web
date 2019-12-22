@@ -303,7 +303,7 @@
   <div class="row" style="padding:1%;">
   
    <c:forEach var="listOfEvents" items="${listOfEvt}"  varStatus="loopCounter">
-   <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
+     <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
     <div class="col-md">
 
 	<!-- Card Narrower -->
@@ -324,7 +324,7 @@
 	   
    
 
-	    <h4 class="card-title"><strong><c:out value="${listOfEvents.eventName}"/></strong></h4>
+	    <h4 class="card-title"><strong><c:out value="${listOfEvents.eventName}"/>---<c:out value="${loopCounter.index}"/></strong></h4>
 	    <!-- Subtitle -->
 	    <h5 class="blue-text pb-2"><strong><c:out value="${listOfEvents.eventOrgName}"/></strong></h5>
 	    <!-- Text -->
@@ -342,6 +342,7 @@
 	</div>
 	<!-- Card Narrower -->
     </div>
+  
     </c:forEach>
     </div>
 
@@ -350,9 +351,13 @@
  </div>
 
 <!--Panel 2-->
+
  <div class="tab-pane fade" id="panel12" role="tabpanel">
-  <div class="row" style="padding:1%;">
-  <div id="products_table"></div>
+  <span id="products_table"></span>
+  
+ 
+    <%--
+    <div class="row" style="padding:1%;">
     <c:forEach var="listOfEvents1" items="${listOfEvt}"  varStatus="loopCounter">
    <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
    <div class="col-md">
@@ -394,11 +399,11 @@
 	<!-- Card Narrower -->
     </div>
   
- </c:forEach>
+ </c:forEach> </div>--%>
     
 
     
-  </div>
+  
  </div>
  
 	<!-- Card Narrower -->

@@ -31,6 +31,11 @@ public interface EventRegisterRepo extends JpaRepository<EventRegister, Long> {
 		int getnoofregistration(@Param("eventid") Long id);
 
 	   long countByuserid(@Param("userid") Long id);
+
+
+	   EventRegister findByEventidAndUserid(@Param("eventid") Long eventid,@Param("userid")Long userid);
+
+	Long countByeventid(Long id);
 	
 	
 	/*

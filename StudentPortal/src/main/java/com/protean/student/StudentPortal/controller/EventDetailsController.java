@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -113,10 +114,12 @@ public class EventDetailsController {
 		EventDetails evt=eventDetailsService.getEventById(eventid);
 		/*System.out.println("No of events attennnnn...."+eventreg.getnoofregistration(id));
 		System.out.println("eventdetailbyid..."+evt);*/
-		Long noofeventatt=eventreg.getnoofregistration(userid);
+		Long noofeventatt=eventreg.getnoofregistrationstudent(userid);
+		Long noofeventattendence=eventreg.getnoofregistrationevent(eventid);
 System.out.println("noofeventatt=========="+noofeventatt);
 		ls.add(evt);
 		ls.add(noofeventatt);
+		ls.add(noofeventattendence);
 		//model.addAttribute(evt);
 		return ls;
 				
@@ -194,7 +197,8 @@ System.out.println("noofeventatt=========="+noofeventatt);
 	/***************************** EVENT REGISTRATION AND ATTENDENCE */
 
 	/* Event Registration Sevice */
-	@PostMapping(value = "/addEventRegistrationDetail",produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/addEventRegistrationDetail")
+	@ResponseBody
 	public String addEventRegistrationDetail(@RequestParam("eventId") Long eventId,@RequestParam("userId") Long userId) throws ParseException {
 
 		EventRegister eventregister=new EventRegister();
