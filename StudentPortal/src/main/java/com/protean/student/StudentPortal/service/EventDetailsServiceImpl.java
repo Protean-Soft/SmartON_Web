@@ -58,8 +58,11 @@ public class EventDetailsServiceImpl implements EventDetailsService {
 	}
 
 	@Override
-	public List<EventDetails> findAllByDeletedflag(Long flag) {
+	public List<EventDetails> findAllByDeletedflag() {
+		long flag = 0;
 		// TODO Auto-generated method stub
+		
+		
 		return (List<EventDetails>) eventsDetailsRepository.findAllByDeletedflag(flag);
 	}
 

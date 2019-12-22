@@ -3,7 +3,9 @@ package com.protean.student.StudentPortal.controller;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -11,7 +13,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.mail.MailException;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.protean.student.StudentPortal.model.EventDetails;
 import com.protean.student.StudentPortal.model.EventRegister;
@@ -29,6 +34,7 @@ import com.protean.student.StudentPortal.repository.RegistrationDao;
 import com.protean.student.StudentPortal.service.EventDetailsService;
 import com.protean.student.StudentPortal.service.EventRegisterService;
 import com.protean.student.StudentPortal.service.MailSenderService;
+import com.protean.student.StudentPortal.serviceImpl.EventRegisterServiceImpl;
 import com.protean.student.StudentPortal.util.commonUtils;
 
 @RestController
@@ -52,6 +58,9 @@ public class EventDetailsController {
 	
 	@Autowired
 	commonUtils commonutil;
+	
+	@Autowired
+	EventRegisterServiceImpl eventreg;
 
 	/* Add multiple events */
 	@PostMapping(value = "/addEvent") /* Insert and update list of records */
@@ -85,17 +94,53 @@ public class EventDetailsController {
 	}
 
 	/* List event details based on event id */
+	//@RequestMapping(value="/getEventDetail/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
 	@GetMapping(value = "/getEventDetail/{id}")
-	public EventDetails getEventById(@PathVariable Long id) {
-		return eventDetailsService.getEventById(id);
+	public EventDetails getEventById(@PathVariable Long id,Model model) {
+		
+		EventDetails evt=eventDetailsService.getEventById(id);
+		
+		System.out.println("eventdetailbyid..."+evt);
+		model.addAttribute(evt);
+		return evt;
+				
+	}
+	
+	
+	@GetMapping(value = "/getEventDetail/{eventid}/{userid}")
+	public List getEventByevtIduserID(@PathVariable Long eventid,@PathVariable Long userid) {
+		List<Object> ls=new ArrayList();
+		EventDetails evt=eventDetailsService.getEventById(eventid);
+		/*System.out.println("No of events attennnnn...."+eventreg.getnoofregistration(id));
+		System.out.println("eventdetailbyid..."+evt);*/
+		Long noofeventatt=eventreg.getnoofregistration(userid);
+System.out.println("noofeventatt=========="+noofeventatt);
+		ls.add(evt);
+		ls.add(noofeventatt);
+		//model.addAttribute(evt);
+		return ls;
+				
 	}
 
 	/* List out all ongoing events */
-	@GetMapping(value = "getOngoingEvents")
+	@GetMapping(value = "getOngoingEvents",produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<EventDetails> getAllNonDeletedEvents() {
-		long flag = 0;
+		List<EventDetails> evt=eventDetailsService.findAllByDeletedflag();
+		Iterator ir=evt.listIterator();
+		while(ir.hasNext()) {
+			System.out.println(evt.get(1));
+			
+			EventDetails evtdet=(EventDetails) ir.next();
+			System.out.println(evtdet.getEventid()+"===="+evtdet.getEventName()+"======="+evtdet.getEventImage());
+			/*
+			 * String base64Encoded = new String(evtdet.getEventImage(), "UTF-8");
+			 * System.out.println("After conversion............"+base64Encoded);
+			 */
+			
+			
+		}
 		
-		return eventDetailsService.findAllByDeletedflag(flag);
+		return eventDetailsService.findAllByDeletedflag();
 	}
 
 	/* Listout event based on catagory and type of events */
@@ -149,10 +194,16 @@ public class EventDetailsController {
 	/***************************** EVENT REGISTRATION AND ATTENDENCE */
 
 	/* Event Registration Sevice */
-	@PostMapping(value = "/addEventRegistrationDetail")
-	public String addEventRegistrationDetail(@RequestBody EventRegister eventregister) throws ParseException {
+	@PostMapping(value = "/addEventRegistrationDetail",produces = MediaType.APPLICATION_JSON_VALUE)
+	public String addEventRegistrationDetail(@RequestParam("eventId") Long eventId,@RequestParam("userId") Long userId) throws ParseException {
 
-		return eventRegisterDetailsService.addEventRegistrationDetail(eventregister);
+		EventRegister eventregister=new EventRegister();
+		eventregister.setEventid(eventId);
+		eventregister.setUserid(userId);
+		System.out.println("Ebtereed addEventRegistrationDetail..."+eventregister.getEventid());
+		String msg=eventRegisterDetailsService.addEventRegistrationDetail(eventregister);
+		System.out.println("Message...."+msg);
+		return msg;
 	}
 
 	/* Get Event Registration Details based on eventid */

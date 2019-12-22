@@ -261,6 +261,12 @@
 </div>
 <!--/.Carousel Wrapper-->
 
+		<ul>
+			<c:forEach var="listValue" items="${studentDetails}">
+				<li>${listValue.}</li>
+			</c:forEach>
+		</ul>
+
 
 
 <main style="padding-top: 3% !important;">
