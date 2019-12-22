@@ -12,8 +12,8 @@ function callEventsbyType(){
 			//$('#panel22 #listOfEvents1').items(data);
 			console.log(data.length);
 			var rowObj = data;
-			$('#products_table').text(data);
-		/*	for(var i=1;i<rowObj.length;i++){
+			//$('#products_table').text(data);
+			for(var i=1;i<rowObj.length;i++){
 			
 			
 			samp='<div class="col-md"><div class="card card-cascade narrower" style="padding:1%;"> <div class="view view-cascade overlay">';
@@ -24,7 +24,7 @@ function callEventsbyType(){
 			samp+='<a class="btn btn-unique">Book Now</a> <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a><a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a><a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a></div></div></div>';
 			final+=samp;
 			}
-			$('#products_table').html(final);*/
+			$('#products_table').html(final);
 		}
 	
 	});

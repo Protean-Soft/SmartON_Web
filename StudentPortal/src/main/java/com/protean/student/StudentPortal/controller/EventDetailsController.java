@@ -79,14 +79,14 @@ public class EventDetailsController {
 		return eventDetailsService.addEventDetail(eventdetails);
 	}
 
-	@PostMapping(value = "/addEventDetailImage")
-	public EventDetails addEventDetailImage(@RequestParam("date") String date,@RequestParam("image") MultipartFile image, @Valid EventDetails eventdetails) throws ParseException, IOException {
+	@PostMapping(value = "/updateEventDetailImage")
+	public String addEventDetailImage(@RequestParam("date") String date,@RequestParam("image") MultipartFile image, @Valid EventDetails eventdetails) throws ParseException, IOException {
 			
 		byte[] data=commonutil.ConvertImagetoByte(image);
 		eventdetails.setEvenyImage(data);
 		Date date1=commonutil.ConvertStringtoByte(date);  
 		eventdetails.setEventDate(date1);
-		return eventDetailsService.addEventDetail(eventdetails);
+		return eventDetailsService.addEventDetailUpdate(eventdetails);
 		//return evt;
 		
 
