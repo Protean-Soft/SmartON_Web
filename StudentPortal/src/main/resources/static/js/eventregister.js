@@ -83,9 +83,9 @@ function registerEvent(){
 			$("#modalPushFaliure").show();
 			console.log("modalPushFaliure");
 		}
-		//window.location.href="/index.jsp";
-		
-			$("#show_profilePic").attr("src", "data:image/png;base64," + response.pic);
+		window.location.href="/index.jsp";
+		//Callmainpage();
+			//$("#show_profilePic").attr("src", "data:image/png;base64," + response.pic);
 		},
 		error : function() {
 			alert("Limit exceed*******************");
@@ -94,7 +94,19 @@ function registerEvent(){
 	
 }
 
-
+function Callmainpage(){
+	$.ajax({
+		url : './StudentPortal/Event/getOngoingEvents',
+		type: 'GET',
+		/*dataType: 'TEXT',
+		processData: false,
+		contentType: false,	*/ 	
+		async: false,
+		success : function(reponse) {
+			alert("Successs");
+		}
+		});
+}
 
 
 
