@@ -226,7 +226,7 @@
     <div class="col-md-7 text-md-left ml-3 mt-3">
 
         <h2 class="h2-responsive text-center text-md-left product-name font-weight-bold dark-grey-text mb-1 ml-xl-0 ml-4" id="eventtitle"></h2>
-        <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">Attendes: 324</span>
+        <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">Attendes: <span id="attendes" ></span></span>
 	<span id="rateMe1"></span>
 	
         <!--<span class="badge badge-success product mb-4 ml-2">SALE</span>-->
@@ -289,7 +289,7 @@
        <input type="hidden" id="eventid" name="eventId" value = '<%=eventid%>' /> 
      <input type="hidden" id="userid" name="userId"  value = '<%=userid%>' /> 
        
-        <a data-toggle="modal" onclick="registerEvent()" class="btn btn-info">Yes</a>
+        <a data-toggle="modal" onclick="registerEvent()" class="btn btn-info" id="conformationbtn">Yes</a>
         <a type="button" class="btn btn-outline-info waves-effect" data-dismiss="modal">No</a>
         </form>
       </div>

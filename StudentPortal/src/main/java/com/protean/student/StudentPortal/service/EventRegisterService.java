@@ -15,6 +15,8 @@ public interface EventRegisterService {
 
 	public String addEventRegistrationDetail(EventRegister eventregister);
 
-	Long getnoofregistration(Long id); 
+	Long getnoofregistrationstudent(Long id);
+
+	Long getnoofregistrationevent(Long id); 
 
 }
