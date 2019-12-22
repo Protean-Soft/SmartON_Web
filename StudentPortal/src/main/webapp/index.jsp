@@ -324,7 +324,7 @@
 	   
    
 
-	    <h4 class="card-title"><strong><c:out value="${listOfEvents.eventName}"/>---<c:out value="${loopCounter.index}"/></strong></h4>
+	    <h4 class="card-title"><strong><c:out value="${listOfEvents.eventName}"/></strong></h4>
 	    <!-- Subtitle -->
 	    <h5 class="blue-text pb-2"><strong><c:out value="${listOfEvents.eventOrgName}"/></strong></h5>
 	    <!-- Text -->
