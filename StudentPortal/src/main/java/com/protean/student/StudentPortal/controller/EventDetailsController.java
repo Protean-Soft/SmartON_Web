@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.mail.MailException;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -127,23 +128,25 @@ System.out.println("noofeventatt=========="+noofeventatt);
 
 	/* List out all ongoing events */
 	@GetMapping(value = "getOngoingEvents",produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<EventDetails> getAllNonDeletedEvents() {
+	@ResponseBody
+	public ModelAndView getAllNonDeletedEvents(ModelMap model) {
 		List<EventDetails> evt=eventDetailsService.findAllByDeletedflag();
+		List<EventDetails> evt1=new ArrayList<EventDetails>();
 		Iterator ir=evt.listIterator();
 		while(ir.hasNext()) {
-			System.out.println(evt.get(1));
-			
 			EventDetails evtdet=(EventDetails) ir.next();
 			System.out.println(evtdet.getEventid()+"===="+evtdet.getEventName()+"======="+evtdet.getEventImage());
-			/*
-			 * String base64Encoded = new String(evtdet.getEventImage(), "UTF-8");
-			 * System.out.println("After conversion............"+base64Encoded);
-			 */
-			
-			
+			if(evtdet.getEventImage()!=null) {
+				String base64Image=commonutil.Covertbase64(evtdet.getEventImage());
+			evtdet.setBase64Image(base64Image);
 		}
-		
-		return eventDetailsService.findAllByDeletedflag();
+			evt1.add(evtdet);
+		}
+		//ModelAndView model=new ModelAndView();
+		model.addAttribute("listOfEvt",evt1);
+		//model.setViewName("index.jsp");
+		return new ModelAndView("redirect:/index.jsp", model);
+		//return model;
 	}
 
 	/* Listout event based on catagory and type of events */
@@ -216,7 +219,16 @@ System.out.println("noofeventatt=========="+noofeventatt);
 		System.out.println("***************" + id);
 		return eventRegisterDetailsService.getEventRegisterDetailsByEventId(id);
 	}
-
+	
+	/* Get Event Registration Details based on useid */
+	
+	  @GetMapping(value = "/getRegisteredEventDetailByUserid/{id}") public
+	 List<Long> getEventRegisterEventByuserId(@PathVariable Long id) {
+	  System.out.println("***************" + id); 
+	List<Long> lstevtids= eventRegisterDetailsService.getEventRegisterEventByuserId(id); 
+	return lstevtids;
+	  }
+	 
 	/* Student Attendence sevice */
 	@PostMapping(value = "/UpdateEventRegisterAttendence")
 	public List<EventRegister> UpdateEventRegisterAttendence(@RequestBody List<EventRegister> evtregDetails) {

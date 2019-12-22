@@ -95,6 +95,13 @@ public class EventRegisterServiceImpl implements EventRegisterService{
 		return eventRegister.getEventRegisterDetailsByEventId(id);
 		
 	}
+	
+	@Override
+	public List<Long> getEventRegisterEventByuserId(Long userid) {
+		System.out.println("========="+userid);
+		return eventRegister.getEventRegisterEventByuserId(userid);
+		
+	}
 	@Override
 	public List<EventRegister> UpdateEventRegisterAttendence(List<EventRegister> evtregDetail) {
 		return eventRegister.saveAll(evtregDetail);
