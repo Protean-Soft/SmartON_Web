@@ -392,7 +392,7 @@
 	   
     
 
-	    <h4 class="card-title"><strong><c:out value="${listOfEvents1.eventName}"/><c:out value="${loopCounter.index}"/></strong></h4>
+	    <h4 class="card-title"><strong><c:out value="${listOfEvents1.eventName}"/></strong></h4>
 	    <!-- Subtitle -->
 	    <h5 class="blue-text pb-2"><strong><c:out value="${listOfEvents1.eventType}"/></strong></h5>
 	    <!-- Text -->
@@ -455,7 +455,7 @@
 	   
     
 
-	    <h4 class="card-title"><strong><c:out value="${listOfEvents1.eventName}"/><c:out value="${loopCounter.index}"/></strong></h4>
+	    <h4 class="card-title"><strong><c:out value="${listOfEvents1.eventName}"/></strong></h4>
 	    <!-- Subtitle -->
 	    <h5 class="blue-text pb-2"><strong><c:out value="${listOfEvents1.eventType}"/></strong></h5>
 	    <!-- Text -->
@@ -512,7 +512,7 @@
 	   
     
 
-	    <h4 class="card-title"><strong><c:out value="${listOfEvents1.eventName}"/><c:out value="${loopCounter.index}"/></strong></h4>
+	    <h4 class="card-title"><strong><c:out value="${listOfEvents1.eventName}"/></strong></h4>
 	    <!-- Subtitle -->
 	    <h5 class="blue-text pb-2"><strong><c:out value="${listOfEvents1.eventType}"/></strong></h5>
 	    <!-- Text -->
@@ -638,140 +638,23 @@
 
 		    <!--First slide-->
 		    <div class="carousel-item active">
-
-		      <div class="col-md-4">
+<c:forEach var="listOfEvents1" items="${listOfEvt}"  varStatus="loopCounter">
+<c:if test="${(loopCounter.index % 3 == 0) && (loopCounter.index !=0)}"></div> <div class="carousel-item"></c:if>
+ <div class="col-md-4">
 			<div class="card mb-2">
 			  <img class="card-img-top"
-			    src="img/cust/slide/slide1.jpg"
+			    src="data:image/png;base64,<c:out value='${listOfEvents1.base64Image}'/>"
 			    alt="Card image cap">
 			  <div class="card-body">
-			    <h4 class="card-title">Card title</h4>
-			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-			      card's content.</p>
+			    <h4 class="card-title"><c:out value="${listOfEvents1.eventName}"/></h4>
+			    <p class="card-text"><c:out value="${listOfEvents1.eventDescription}"/></p>
 			    <a class="btn btn-primary">Button</a>
 			  </div>
 			</div>
 		      </div>
-
-		      <div class="col-md-4">
-			<div class="card mb-2">
-			  <img class="card-img-top"
-			    src="img/cust/slide/slide2.jpg"
-			    alt="Card image cap">
-			  <div class="card-body">
-			    <h4 class="card-title">Card title</h4>
-			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-			      card's content.</p>
-			    <a class="btn btn-primary">Button</a>
-			  </div>
-			</div>
-		      </div>
-
-		      <div class="col-md-4">
-			<div class="card mb-2">
-			  <img class="card-img-top"
-			    src="img/cust/slide/slide3.jpg"
-			    alt="Card image cap">
-			  <div class="card-body">
-			    <h4 class="card-title">Card title</h4>
-			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-			      card's content.</p>
-			    <a class="btn btn-primary">Button</a>
-			  </div>
-			</div>
-		      </div>
-
-		    </div>
-		    <!--/.First slide-->
-
-		    <!--Second slide-->
-		    <div class="carousel-item">
-
-		      <div class="col-md-4">
-			<div class="card mb-2">
-			  <img class="card-img-top"
-			    src="img/cust/slide/slide4.jpg" alt="Card image cap">
-			  <div class="card-body">
-			    <h4 class="card-title">Card title</h4>
-			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-			      card's content.</p>
-			    <a class="btn btn-primary">Button</a>
-			  </div>
-			</div>
-		      </div>
-
-		      <div class="col-md-4">
-			<div class="card mb-2">
-			  <img class="card-img-top"
-			    src="img/cust/slide/slide5.jpg" alt="Card image cap">
-			  <div class="card-body">
-			    <h4 class="card-title">Card title</h4>
-			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-			      card's content.</p>
-			    <a class="btn btn-primary">Button</a>
-			  </div>
-			</div>
-		      </div>
-
-		      <div class="col-md-4">
-			<div class="card mb-2">
-			  <img class="card-img-top"
-			    src="img/cust/slide/slide6.jpg" alt="Card image cap">
-			  <div class="card-body">
-			    <h4 class="card-title">Card title</h4>
-			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-			      card's content.</p>
-			    <a class="btn btn-primary">Button</a>
-			  </div>
-			</div>
-		      </div>
-
-		    </div>
-		    <!--/.Second slide-->
-
-		    <!--Third slide-->
-		    <div class="carousel-item">
-
-		      <div class="col-md-4">
-			<div class="card mb-2">
-			  <img class="card-img-top"
-			    src="img/cust/slide/slide7.jpg" alt="Card image cap">
-			  <div class="card-body">
-			    <h4 class="card-title">Card title</h4>
-			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-			      card's content.</p>
-			    <a class="btn btn-primary">Button</a>
-			  </div>
-			</div>
-		      </div>
-
-		      <div class="col-md-4">
-			<div class="card mb-2">
-			  <img class="card-img-top"
-			    src="img/cust/slide/slide8.jpg" alt="Card image cap">
-			  <div class="card-body">
-			    <h4 class="card-title">Card title</h4>
-			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-			      card's content.</p>
-			    <a class="btn btn-primary">Button</a>
-			  </div>
-			</div>
-		      </div>
-
-		      <div class="col-md-4">
-			<div class="card mb-2">
-			  <img class="card-img-top"
-			    src="img/cust/slide/slide9.jpg" alt="Card image cap">
-			  <div class="card-body">
-			    <h4 class="card-title">Card title</h4>
-			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-			      card's content.</p>
-			    <a class="btn btn-primary">Button</a>
-			  </div>
-			</div>
-		      </div>
-
-		    </div>
+</c:forEach>
+ </div>
+		  
 		    <!--/.Third slide-->
 
 		  </div>
@@ -784,19 +667,169 @@
 
       <!--Panel 2-->
       <div class="tab-pane fade" id="panel32" role="tabpanel">
+<!--Carousel Wrapper-->
+		<div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
 
+		  <!--Controls-->
+		  <div class="controls-top">
+		    <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
+		    <a class="btn-floating" href="#multi-item-example" data-slide="next"><i
+			class="fas fa-chevron-right"></i></a>
+		  </div>
+		  <!--/.Controls-->
+
+		  <!--Indicators-->
+		  <ol class="carousel-indicators">
+		    <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
+		    <li data-target="#multi-item-example" data-slide-to="1"></li>
+		    <li data-target="#multi-item-example" data-slide-to="2"></li>
+		  </ol>
+		  <!--/.Indicators-->
+
+		  <!--Slides-->
+		  <div class="carousel-inner" role="listbox">
+
+		    <!--First slide-->
+		    <div class="carousel-item active">
+<c:forEach var="listOfEvents1" items="${listOfEvt}"  varStatus="loopCounter">
+<c:if test="${listOfEvents1.eventType=='WORKSHOPS'}">
+<c:if test="${(loopCounter.index % 3 == 0) && (loopCounter.index !=0)}"></div> <div class="carousel-item"></c:if>
+ <div class="col-md-4">
+			<div class="card mb-2">
+			  <img class="card-img-top"
+			    src="data:image/png;base64,<c:out value='${listOfEvents1.base64Image}'/>"
+			    alt="Card image cap">
+			  <div class="card-body">
+			    <h4 class="card-title"><c:out value="${listOfEvents1.eventName}"/></h4>
+			    <p class="card-text"><c:out value="${listOfEvents1.eventDescription}"/></p>
+			    <a class="btn btn-primary">Button</a>
+			  </div>
+			</div>
+		      </div>
+		      </c:if>
+</c:forEach>
+ </div>
+		  
+		    <!--/.Third slide-->
+
+		  </div>
+		  <!--/.Slides-->
+
+		</div>
+		<!--/.Carousel Wrapper-->
+      </div>
       </div>
       <!--Panel 2-->
 
       <!--Panel 3-->
       <div class="tab-pane fade" id="panel33" role="tabpanel">
+<!--Carousel Wrapper-->
+		<div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
 
+		  <!--Controls-->
+		  <div class="controls-top">
+		    <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
+		    <a class="btn-floating" href="#multi-item-example" data-slide="next"><i
+			class="fas fa-chevron-right"></i></a>
+		  </div>
+		  <!--/.Controls-->
+
+		  <!--Indicators-->
+		  <ol class="carousel-indicators">
+		    <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
+		    <li data-target="#multi-item-example" data-slide-to="1"></li>
+		    <li data-target="#multi-item-example" data-slide-to="2"></li>
+		  </ol>
+		  <!--/.Indicators-->
+
+		  <!--Slides-->
+		  <div class="carousel-inner" role="listbox">
+
+		    <!--First slide-->
+		    <div class="carousel-item active">
+<c:forEach var="listOfEvents1" items="${listOfEvt}"  varStatus="loopCounter">
+<c:if test="${listOfEvents1.eventType=='TECH MEETS'}">
+<c:if test="${(loopCounter.index % 3 == 0) && (loopCounter.index !=0)}"></div> <div class="carousel-item"></c:if>
+ <div class="col-md-4">
+			<div class="card mb-2">
+			  <img class="card-img-top"
+			    src="data:image/png;base64,<c:out value='${listOfEvents1.base64Image}'/>"
+			    alt="Card image cap">
+			  <div class="card-body">
+			    <h4 class="card-title"><c:out value="${listOfEvents1.eventName}"/></h4>
+			    <p class="card-text"><c:out value="${listOfEvents1.eventDescription}"/></p>
+			    <a class="btn btn-primary">Button</a>
+			  </div>
+			</div>
+		      </div>
+		      </c:if>
+</c:forEach>
+ </div>
+		  
+		    <!--/.Third slide-->
+
+		  </div>
+		  <!--/.Slides-->
+
+		</div>
+		<!--/.Carousel Wrapper-->
+      </div>
       </div>
       <!--Panel 3-->
 
       <!--Panel 4-->
       <div class="tab-pane fade" id="panel34" role="tabpanel">
+<!--Carousel Wrapper-->
+		<div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
 
+		  <!--Controls-->
+		  <div class="controls-top">
+		    <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
+		    <a class="btn-floating" href="#multi-item-example" data-slide="next"><i
+			class="fas fa-chevron-right"></i></a>
+		  </div>
+		  <!--/.Controls-->
+
+		  <!--Indicators-->
+		  <ol class="carousel-indicators">
+		    <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
+		    <li data-target="#multi-item-example" data-slide-to="1"></li>
+		    <li data-target="#multi-item-example" data-slide-to="2"></li>
+		  </ol>
+		  <!--/.Indicators-->
+
+		  <!--Slides-->
+		  <div class="carousel-inner" role="listbox">
+
+		    <!--First slide-->
+		    <div class="carousel-item active">
+<c:forEach var="listOfEvents1" items="${listOfEvt}"  varStatus="loopCounter">
+<c:if test="${listOfEvents1.eventType=='COURSES'}">
+<c:if test="${(loopCounter.index % 3 == 0) && (loopCounter.index !=0)}"></div> <div class="carousel-item"></c:if>
+ <div class="col-md-4">
+			<div class="card mb-2">
+			  <img class="card-img-top"
+			    src="data:image/png;base64,<c:out value='${listOfEvents1.base64Image}'/>"
+			    alt="Card image cap">
+			  <div class="card-body">
+			    <h4 class="card-title"><c:out value="${listOfEvents1.eventName}"/></h4>
+			    <p class="card-text"><c:out value="${listOfEvents1.eventDescription}"/></p>
+			    <a class="btn btn-primary">Button</a>
+			  </div>
+			</div>
+		      </div>
+		      </c:if>
+</c:forEach>
+ </div>
+		  
+		    <!--/.Third slide-->
+
+		  </div>
+		  <!--/.Slides-->
+
+		</div>
+		<!--/.Carousel Wrapper-->
+      </div>
       </div>
       <!--Panel 4-->
 
