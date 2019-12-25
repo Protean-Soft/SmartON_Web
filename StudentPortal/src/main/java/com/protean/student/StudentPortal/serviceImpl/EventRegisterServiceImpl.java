@@ -36,8 +36,11 @@ public class EventRegisterServiceImpl implements EventRegisterService{
 		String responseMsg="";
 		Long deletedflag=(long) 0;
 		try {
+			
 		Long userId=eventregister.getUserid();
-		
+		EventRegister evtreg=eventRegister.findByEventidAndUserid(eventregister.getEventid(),eventregister.getUserid());
+		System.out.println(evtreg);
+		if(evtreg==null) {
 		  RegisterUserDetails userdetail=userdetails.findByUserId(userId);
 		  System.out.println(userdetail);
 		  System.out.println("local................."+userdetail.getNoofevtallowed());
@@ -55,6 +58,9 @@ public class EventRegisterServiceImpl implements EventRegisterService{
 		 }else if(userdetail.getNoofevtallowed()==0) {
 			 responseMsg="UserExceedtheLimit";
 		 }
+		 }else {
+			 responseMsg="Already Registed";
+		 }
 		}catch (Exception e) {
 			System.out.println("Exception in addEventRegistrationDetail::"+e);
 			responseMsg="Error";
@@ -68,10 +74,18 @@ public class EventRegisterServiceImpl implements EventRegisterService{
 	
 	
 	@Override
-	public Long getnoofregistration(Long id) {
+	public Long getnoofregistrationstudent(Long id) {
 		System.out.println("========="+id);
 		 
 		return eventRegister.countByuserid(id);
+		
+	}
+	
+	@Override
+	public Long getnoofregistrationevent(Long id) {
+		System.out.println("========="+id);
+		 
+		return eventRegister.countByeventid(id);
 		
 	}
 
@@ -79,6 +93,13 @@ public class EventRegisterServiceImpl implements EventRegisterService{
 	public List<EventRegister> getEventRegisterDetailsByEventId(Long id) {
 		System.out.println("========="+id);
 		return eventRegister.getEventRegisterDetailsByEventId(id);
+		
+	}
+	
+	@Override
+	public List<Long> getEventRegisterEventByuserId(Long userid) {
+		System.out.println("========="+userid);
+		return eventRegister.getEventRegisterEventByuserId(userid);
 		
 	}
 	@Override

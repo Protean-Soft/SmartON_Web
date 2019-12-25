@@ -31,6 +31,17 @@ public interface EventRegisterRepo extends JpaRepository<EventRegister, Long> {
 		int getnoofregistration(@Param("eventid") Long id);
 
 	   long countByuserid(@Param("userid") Long id);
+
+
+	   EventRegister findByEventidAndUserid(@Param("eventid") Long eventid,@Param("userid")Long userid);
+
+	Long countByeventid(Long id);
+
+
+	 @Transactional
+	   @Modifying
+	   @Query(value = "select fk_eventid from event_Register where fk_userid=:userid and deletedflag <>1 and iscancelled<>1",nativeQuery  = true)
+		List<Long> getEventRegisterEventByuserId(@Param("userid") Long userid);
 	
 	
 	/*

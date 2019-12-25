@@ -7,7 +7,7 @@ function getEventdetais(eventId,userId){
 		type: 'GET',
 		success: function(data){
 			var rowObj = data;
-			console.log(rowObj.length);
+			console.log(rowObj);
 			$("#eventtitle").text(rowObj[0].eventName);
 			$("#venue").text("Venue: "+rowObj[0].eventVenue);
 			$("#category").text("Category: "+rowObj[0].eventCatogery);
@@ -15,6 +15,8 @@ function getEventdetais(eventId,userId){
 			$("#duration").text("Duration: "+rowObj[0].eventDuration);
 			$("#description").text(rowObj[0].event_description);
 			$("#show_eventPic").attr("src", "data:image/png;base64," + rowObj[0].eventImage);
+			$("#attendes").text(rowObj[2]);
+			$("#noofeventattend").text(rowObj[1]);
 			}
 	
 });
@@ -56,7 +58,7 @@ function callEventsbyType(){
 function registerEvent(){
 	console.log("registerEventin registerevent*****************************");
 	var formData =  $('#registerForm1').serialize();  
-	
+	$("#conformationbtn").attr("disabled", true)
 	console.log(formData);
 	$.ajax({
 		url : './StudentPortal/Event/addEventRegistrationDetail',
@@ -65,18 +67,24 @@ function registerEvent(){
 		/*dataType: 'TEXT',
 		processData: false,
 		contentType: false,	*/ 	
-		success : function(data) {
-		alert("Limit exceed...."+data);
+		async: false,
+		success : function(reponse) {
+		alert(reponse);
 		
-		if(reponse!="UserExceedtheLimit"){
+		if(reponse=="UserExceedtheLimit"){
 			$("#modalPushSuccess").show();
-			
-		}else{
-			$("#modalPushSuccess").hide();
-			$("#modalPushFaliure").show();
-			
+			 $("#modalPushSuccess").addClass('active');
+			console.log("UserExceedtheLimit");
+		}else if(reponse=="Already Registed"){
+			 $("#modalPushSuccess").addClass('active');
 		}
-		
+		else{
+			$("#modalPushSuccess").show();
+			$("#modalPushFaliure").show();
+			console.log("modalPushFaliure");
+		}
+		window.location.href="/index.jsp";
+		//Callmainpage();
 			//$("#show_profilePic").attr("src", "data:image/png;base64," + response.pic);
 		},
 		error : function() {
@@ -86,7 +94,19 @@ function registerEvent(){
 	
 }
 
-
+function Callmainpage(){
+	$.ajax({
+		url : './StudentPortal/Event/getOngoingEvents',
+		type: 'GET',
+		/*dataType: 'TEXT',
+		processData: false,
+		contentType: false,	*/ 	
+		async: false,
+		success : function(reponse) {
+			alert("Successs");
+		}
+		});
+}
 
 
 
