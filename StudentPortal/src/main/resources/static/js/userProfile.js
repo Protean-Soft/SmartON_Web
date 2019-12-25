@@ -15,14 +15,14 @@ $(document).ready(function() {
 			dataType: 'json',
 			success : function(data) { 
 				
-						$("#userName").val(data.userName);
-						$("#firstName").val(data.firstName);
-						$("#lastName").val(data.lastName);
-						$("#collegeName").val(data.college);
-						$("#mailID").val(data.email);
-						$("#phoneNo").val(data.mobileNum);
-						$("#city").val(data.city);
-						$("#state").val(data.state);
+						$("#userName").val(data.userName).trigger("change");
+						$("#firstName").val(data.firstName).trigger("change");
+						$("#lastName").val(data.lastName).trigger("change");
+						$("#collegeName").val(data.college).trigger("change");
+						$("#mailID").val(data.email).trigger("change");
+						$("#phoneNo").val(data.mobileNum).trigger("change");
+						$("#city").val(data.city).trigger("change");
+						$("#state").val(data.state).trigger("change");
 						// $("#pinCode").val(data.mobileNum);
 					}
 				});
@@ -45,7 +45,7 @@ $(document).ready(function() {
 				data : userDetailsForm,
 				success : function(data) {					
 					alert("user details " + JSON.stringify(data));
-					window.location.reload();
+					location.reload();
 				}
 			});
 		});
