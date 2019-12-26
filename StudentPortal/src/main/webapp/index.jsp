@@ -1,3 +1,4 @@
+<%@page import="com.protean.student.StudentPortal.model.RegisterUserDetails"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -138,6 +139,8 @@
         	session.setAttribute("userId", userId);
         	session.setAttribute("fullName", fullName);
         	session.setAttribute("userName", userName);
+        	RegisterUserDetails accountInfo = (RegisterUserDetails)request.getAttribute("studentDetails");
+        	session.setAttribute("userEmail", accountInfo.getEmail());
         %> 
         <input type="hidden" id="userId" value = <% out.println(session.getAttribute("userId")); %> />  
         <span class="nav-link clearfix d-none d-sm-inline-block">Welcome <% out.println(session.getAttribute("fullName")); %></span>
@@ -839,7 +842,7 @@
 	</section>
   
 <div id="mybutton">
-<a class="btn-floating btn-lg btn-default peach-gradient"><i class="fas fa-bolt"></i></a><span class="counter">9500</span>
+<a class="btn-floating btn-lg btn-default peach-gradient"><i class="fas fa-bolt"></i></a><span class="counter">${rewardPoints}</span>
 </div>
 
 
