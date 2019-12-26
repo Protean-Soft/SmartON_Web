@@ -31,6 +31,7 @@
   border-radius: 4px;
   border-color: #46b8da;
 }
+
 #mybutton {
   position: fixed;
   bottom: -4px;
@@ -170,38 +171,49 @@
     <!-- /.Navbar -->
   </header>
   <!--/.Double navigation-->
+
+
+
 <div class="modal fade" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
   <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
     <!--Content-->
     <div class="modal-content">
+
       <!--Header-->
       <div class="modal-header">
         <img src="img/cust/Photo/photo2.jpg" alt="avatar" class="rounded-circle img-responsive">
       </div>
       <!--Body-->
       <div class="modal-body text-center mb-1">
+
         <h5 class="mt-1 mb-2">Vladimir Putin</h5>
+
         <div class="md-form ml-0 mr-0">
           <input type="text" type="text" id="mail" class="form-control form-control-sm validate ml-0">
           <label data-error="wrong" data-success="right" for="mail" class="ml-0">Your Email</label>
         </div>
+
         <div class="md-form ml-0 mr-0">
           <input type="text" type="text" id="subject" class="form-control form-control-sm validate ml-0">
           <label data-error="wrong" data-success="right" for="subject" class="ml-0">Your subject</label>
         </div>
+
         <div class="md-form ml-0 mr-0">
           <input type="text" type="text" id="message" class="md-textarea form-control" rows="4">
           <label data-error="wrong" data-success="right" for="message" class="ml-0">Your Message</label>
         </div>
+
         <div class="text-center mt-4">
           <button class="btn btn-unique">Send Message <i class="fas fa-sign-in ml-1"></i></button>
         </div>
       </div>
+
     </div>
     <!--/.Content-->
   </div>
 </div>
+
 <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -218,21 +230,25 @@
           <input type="text" id="name" class="form-control validate">
           <label data-error="wrong" data-success="right" for="name">Your name</label>
         </div>
+
         <div class="md-form mb-5">
           <i class="fas fa-envelope prefix grey-text"></i>
           <input type="email" id="email" class="form-control validate">
           <label data-error="wrong" data-success="right" for="email">Your email</label>
         </div>
+
         <div class="md-form mb-5">
           <i class="fas fa-tag prefix grey-text"></i>
           <input type="text" id="sugges" class="form-control validate">
           <label data-error="wrong" data-success="right" for="sugges">Your suggestion to us</label>
         </div>
+
         <div class="md-form mb-5">
           <i class="fas fa-tag prefix grey-text"></i>
           <input type="text" id="feedback" class="form-control validate">
           <label data-error="wrong" data-success="right" for="feedback">Academic Feedback</label>
         </div>
+
       </div>
       <div class="modal-footer d-flex justify-content-center">
         <button class="btn btn-unique">Send <i class="fas fa-paper-plane-o ml-1"></i></button>
@@ -240,6 +256,8 @@
     </div>
   </div>
 </div>
+
+
 <!--Carousel Wrapper-->
 <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel" style="height:50%;">
   <!--Indicators-->
@@ -283,9 +301,14 @@
   <!--/.Controls-->
 </div>
 <!--/.Carousel Wrapper-->
+
+
+
 <main style="padding-top: 3% !important;">
 <div class="container">
   <h3 class="text-center font-weight-bold mb-4 pb-2">Our Feature Products</h3>	
+
+
       <!--First row-->
       <div class="row">
         
@@ -310,9 +333,12 @@
           
         </div>
         <!--First column-->
+
     </div>
     <!--First row-->
+
 <!--Tab panels-->
+
 <div class="tab-content">
  <!--Panel 1-->
  <div class="tab-pane fade show in active" id="panel11" role="tabpanel">
@@ -321,8 +347,10 @@
    <c:forEach var="listOfEvents" items="${listOfEvt}"  varStatus="loopCounter" begin = "0" end = "8">
      <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
     <div class="col-md">
+
 	<!-- Card Narrower -->
 	<div class="card card-cascade narrower" style="padding:1%;">
+
 	  <!-- Card image -->
 	  <div class="view view-cascade overlay">
 	    <img id="image-${loopCounter.index}" class="card-img-top" src="data:image/jpg;base64,${listOfEvents.base64Image}" alt="Card image cap">
@@ -330,11 +358,14 @@
 	      <div class="mask rgba-white-slight"></div>
 	    </a>
 	  </div>
+
 	  <!-- Card content -->
 	  <div class="card-body card-body-cascade text-center">
+
 	    <!-- Title -->
 	   
    
+
 	    <h4 class="card-title"><strong><c:out value="${listOfEvents.eventName}"/></strong></h4>
 	    <!-- Subtitle -->
 	    <h5 class="blue-text pb-2"><strong><c:out value="${listOfEvents.eventOrgName}"/></strong></h5>
@@ -346,6 +377,7 @@
 	    <%-- <p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <c:out value="${listOfEvents.eventDate}"/></span></p> --%>
 	     <p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <fmt:formatDate pattern="dd MMMM yyyy" value="${listOfEvents.eventDate}" /></span></p>
 	  
+
 <%-- <c:if test="${fn:contains(attenevts,listOfEvents.eventid)}"> --%>
     <c:choose>
     <c:when test="${fn:contains(attenevts,listOfEvents.eventid)==true}">
@@ -362,6 +394,7 @@
 	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
 	    <!-- Dribbble -->
 	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
+
 	  </div>
 	</div>
 	<!-- Card Narrower -->
@@ -369,10 +402,13 @@
   
     </c:forEach>
     </div>
+
   <div class="row" style="padding:1%;">
     </div>
  </div>
+
 <!--Panel 2-->
+
  <div class="tab-pane fade" id="panel12" role="tabpanel">
    <div class="row" style="padding:1%;">
   
@@ -380,8 +416,10 @@
     <c:if test="${listOfEvents.eventCatogery=='TECHNICALS'}">
      <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
     <div class="col-md">
+
 	<!-- Card Narrower -->
 	<div class="card card-cascade narrower" style="padding:1%;">
+
 	  <!-- Card image -->
 	  <div class="view view-cascade overlay">
 	    <img id="image-${loopCounter.index}" class="card-img-top" src="data:image/jpg;base64,${listOfEvents.base64Image}" alt="Card image cap">
@@ -389,11 +427,14 @@
 	      <div class="mask rgba-white-slight"></div>
 	    </a>
 	  </div>
+
 	  <!-- Card content -->
 	  <div class="card-body card-body-cascade text-center">
+
 	    <!-- Title -->
 	   
    
+
 	    <h4 class="card-title"><strong><c:out value="${listOfEvents.eventName}"/></strong></h4>
 	    <!-- Subtitle -->
 	    <h5 class="blue-text pb-2"><strong><c:out value="${listOfEvents.eventOrgName}"/></strong></h5>
@@ -405,6 +446,7 @@
 	    <%-- <p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <c:out value="${listOfEvents.eventDate}"/></span></p> --%>
 	     <p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <fmt:formatDate pattern="dd MMMM yyyy" value="${listOfEvents.eventDate}" /></span></p>
 	  
+
 <%-- <c:if test="${fn:contains(attenevts,listOfEvents.eventid)}"> --%>
     <c:choose>
     <c:when test="${fn:contains(attenevts,listOfEvents.eventid)==true}">
@@ -421,6 +463,7 @@
 	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
 	    <!-- Dribbble -->
 	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
+
 	  </div>
 	</div>
 	<!-- Card Narrower -->
@@ -428,6 +471,7 @@
   </c:if>
     </c:forEach>
     </div>
+
   <div class="row" style="padding:1%;">
     </div>
     
@@ -436,6 +480,7 @@
  
 	<!-- Card Narrower -->
   
+
 <!--Panel 3-->
 <div class="tab-pane fade" id="panel13" role="tabpanel">
    <div class="row" style="padding:1%;">
@@ -444,8 +489,10 @@
     <c:if test="${listOfEvents.eventCatogery=='LIFE STYLE CHOICES'}">
      <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
     <div class="col-md">
+
 	<!-- Card Narrower -->
 	<div class="card card-cascade narrower" style="padding:1%;">
+
 	  <!-- Card image -->
 	  <div class="view view-cascade overlay">
 	    <img id="image-${loopCounter.index}" class="card-img-top" src="data:image/jpg;base64,${listOfEvents.base64Image}" alt="Card image cap">
@@ -453,11 +500,14 @@
 	      <div class="mask rgba-white-slight"></div>
 	    </a>
 	  </div>
+
 	  <!-- Card content -->
 	  <div class="card-body card-body-cascade text-center">
+
 	    <!-- Title -->
 	   
    
+
 	    <h4 class="card-title"><strong><c:out value="${listOfEvents.eventName}"/></strong></h4>
 	    <!-- Subtitle -->
 	    <h5 class="blue-text pb-2"><strong><c:out value="${listOfEvents.eventOrgName}"/></strong></h5>
@@ -469,6 +519,7 @@
 	    <%-- <p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <c:out value="${listOfEvents.eventDate}"/></span></p> --%>
 	     <p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <fmt:formatDate pattern="dd MMMM yyyy" value="${listOfEvents.eventDate}" /></span></p>
 	  
+
 <%-- <c:if test="${fn:contains(attenevts,listOfEvents.eventid)}"> --%>
     <c:choose>
     <c:when test="${fn:contains(attenevts,listOfEvents.eventid)==true}">
@@ -485,6 +536,7 @@
 	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
 	    <!-- Dribbble -->
 	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
+
 	  </div>
 	</div>
 	<!-- Card Narrower -->
@@ -492,6 +544,7 @@
   </c:if>
     </c:forEach>
     </div>
+
   <div class="row" style="padding:1%;">
     </div>
     
@@ -505,8 +558,10 @@
     <c:if test="${listOfEvents.eventCatogery=='PERSONALITY DEVELOPMENTS'}">
      <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
     <div class="col-md">
+
 	<!-- Card Narrower -->
 	<div class="card card-cascade narrower" style="padding:1%;">
+
 	  <!-- Card image -->
 	  <div class="view view-cascade overlay">
 	    <img id="image-${loopCounter.index}" class="card-img-top" src="data:image/jpg;base64,${listOfEvents.base64Image}" alt="Card image cap">
@@ -514,11 +569,14 @@
 	      <div class="mask rgba-white-slight"></div>
 	    </a>
 	  </div>
+
 	  <!-- Card content -->
 	  <div class="card-body card-body-cascade text-center">
+
 	    <!-- Title -->
 	   
    
+
 	    <h4 class="card-title"><strong><c:out value="${listOfEvents.eventName}"/></strong></h4>
 	    <!-- Subtitle -->
 	    <h5 class="blue-text pb-2"><strong><c:out value="${listOfEvents.eventOrgName}"/></strong></h5>
@@ -530,6 +588,7 @@
 	    <%-- <p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <c:out value="${listOfEvents.eventDate}"/></span></p> --%>
 	     <p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <fmt:formatDate pattern="dd MMMM yyyy" value="${listOfEvents.eventDate}" /></span></p>
 	  
+
 <%-- <c:if test="${fn:contains(attenevts,listOfEvents.eventid)}"> --%>
     <c:choose>
     <c:when test="${fn:contains(attenevts,listOfEvents.eventid)==true}">
@@ -546,6 +605,7 @@
 	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
 	    <!-- Dribbble -->
 	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
+
 	  </div>
 	</div>
 	<!-- Card Narrower -->
@@ -553,6 +613,7 @@
   </c:if>
     </c:forEach>
     </div>
+
   <div class="row" style="padding:1%;">
     </div>
     
@@ -560,12 +621,17 @@
   
  </div>
  </div>
+
+
     <div class="text-center mt-4 mb-5">
       <a class="black-text font-weight-bold" href="#!">View all product <i class="fa fa-angle-right"></i></a>
     </div>
 </div>
+
+
 <!-- Card -->
 <div class="card card-image" style="background-image: url(img/cust/Card/card2.jpg);">
+
     <!-- Content -->
     <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
         <div>
@@ -576,9 +642,15 @@
     <!-- Content -->
 </div>
 <!-- Card -->
+
+
+
 <div class="container mt-5">
+
+
   <!--Section: Content-->
   <section class="dark-grey-text text-center">
+
     <style>
       .md-pills .nav-link.active {
         background-color: #3f51b5;
@@ -614,15 +686,18 @@
           
         </div>
         <!--First column-->
+
     </div>
     <!--First row-->
     
     <!--Tab panels-->
     <div class="tab-content">
+
       <!--Panel 1-->
       <div class="tab-pane fade show in active" id="panel31" role="tabpanel">
 		<!--Carousel Wrapper-->
 		<div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
+
 		  <!--Controls-->
 		  <div class="controls-top">
 		    <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
@@ -630,6 +705,7 @@
 			class="fas fa-chevron-right"></i></a>
 		  </div>
 		  <!--/.Controls-->
+
 		  <!--Indicators-->
 		  <ol class="carousel-indicators">
 		    <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
@@ -637,8 +713,10 @@
 		    <li data-target="#multi-item-example" data-slide-to="2"></li>
 		  </ol>
 		  <!--/.Indicators-->
+
 		  <!--Slides-->
 		  <div class="carousel-inner" role="listbox">
+
 		    <!--First slide-->
 		    <div class="carousel-item active">
 <c:forEach var="listOfEvents1" items="${listOfEvt}"  varStatus="loopCounter">
@@ -1057,6 +1135,7 @@
  
 			$(document).ready(function() {
 				$(".button-collapse").sideNav();
+
 				/**
 				 * ========= FETCH PROFILE PICS ========== 
 				 */
