@@ -70,7 +70,9 @@ public class StudentPortalController {
 		RegisterUserDetails regDetails = studentService.getLogonDetails(userName);
 		model.addAttribute("studentDetails", regDetails);
 		model.addAttribute("userName", userName);
-		model.addAttribute("fullName",regDetails.getFirstName() + " " + regDetails.getLastName());
+		model.addAttribute("fullName",regDetails.getFirstName().substring(0, 1).toUpperCase() + regDetails.getFirstName().substring(1)  
+				+ " " + regDetails.getLastName());
+		model.addAttribute("rewardPoints", regDetails.getRewpoints());
 		String mailId = regDetails.getEmail();
 		long userId = regDetails.getUserId();
 		model.addAttribute("userId",userId);
@@ -90,7 +92,7 @@ public class StudentPortalController {
 	    System.out.println("evtbyUser........."+evtbyUser);
 		List<EventDetails> evt1=new ArrayList<EventDetails>();
 		Iterator ir=evt.listIterator();
-		while(ir.hasNext()) {
+		while(ir.hasNext()	) {
 			EventDetails evtdet=(EventDetails) ir.next();
 			System.out.println(evtdet.getEventid()+"===="+evtdet.getEventName()+"======="+evtdet.getEventImage());
 			if(evtdet.getEventImage()!=null) {

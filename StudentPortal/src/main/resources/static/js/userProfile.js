@@ -44,7 +44,7 @@ $(document).ready(function() {
 				type : 'POST',	
 				data : userDetailsForm,
 				success : function(data) {					
-					alert("user details " + JSON.stringify(data));
+					//alert("user details " + JSON.stringify(data));
 					location.reload();
 				}
 			});
@@ -76,7 +76,7 @@ $(document).ready(function() {
 		/**
 		 * ========= FETCH PROFILE PICS ========== 
 		 */
-		var userId = $("#userId").val();
+		/**var userId = $("#userId").val();
 		$.ajax({
 			url : 'tag/userProfile/getProfilePic?userId=' + userId ,
 			type : 'GET',
@@ -89,6 +89,6 @@ $(document).ready(function() {
 			},
 			error : function() {
 			}
-		});		
+		});	*/	
 
 });
