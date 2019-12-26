@@ -82,6 +82,31 @@ function registerEvent12(){
 }
 
 
+function viewAllProduct(){
+	console.log("Success......");
+	//var formData =  $('#registerForm1').serialize();  
+	
+	var userId=1;
+	$.ajax({
+		url : './StudentPortal/Event/viewAllProduct',
+		type: 'GET',
+		/*dataType: 'TEXT',
+		processData: false,
+		contentType: false,	*/ 	
+		async: false,
+		dataType: 'TEXT',
+		success: function(page){
+			$('#payFormDiv').html("");
+			$('#payFormDiv').html(page);
+		},
+		error : function() {
+			alert("Limit exceed*******************");
+		}
+		});
+	
+}
+
+
 
 
 
