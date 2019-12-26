@@ -80,4 +80,23 @@ public class MailSenderService {
 	}
 
 	}
+
+	public void sendEmailToReddemOffer(String mailID, String adminEmail, String name,String offerTitle) {
+		SimpleMailMessage reedemMail = new SimpleMailMessage();
+		reedemMail.setTo(adminEmail);
+		reedemMail.setCc(mailID);
+		reedemMail.setSubject("User wants to use the offer");
+		
+		String body = "Hey Admin\r\n " + name + " reached 10000 reward points now he wants to use " + offerTitle + "\r\n"
+
+		+"\r\n\r\n"
+
+		+"Thanks & Regards\r\n"
+
+		+"Team TagAcademy\r\n";
+
+		
+		reedemMail.setText(body);
+		jms.send(reedemMail);
+	}
 }

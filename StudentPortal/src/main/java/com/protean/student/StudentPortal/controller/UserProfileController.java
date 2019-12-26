@@ -3,10 +3,15 @@ package com.protean.student.StudentPortal.controller;
 import java.io.IOException;
 import java.util.Optional;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.mail.MailException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,11 +20,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.protean.student.StudentPortal.model.EmailNotFound;
 import com.protean.student.StudentPortal.model.ImageModel;
 import com.protean.student.StudentPortal.model.InvalidUserDetailsException;
 import com.protean.student.StudentPortal.model.RegisterUserDetails;
 import com.protean.student.StudentPortal.model.ResourceNotFoundException;
 import com.protean.student.StudentPortal.repository.ImageRepository;
+import com.protean.student.StudentPortal.repository.RegistrationDao;
+import com.protean.student.StudentPortal.service.MailSenderService;
 import com.protean.student.StudentPortal.service.StudentUserDetailsService;
 import com.protean.student.StudentPortal.util.commonUtils;
 
@@ -34,6 +42,16 @@ public class UserProfileController {
 	
 	@Autowired
 	ImageRepository imageRepository;
+	
+	@Autowired
+	RegistrationDao registrationDao;
+	
+	@Autowired
+	MailSenderService mailSenderService;
+	
+	@Value("${admin.email}")
+	private String adminEmail;
+	
 
 
 	/**
@@ -158,5 +176,19 @@ public class UserProfileController {
 		} else {
 			return new ImageModel();
 		}		
+	}
+	
+	@PostMapping(value = "/redeemOffers")
+	public String send(@RequestParam("emailId") String mailID,@RequestParam(value="offerTitle") String title) throws MessagingException {
+		try {
+			RegisterUserDetails registerUserDetails = registrationDao.findByEmail(mailID);
+			String name = registerUserDetails.getFirstName().substring(0, 1).toUpperCase() + registerUserDetails.getFirstName().substring(1);
+			mailSenderService.sendEmailToReddemOffer(mailID,adminEmail,name,title);
+			return "Congratulations! Admin will reach you.";
+		} catch (MailException mailException) {
+			System.out.println(mailException);
+			return mailException.getLocalizedMessage();
+		}
+		
 	}
 }

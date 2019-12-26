@@ -20,140 +20,17 @@
 
 <body class="hidden-sn mdb-skin">
 
-  <!--Double navigation-->
-  <header>
-    <!-- Sidebar navigation -->
-    <div id="slide-out" class="side-nav sn-bg-4">
-      <ul class="custom-scrollbar">
-        <!-- Logo -->
-        <li>
-          <div class="logo-wrapper waves-light">
-            <a href="#"><img src="img/cust/logoTrans.png" class="img-fluid flex-center" height="150" width="150" style="margin-left: 15%;"></a>
-          </div>
-        </li>
-        <!--/. Logo -->
-        <!--Social-->
-        <li>
-          <ul class="social">
-            <li><a href="#" class="icons-sm fb-ic"><i class="fab fa-facebook-f"> </i></a></li>
-            <li><a href="#" class="icons-sm pin-ic"><i class="fab fa-pinterest"> </i></a></li>
-            <li><a href="#" class="icons-sm gplus-ic"><i class="fab fa-google-plus-g"> </i></a></li>
-            <li><a href="#" class="icons-sm tw-ic"><i class="fab fa-twitter"> </i></a></li>
-          </ul>
-        </li>
-        <!--/Social-->
-        <!--Search Form-->
-        <li>
-          <form class="search-form" role="search">
-            <div class="form-group md-form mt-0 pt-1 waves-light">
-              <input type="text" class="form-control" placeholder="Search">
-            </div>
-          </form>
-        </li>
-        <!--/.Search Form-->
-        <!-- Side navigation links -->
-        <li>
-          <ul class="collapsible collapsible-accordion">
-            <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-chevron-right"></i> About Us
-		</a>
-              <!--<div class="collapsible-body">
-                <ul>
-                  <li><a href="#" class="waves-effect">About Us - Submenu1</a>
-                  </li>
-                  <li><a href="#" class="waves-effect">About Us - Submenu2</a>
-                  </li>
-                </ul>
-              </div>-->
-            </li>
-            <!--<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-hand-point-up"></i>
-                Product<i class="fas fa-angle-down rotate-icon"></i></a>
-              <div class="collapsible-body">
-                <ul>
-                  <li><a href="#" class="waves-effect">Product - Submenu1</a>
-                  </li>
-                  <li><a href="#" class="waves-effect">Product - Submenu2</a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-eye"></i> Workshop<i class="fas fa-angle-down rotate-icon"></i></a>
-              <div class="collapsible-body">
-                <ul>
-                  <li><a href="#" class="waves-effect">Workshop - Submenu1</a>
-                  </li>
-                  <li><a href="#" class="waves-effect">Workshop - Submenu1</a>
-                  </li>
-                </ul>
-              </div>
-            </li>-->
-            <li><a class="collapsible-header waves-effect arrow-r" data-toggle="modal" data-target="#modalLoginAvatar"><i class="fas fa-envelope"></i> Contact me</a>
-            </li>
-          </ul>
-        </li>
-        <!--/. Side navigation links -->
-      </ul>
-      <div class="sidenav-bg mask-strong"></div>
-    </div>
-    <!--/. Sidebar navigation -->
-    <!-- Navbar -->
-    <nav class="navbar fixed-top navbar-toggleable-md navbar-expand-lg scrolling-navbar double-nav">
-      <!-- SideNav slide-out button -->
-      <div class="float-left">
-        <a href="#" data-activates="slide-out" class="button-collapse"><i class="fas fa-bars"></i></a>
-      </div>
-      <!-- Breadcrumb-->
-      <div class="breadcrumb-dn mr-auto" style="margin-left: 1%;">
-        <a href="#"><img src="img/cust/logoTrans.png" class="img-fluid flex-center" height="50" width="50"></a>
-      </div>
-      <ul class="nav navbar-nav nav-flex-icons ml-auto">
-        <li class="nav-item">
-          <a class="nav-link"><i class="far fa-comments"></i> <span class="clearfix d-none d-sm-inline-block">Support</span></a>
-        </li>
-        <li class="nav-item">
-         <span class="nav-link clearfix d-none d-sm-inline-block">Welcome Mr Putin </span>
-        </li>
-        <!--<li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Dropdown
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>-->
-      <li class="nav-item avatar dropdown">
-        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          <img src="img/cust/Photo/photo2.jpg" class="rounded-circle z-depth-0"
-            alt="avatar image">
-        </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#"><i class="far fa-user"></i> My Account</a>
-            <a class="dropdown-item" href="#"><i class="fas fa-key"></i> Change Password</a>
-            <a class="dropdown-item" href="#"><i class="fas fa-fingerprint"></i> Log Off</a>
-          </div>
-      </li>
-      </ul>
-    </nav>
-    <!-- /.Navbar -->
-  </header>
-  <!--/.Double navigation-->
-
-
-
-<div class="modal fade" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<!-- <div class="modal fade" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
   <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
-    <!--Content-->
+    Content
     <div class="modal-content">
 
-      <!--Header-->
+      Header
       <div class="modal-header">
         <img src="img/cust/Photo/photo2.jpg" alt="avatar" class="rounded-circle img-responsive">
       </div>
-      <!--Body-->
+      Body
       <div class="modal-body text-center mb-1">
 
         <h5 class="mt-1 mb-2">Vladimir Putin</h5>
@@ -179,14 +56,11 @@
       </div>
 
     </div>
-    <!--/.Content-->
+    /.Content
   </div>
 </div>
-
-
-
-
-
+ -->
+ <%@ include file="navigationbar.jsp" %>
 
 <main style="padding-top: 5%;">
 
@@ -222,7 +96,7 @@
 	    <!-- Title -->
 	    <h2 class="card-header-title mb-3">Offer One Title</h2>
 	    <!-- Text -->
-	    <p class="mb-0"><i class="fas fa-calendar mr-2"></i>Valid till: 26.07.2017</p>
+	    <p class="mb-0"><i class="fas fa-calendar mr-2"></i>Valid till: 31-12-2030</p>
 	  </div>
 	  <!-- Card content -->
 	  <div class="card-body card-body-cascade text-center">
@@ -245,7 +119,7 @@
 	    <!-- Title -->
 	    <h2 class="card-header-title mb-3">Offer two Title</h2>
 	    <!-- Text -->
-	    <p class="mb-0"><i class="fas fa-calendar mr-2"></i>Valid till: 26.07.2017</p>
+	    <p class="mb-0"><i class="fas fa-calendar mr-2"></i>Valid till: 31-12-2030</p>
 	  </div>
 	  <!-- Card content -->
 	  <div class="card-body card-body-cascade text-center">
@@ -268,7 +142,7 @@
 	    <!-- Title -->
 	    <h2 class="card-header-title mb-3">Offer three Title</h2>
 	    <!-- Text -->
-	    <p class="mb-0"><i class="fas fa-calendar mr-2"></i>Valid till: 26.07.2017</p>
+	    <p class="mb-0"><i class="fas fa-calendar mr-2"></i>Valid till: 31-12-2030</p>
 	  </div>
 	  <!-- Card content -->
 	  <div class="card-body card-body-cascade text-center">
@@ -297,7 +171,7 @@
 	    <!-- Title -->
 	    <h2 class="card-header-title mb-3">Offer four Title</h2>
 	    <!-- Text -->
-	    <p class="mb-0"><i class="fas fa-calendar mr-2"></i>Valid till: 26.07.2017</p>
+	    <p class="mb-0"><i class="fas fa-calendar mr-2"></i>Valid till: 31-12-2030</p>
 	  </div>
 	  <!-- Card content -->
 	  <div class="card-body card-body-cascade text-center">
@@ -320,7 +194,7 @@
 	    <!-- Title -->
 	    <h2 class="card-header-title mb-3">Offer five Title</h2>
 	    <!-- Text -->
-	    <p class="mb-0"><i class="fas fa-calendar mr-2"></i>Valid till: 26.07.2017</p>
+	    <p class="mb-0"><i class="fas fa-calendar mr-2"></i>Valid till: 31-12-2030</p>
 	  </div>
 	  <!-- Card content -->
 	  <div class="card-body card-body-cascade text-center">
@@ -343,7 +217,7 @@
 	    <!-- Title -->
 	    <h2 class="card-header-title mb-3">Offer six Title</h2>
 	    <!-- Text -->
-	    <p class="mb-0"><i class="fas fa-calendar mr-2"></i>Valid till: 26.07.2017</p>
+	    <p class="mb-0"><i class="fas fa-calendar mr-2"></i>Valid till: 31-12-2030</p>
 	  </div>
 	  <!-- Card content -->
 	  <div class="card-body card-body-cascade text-center">
@@ -535,23 +409,40 @@
 <!-- Footer -->
 
 </main>
-
-  <!-- jQuery -->
-  <script type="text/javascript" src="js/jquery.min.js"></script>
+	
+   <!-- jQuery -->
+  <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
   <!-- Bootstrap tooltips -->
-  <script type="text/javascript" src="js/popper.min.js"></script>
+  <script src="vendor/bootstrap/js/popper.js"></script>	
   <!-- Bootstrap core JavaScript -->
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
   <!-- MDB core JavaScript -->
-  <script type="text/javascript" src="js/mdb.min.js"></script>
-  <script src="js/addons/rating.min.js"></script>   
+  <script type="text/javascript" src="vendor/bootstrap/js/mdb.min.js"></script>
+    
   <!-- Your custom scripts (optional) -->
-  <script type="text/javascript">
-	$(".button-collapse").sideNav();
-        $(document).ready(function() {
-  	   $('#rateMe1').mdbRate();
-	});
-  </script>
+  <script type="text/javascript">     
+			$(document).ready(function() {
+				$(".button-collapse").sideNav();
+				//$('#rateMe1').mdbRate();
+				$("a h5").on("click", function() {
+					var title =  $(this).parent().parent().parent().find('h2').text();
+					var expireDate = $(this).parent().parent().parent().find('p').text();
+					var email = $("#email").val();
+					//alert(email);
+					//var json = {'emailId='+  email,'offerTitle='+ title}
+					// repeated code move to common js
+					$.ajax({
+			    		url: 'tag/userProfile/redeemOffers?emailId='+email+'&offerTitle='+title,
+			    		type: 'POST',
+			    		processData: false,
+			    		contentType: false,
+			    		success: function(data){
+			    			alert(JSON.stringify(data));
+			    		}
+			    	});
+				});
+			});
+		</script>
 
 </body>
 </html>
