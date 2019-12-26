@@ -169,18 +169,18 @@
         <h5 class="mt-1 mb-2">Vladimir Putin</h5>
 
         <div class="md-form ml-0 mr-0">
-          <input type="text" type="text" id="form29" class="form-control form-control-sm validate ml-0">
-          <label data-error="wrong" data-success="right" for="form29" class="ml-0">Your Email</label>
+          <input type="text" type="text" id="mail" class="form-control form-control-sm validate ml-0">
+          <label data-error="wrong" data-success="right" for="mail" class="ml-0">Your Email</label>
         </div>
 
         <div class="md-form ml-0 mr-0">
-          <input type="text" type="text" id="form29" class="form-control form-control-sm validate ml-0">
-          <label data-error="wrong" data-success="right" for="form29" class="ml-0">Your subject</label>
+          <input type="text" type="text" id="subject" class="form-control form-control-sm validate ml-0">
+          <label data-error="wrong" data-success="right" for="subject" class="ml-0">Your subject</label>
         </div>
 
         <div class="md-form ml-0 mr-0">
-          <input type="text" type="text" id="form29" class="md-textarea form-control" rows="4">
-          <label data-error="wrong" data-success="right" for="form29" class="ml-0">Your Message</label>
+          <input type="text" type="text" id="message" class="md-textarea form-control" rows="4">
+          <label data-error="wrong" data-success="right" for="message" class="ml-0">Your Message</label>
         </div>
 
         <div class="text-center mt-4">

@@ -36,6 +36,7 @@ import com.protean.student.StudentPortal.repository.RegistrationDao;
 import com.protean.student.StudentPortal.service.EventDetailsService;
 import com.protean.student.StudentPortal.service.EventRegisterService;
 import com.protean.student.StudentPortal.service.MailSenderService;
+import com.protean.student.StudentPortal.service.StudentUserDetailsService;
 import com.protean.student.StudentPortal.serviceImpl.EventRegisterServiceImpl;
 import com.protean.student.StudentPortal.util.commonUtils;
 
@@ -63,6 +64,10 @@ public class EventDetailsController {
 	
 	@Autowired
 	EventRegisterServiceImpl eventreg;
+	
+	@Autowired
+	StudentUserDetailsService studentService;
+	
 
 	/* Add multiple events */
 	@PostMapping(value = "/addEvent") /* Insert and update list of records */
@@ -130,6 +135,7 @@ System.out.println("noofeventatt=========="+noofeventatt);
 	@GetMapping(value = "getOngoingEvents",produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ModelAndView getAllNonDeletedEvents(ModelMap model) {
+		System.out.println("Successfully Registerd..............");
 		List<EventDetails> evt=eventDetailsService.findAllByDeletedflag();
 		List<EventDetails> evt1=new ArrayList<EventDetails>();
 		Iterator ir=evt.listIterator();
@@ -142,13 +148,52 @@ System.out.println("noofeventatt=========="+noofeventatt);
 		}
 			evt1.add(evtdet);
 		}
-		//ModelAndView model=new ModelAndView();
+		RegisterUserDetails regDetails = studentService.getLogonDetails("andrew");
+		
+		model.addAttribute("studentDetails", regDetails);
+		model.addAttribute("userName", regDetails.getFirstName());
+		model.addAttribute("fullName",regDetails.getFirstName() + " " + regDetails.getLastName());
+		String mailId = regDetails.getEmail();
+		long userId = regDetails.getUserId();
+		model.addAttribute("userId",userId);
 		model.addAttribute("listOfEvt",evt1);
 		//model.setViewName("index.jsp");
 		return new ModelAndView("redirect:/index.jsp", model);
 		//return model;
 	}
 
+	@GetMapping(value = "viewAllProduct",produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ModelAndView viewAllProduct(ModelMap model) {
+		System.out.println("Successfully Registerd..............");
+		List<EventDetails> evt=eventDetailsService.findAllByDeletedflag();
+		List<EventDetails> evt1=new ArrayList<EventDetails>();
+		Iterator ir=evt.listIterator();
+		while(ir.hasNext()) {
+			EventDetails evtdet=(EventDetails) ir.next();
+			System.out.println(evtdet.getEventid()+"===="+evtdet.getEventName()+"======="+evtdet.getEventImage());
+			if(evtdet.getEventImage()!=null) {
+				String base64Image=commonutil.Covertbase64(evtdet.getEventImage());
+			evtdet.setBase64Image(base64Image);
+		}
+			evt1.add(evtdet);
+		}
+		RegisterUserDetails regDetails = studentService.getLogonDetails("andrew");
+		
+		model.addAttribute("studentDetails", regDetails);
+		model.addAttribute("userName", regDetails.getFirstName());
+		model.addAttribute("fullName",regDetails.getFirstName() + " " + regDetails.getLastName());
+		String mailId = regDetails.getEmail();
+		long userId = regDetails.getUserId();
+		model.addAttribute("userId",userId);
+		model.addAttribute("listOfEvt",evt1);
+		//model.setViewName("index.jsp");
+		return new ModelAndView("redirect:/products.jsp", model);
+		//return model;
+	}
+
+	
+	
 	/* Listout event based on catagory and type of events */
 	@GetMapping(value = "/getOngoingEventsByCatogery/{catogery}/{type}")
 	public List<EventDetails> getOngoingEventsByCatogery(@PathVariable String catogery, @PathVariable String type) {

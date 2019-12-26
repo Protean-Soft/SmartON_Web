@@ -103,7 +103,11 @@ function Callmainpage(){
 		contentType: false,	*/ 	
 		async: false,
 		success : function(reponse) {
-			alert("Successs");
+		$('#payFormDiv').html(reponse);
+			alert("Successs:::::"+reponse);
+		},
+		error : function() {
+			alert("Limit exceed*******************");
 		}
 		});
 }
