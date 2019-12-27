@@ -28,6 +28,23 @@ public class EventDetailsServiceImpl implements EventDetailsService {
 				return eventsDetailsRepository.save(eventdetails);
 	}
 	
+	public String addEventDetailUpdate(EventDetails eventdetails) {
+		String msg = null;
+		if(eventdetails.getEventid()!=null && eventdetails.getEventImage()!=null ) {		
+		Long eventid=eventdetails.getEventid();
+		byte[] eventimage=eventdetails.getEventImage();
+		int res=eventsDetailsRepository.updateEventDetail(eventid,eventimage);
+		System.out.println("Response of update:::::"+res);
+		if(res==1) {
+			msg="Updated record successfully";
+		}
+		else {
+			msg="Problem in updating image contact admin";
+		}
+		}
+		return msg;
+}
+	
 	@Override
 	public EventDetails getEventById(Long eventId) {
 		return eventsDetailsRepository.findByEventid(eventId);
@@ -58,8 +75,11 @@ public class EventDetailsServiceImpl implements EventDetailsService {
 	}
 
 	@Override
-	public List<EventDetails> findAllByDeletedflag(Long flag) {
+	public List<EventDetails> findAllByDeletedflag() {
+		long flag = 0;
 		// TODO Auto-generated method stub
+		
+		
 		return (List<EventDetails>) eventsDetailsRepository.findAllByDeletedflag(flag);
 	}
 

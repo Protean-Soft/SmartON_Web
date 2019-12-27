@@ -1,28 +1,41 @@
 package com.protean.student.StudentPortal.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.protean.student.StudentPortal.model.EventDetails;
+import com.protean.student.StudentPortal.model.EventRegister;
 import com.protean.student.StudentPortal.model.RegisterUserDetails;
 import com.protean.student.StudentPortal.model.TransactionDetails;
 import com.protean.student.StudentPortal.repository.PaymentDao;
 import com.protean.student.StudentPortal.repository.RegistrationDao;
+import com.protean.student.StudentPortal.service.EventDetailsServiceImpl;
 import com.protean.student.StudentPortal.service.MailSenderService;
 import com.protean.student.StudentPortal.service.PaymentService;
 import com.protean.student.StudentPortal.service.StudentUserDetailsService;
+import com.protean.student.StudentPortal.serviceImpl.EventRegisterServiceImpl;
+import com.protean.student.StudentPortal.util.commonUtils;
 
 @Controller
 public class StudentPortalController {
@@ -40,13 +53,29 @@ public class StudentPortalController {
 	@Autowired
 	PaymentService paymentService;
 	
-	@RequestMapping("/")
-	public String home(Authentication authentication,Model model){
+	@Autowired 
+	EventDetailsServiceImpl event;
+	
+	
+	@Autowired 
+	EventRegisterServiceImpl evtreg;
+	 
+	
+	@Autowired
+	commonUtils common;
+	
+	@RequestMapping(value="/",produces = MediaType.APPLICATION_JSON_VALUE)
+	public String home(Authentication authentication,Model model) throws UnsupportedEncodingException{
 		String userName = authentication.getName();
 		RegisterUserDetails regDetails = studentService.getLogonDetails(userName);
 		model.addAttribute("studentDetails", regDetails);
 		model.addAttribute("userName", userName);
+		model.addAttribute("fullName",regDetails.getFirstName().substring(0, 1).toUpperCase() + regDetails.getFirstName().substring(1)  
+				+ " " + regDetails.getLastName());
+		model.addAttribute("rewardPoints", regDetails.getRewpoints());
 		String mailId = regDetails.getEmail();
+		long userId = regDetails.getUserId();
+		model.addAttribute("userId",userId);
 		TransactionDetails transDetails = paymentService.getByMailId(mailId);
 		if(transDetails != null) {
 			if(!transDetails.getStatus().equals("success") && transDetails.getProductinfo().equals("PremiumUser") && regDetails.getIsPremium().equals("premium")) {
@@ -57,7 +86,26 @@ public class StudentPortalController {
 			regDetails.setIsPremium("guest");
 			studentService.updateUserDetails(regDetails);
 		}
-		return "dashboard.jsp";
+		
+		List<EventDetails> evt=event.findAllByDeletedflag();
+		 List<Long> evtbyUser=evtreg.getEventRegisterEventByuserId(userId); 
+	    System.out.println("evtbyUser........."+evtbyUser);
+		List<EventDetails> evt1=new ArrayList<EventDetails>();
+		Iterator ir=evt.listIterator();
+		while(ir.hasNext()	) {
+			EventDetails evtdet=(EventDetails) ir.next();
+			System.out.println(evtdet.getEventid()+"===="+evtdet.getEventName()+"======="+evtdet.getEventImage());
+			if(evtdet.getEventImage()!=null) {
+				String base64Image=common.Covertbase64(evtdet.getEventImage());
+			evtdet.setBase64Image(base64Image);
+			}
+			evt1.add(evtdet);
+			
+					
+		}
+		model.addAttribute("attenevts", evtbyUser);
+		model.addAttribute("listOfEvt",evt1);
+		return "index.jsp";
 	}
 	
 	@RequestMapping("/login")
@@ -74,6 +122,19 @@ public class StudentPortalController {
 	 * @RequestMapping("/register") public String register(){
 	 * System.out.println("register"); return "register.html"; }
 	 */
+	
+
+	/* List event details based on event id */
+	@RequestMapping(value="/getEventDetail/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+	//@GetMapping(value = "/getEventDetail/{id}")
+	public String getEventById(@PathVariable Long id,Model model) {
+		System.out.println("Enterd into eventdetail");
+		EventDetails evt=event.getEventById(id);
+		model.addAttribute(evt);
+		System.out.println("Response...."+evt);		
+		return "confirmation.jsp";
+				
+	}
 	
 	@RequestMapping("/registerUser")
 	@ResponseBody

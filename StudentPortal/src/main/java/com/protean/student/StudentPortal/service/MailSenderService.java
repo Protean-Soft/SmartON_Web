@@ -7,6 +7,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import com.protean.student.StudentPortal.model.EventDetails;
 import com.protean.student.StudentPortal.model.RegisterUserDetails;
 
 @Service
@@ -52,5 +53,50 @@ public class MailSenderService {
 
 		jms.send(passwordResetEmail);
 
+	}
+	
+	
+	public void sendEmailRegisterevent(RegisterUserDetails userinfo,EventDetails evtdet) throws MessagingException {
+		if(userinfo.getFirstName()!="" && userinfo.getEmail()!="" && userinfo.getNoofevtallowed()!=null &&  evtdet.getEventName()!="" && evtdet.getEventVenue()!="" && evtdet.getEventDate()!=null) {
+			
+		
+		SimpleMailMessage msg = new SimpleMailMessage();
+		msg.setTo(userinfo.getEmail());
+
+		msg.setSubject("Thank You for Register in Event #");
+
+		String body = "Hi "+userinfo.getFirstName()+" \r\n"
+				+"You have successfully registered for "+evtdet.getEventName()+" with was venued at "+evtdet.getEventVenue()+" on "+evtdet.getEventDate()+"\r\n"
+
+		+"Please be on time for your event. \r\n\r\n\r\n"
+
+		+"Thanks & Regards\r\n"
+
+		+"Team TagAcademy\r\n";
+		
+
+		msg.setText(body);
+		jms.send(msg);
+	}
+
+	}
+
+	public void sendEmailToReddemOffer(String mailID, String adminEmail, String name,String offerTitle) {
+		SimpleMailMessage reedemMail = new SimpleMailMessage();
+		reedemMail.setTo(adminEmail);
+		reedemMail.setCc(mailID);
+		reedemMail.setSubject("User wants to use the offer");
+		
+		String body = "Hey Admin\r\n " + name + " reached 10000 reward points now he wants to use " + offerTitle + "\r\n"
+
+		+"\r\n\r\n"
+
+		+"Thanks & Regards\r\n"
+
+		+"Team TagAcademy\r\n";
+
+		
+		reedemMail.setText(body);
+		jms.send(reedemMail);
 	}
 }

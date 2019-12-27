@@ -3,6 +3,8 @@ package com.protean.student.StudentPortal.service;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 
@@ -28,11 +30,15 @@ public interface EventDetailsService {
 	public int deleteEventDetail(Long eventid);
 
 	
-	List<EventDetails> findAllByDeletedflag(Long flag);
+	
 
 	
 	  public List<EventDetails> getOngoingEventsByCatogery(String catogery, String
 	  type);
+
+	List<EventDetails> findAllByDeletedflag();
+
+	public String addEventDetailUpdate(@Valid EventDetails eventdetails);
 
 	
 	 

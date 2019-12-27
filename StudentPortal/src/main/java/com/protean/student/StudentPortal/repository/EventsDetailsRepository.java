@@ -47,6 +47,12 @@ public interface EventsDetailsRepository extends JpaRepository<EventDetails, Lon
     @Modifying
     @Query(value = "Select * from event_Details e where e.event_catogery =:catogery and e.event_type = :type",nativeQuery = true)
 	List<EventDetails> findAllByEventCategoryandType(@Param("catogery") String catogery,@Param("type") String type);
+	
+	
+	@Transactional
+    @Modifying
+    @Query(value = "Update  event_Details set event_image=:eventimage where eventid=:eventid",nativeQuery = true)
+	int updateEventDetail(@Param("eventid") Long eventid,@Param("eventimage") byte[] eventimage);
 
 	//List<EventDetails> findAllByDeletedflag(Long flag);
 	

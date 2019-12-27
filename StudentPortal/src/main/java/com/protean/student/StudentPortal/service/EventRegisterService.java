@@ -13,6 +13,12 @@ public interface EventRegisterService {
 
 	public List<EventRegister> UpdateEventRegisterAttendence(List<EventRegister> evtregDetails);
 
-	public String addEventRegistrationDetail(EventRegister eventregister); 
+	public String addEventRegistrationDetail(EventRegister eventregister);
+
+	Long getnoofregistrationstudent(Long id);
+
+	Long getnoofregistrationevent(Long id);
+
+	List<Long> getEventRegisterEventByuserId(Long id); 
 
 }
