@@ -41,7 +41,67 @@
 </head>
 
 <body class="hidden-sn mdb-skin">
-<div id='PopUp'></div>
+<style>
+
+#ac-wrapper {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(255,255,255,.6);
+z-index: 1001;
+}
+#popup{
+width: 95%;
+height: 90%;
+background: #FFFFFF;
+border: 5px solid #000;
+border-radius: 25px;
+-moz-border-radius: 25px;
+-webkit-border-radius: 25px;
+box-shadow: #64686e 0px 0px 3px 3px;
+-moz-box-shadow: #64686e 0px 0px 3px 3px;
+-webkit-box-shadow: #64686e 0px 0px 3px 3px;
+position: relative;
+top: 65px; left: 50px;
+}
+/* .outer {
+  position: absolute;
+  width: 98%;
+  border: 1px solid red;
+} */
+/* .relative {
+  position: relative;
+} */
+.inner {
+  height: 100%;
+  overflow-y: auto;
+} 
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+</style>
+<div id="ac-wrapper" style="display:none">
+<div class="outer">
+  <div class="relative">
+    <div class="close">X</div>
+    
+  <div id="popup">
+  <div class="inner">
+  <center>
+  <div id="conformation"></div>
+   <!--  <h2>Popup Content Here</h2>
+      <input type="submit" name="submit" value="Submit" onClick="PopUp()" /> -->
+  </center>
+  </div>
+  </div>
+  </div>
+  </div>
+</div>
   <!--Double navigation-->
   <header>
     <!-- Sidebar navigation -->
@@ -411,10 +471,12 @@
 
  <div class="tab-pane fade" id="panel12" role="tabpanel">
    <div class="row" style="padding:1%;">
-  
+  <c:set var="count"  value="${0}"/>  
    <c:forEach var="listOfEvents" items="${listOfEvt}"  varStatus="loopCounter" >
     <c:if test="${listOfEvents.eventCatogery=='TECHNICALS'}">
-     <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
+      <c:if test="${count<9}">
+     <c:if test="${count % 3 == 0}"></div> <div class="row" style="padding:1%;"></c:if>
+     <c:set var="count" value="${count+1}"/> 
     <div class="col-md">
 
 	<!-- Card Narrower -->
@@ -469,8 +531,10 @@
 	<!-- Card Narrower -->
     </div>
   </c:if>
+  </c:if>
     </c:forEach>
     </div>
+    
 
   <div class="row" style="padding:1%;">
     </div>
@@ -484,10 +548,12 @@
 <!--Panel 3-->
 <div class="tab-pane fade" id="panel13" role="tabpanel">
    <div class="row" style="padding:1%;">
-  
+   <c:set var="count"  value="${0}"/> 
    <c:forEach var="listOfEvents" items="${listOfEvt}"  varStatus="loopCounter" >
     <c:if test="${listOfEvents.eventCatogery=='LIFE STYLE CHOICES'}">
-     <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
+      <c:if test="${count<9}">
+     <c:if test="${count % 3 == 0}"></div> <div class="row" style="padding:1%;"></c:if>
+     <c:set var="count" value="${count+1}"/> 
     <div class="col-md">
 
 	<!-- Card Narrower -->
@@ -541,6 +607,7 @@
 	</div>
 	<!-- Card Narrower -->
     </div>
+  </c:if>
   </c:if>
     </c:forEach>
     </div>
@@ -553,13 +620,14 @@
  <!--Panel 4-->
  <div class="tab-pane fade" id="panel14" role="tabpanel">
    <div class="row" style="padding:1%;">
-  
+   <c:set var="count" value="${0}"/> 
    <c:forEach var="listOfEvents" items="${listOfEvt}"  varStatus="loopCounter" >
     <c:if test="${listOfEvents.eventCatogery=='PERSONALITY DEVELOPMENTS'}">
-     <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
-    <div class="col-md">
-
-	<!-- Card Narrower -->
+    
+      <c:if test="${count<9}">
+     <c:if test="${count % 3 == 0}"></div> <div class="row" style="padding:1%;"></c:if>
+     <c:set var="count" value="${count+1}"/>
+   	<!-- Card Narrower -->
 	<div class="card card-cascade narrower" style="padding:1%;">
 
 	  <!-- Card image -->
@@ -611,8 +679,10 @@
 	<!-- Card Narrower -->
     </div>
   </c:if>
+  </c:if>
     </c:forEach>
     </div>
+
 
   <div class="row" style="padding:1%;">
     </div>
