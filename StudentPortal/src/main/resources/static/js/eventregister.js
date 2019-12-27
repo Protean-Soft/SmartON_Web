@@ -1,4 +1,6 @@
-
+var confheading="success";
+var confmsg="";
+var noofeventattend="";
 function getEventdetais(eventId,userId){
 	var eventid = $("#eventid1").val();
 	console.log("Enterd registerEvent.............."+JSON.stringify(eventId));
@@ -16,7 +18,11 @@ function getEventdetais(eventId,userId){
 			$("#description").text(rowObj[0].event_description);
 			$("#show_eventPic").attr("src", "data:image/png;base64," + rowObj[0].eventImage);
 			$("#attendes").text(rowObj[2]);
-			$("#noofeventattend").text(rowObj[1]);
+			//$("#noofeventattend").text(rowObj[1]);
+			noofeventattend=rowObj[1];
+			
+			
+			 
 			}
 	
 });
@@ -60,6 +66,8 @@ function registerEvent(){
 	var formData =  $('#registerForm1').serialize();  
 	$("#conformationbtn").attr("disabled", true)
 	console.log(formData);
+	confmsg="Thank you for booking. Instructions to join next Event";
+	var confmsg2="You have booked "+noofeventattend+"of Event(s), Still you can book "+parseInt(5-noofeventattend)+" of Event(s) for this renewal.";
 	$.ajax({
 		url : './StudentPortal/Event/addEventRegistrationDetail',
 		type: 'POST',
@@ -69,21 +77,28 @@ function registerEvent(){
 		contentType: false,	*/ 	
 		async: false,
 		success : function(reponse) {
-		alert(reponse);
-		
+		console.log(reponse);
+			
 		if(reponse=="UserExceedtheLimit"){
-			$("#modalPushSuccess").show();
-			 $("#modalPushSuccess").addClass('active');
+			confmsg2="You have exceed the Limit.Please renew your account for continue this service"
+			$("#conformationheading").text(reponse);
+			$("#conformationmsg").text(confmsg+confmsg2);
 			console.log("UserExceedtheLimit");
 		}else if(reponse=="Already Registed"){
-			 $("#modalPushSuccess").addClass('active');
+			confmsg2="You have already registered for this event"
+			$("#conformationheading").text(reponse);
+			$("#conformationmsg").text(confmsg+confmsg2);
+			// $("#modalPushSuccess").addClass('active');
 		}
-		else{
-			$("#modalPushSuccess").show();
-			$("#modalPushFaliure").show();
+		else if(reponse=="Error"){
+			$("#conformationheading").text("ERROR!!!");
+			$("#conformationmsg").text("ERROR when register event please contact Adminstrator");
 			console.log("modalPushFaliure");
+		}else{
+		$("#conformationheading").text(reponse);
+		$("#conformationmsg").text(confmsg+confmsg2);
 		}
-		window.location.href="/index.jsp";
+		//window.location.href="/index.jsp";
 		//Callmainpage();
 			//$("#show_profilePic").attr("src", "data:image/png;base64," + response.pic);
 		},
@@ -92,6 +107,11 @@ function registerEvent(){
 		}
 	});
 	
+}
+function regcomplete(){
+	$("#modalPush").removeClass('show');
+	$("#modalPushSuccess").removeClass('show');
+	$('#mymodelconform').remove("modal-open"); 
 }
 
 function Callmainpage(){
