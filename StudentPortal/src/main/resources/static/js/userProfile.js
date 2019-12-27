@@ -65,13 +65,17 @@ $(document).ready(function() {
 			contentType : false,
 			cache : false,
 			processData : false,	 	
-			success : function(response) {				
-				$("#show_profilePic").attr("src", "data:image/png;base64," + response.pic);
+			success : function(response) {
+				if(response.pic != null){
+					$("#show_profilePic").attr("src", "data:image/png;base64," + response.pic);
+					$("#navbar_profile").attr("src", "data:image/png;base64," + response.pic);
+				}
 			},
 			error : function() {
 			}
 		});
-	});
+		});
+
 		
 		/**
 		 * ========= FETCH PROFILE PICS ========== 

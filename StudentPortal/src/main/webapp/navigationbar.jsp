@@ -85,7 +85,6 @@
 		 * ========= FETCH PROFILE PICS ========== 
 		 */
 		var userID = $("#userId").val();
-		//alert(userID);
 		$.ajax({
 			url : 'tag/userProfile/getProfilePic?userId=' + userID ,
 			type : 'GET',
@@ -93,8 +92,10 @@
 			cache : false,
 			processData : false,	 	
 			success : function(response) {
-				$("#navbar_profile").attr("src", "data:image/png;base64," + response.pic);
-				$("#show_profilePic").attr("src", "data:image/png;base64," + response.pic);
+				if(response.pic != null){
+					$("#show_profilePic").attr("src", "data:image/png;base64," + response.pic);
+					$("#navbar_profile").attr("src", "data:image/png;base64," + response.pic);
+				}
 			},
 			error : function() {
 			}
