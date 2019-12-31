@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -67,6 +68,9 @@ public class EventDetailsController {
 	
 	@Autowired
 	StudentUserDetailsService studentService;
+	
+	@Value("${admin.email}")
+	private String adminEmail;
 	
 
 	/* Add multiple events */
@@ -164,7 +168,7 @@ System.out.println("noofeventatt=========="+noofeventatt);
 
 	@GetMapping(value = "viewAllProduct",produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ModelAndView viewAllProduct(ModelMap model) {
+	public List<EventDetails> viewAllProduct(ModelMap model) {
 		System.out.println("Successfully Registerd..............");
 		List<EventDetails> evt=eventDetailsService.findAllByDeletedflag();
 		List<EventDetails> evt1=new ArrayList<EventDetails>();
@@ -188,8 +192,8 @@ System.out.println("noofeventatt=========="+noofeventatt);
 		model.addAttribute("userId",userId);
 		model.addAttribute("listOfEvt",evt1);
 		//model.setViewName("index.jsp");
-		return new ModelAndView("redirect:/products.jsp", model);
-		//return model;
+		//return new ModelAndView("redirect:/products.jsp", model);
+		return evt1;
 	}
 
 	
@@ -241,6 +245,27 @@ System.out.println("noofeventatt=========="+noofeventatt);
 		}
 		return "Congratulations! Your mail has been send to the user.";
 	}
+	
+	@PostMapping(value="/sendfeedback")
+	@ResponseBody
+	public String sendfeedback(@RequestParam("email") String mailID,@RequestParam("name") String name,@RequestParam("sugges") String sugges,@RequestParam("feedback") String feedback) throws MessagingException {
+		System.out.println("Entered...sendfeedback");
+		try {
+			HashMap<String, String> map=new HashMap<String, String>();
+			map.put("mailID", mailID);
+			map.put("name", name);
+			map.put("sugges", sugges);
+			map.put("feedback", feedback);
+			map.put("adminEmail", adminEmail);
+			System.out.println("map Values............."+map);
+			mailSenderService.sendFeedbackEmail(map);
+		} catch (MailException mailException) {
+			System.out.println(mailException);
+		}
+		return "Congratulations! Your mail has been send to the admin.";
+	}
+	
+	
 
 	/***************************** EVENT REGISTRATION AND ATTENDENCE */
 
