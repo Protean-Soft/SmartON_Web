@@ -63,6 +63,7 @@ function callEventsbyType(){
 
 function registerEvent(){
 	console.log("registerEventin registerevent*****************************");
+	$('#preloader').show();
 	var formData =  $('#registerForm1').serialize();  
 	$("#conformationbtn").attr("disabled", true)
 	console.log(formData);
@@ -106,6 +107,7 @@ function registerEvent(){
 			alert("Limit exceed*******************");
 		}
 	});
+	$('#preloader').show();
 	
 }
 function regcomplete(){

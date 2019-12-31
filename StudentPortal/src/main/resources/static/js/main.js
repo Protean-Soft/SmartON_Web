@@ -224,6 +224,16 @@
     				$('.clearForm').click();
     				customAlert('success','You have tagged yourself successfully.');
     			}
+    		},
+    		error : function() {
+    			if(role == 'premium'){
+    				paymentIntegration();
+    			}else{
+    				$('.clearForm').click();
+    				customAlert('success','You have tagged yourself successfully.');
+    			}
+    			
+    			alert("====registerUserData=====");
     		}
     	});
     }

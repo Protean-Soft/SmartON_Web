@@ -20,6 +20,10 @@
   <link rel="stylesheet" href="css/mdb.min.css">
   <!-- Your custom styles (optional) -->
   <link rel="stylesheet" href="css/style.css">
+  
+  <div id="preloader" style="display:none;">
+		  <div id="loader"></div>
+		</div>
 
 </head>
    <%

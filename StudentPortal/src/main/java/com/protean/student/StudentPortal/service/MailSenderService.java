@@ -1,5 +1,7 @@
 package com.protean.student.StudentPortal.service;
 
+import java.util.HashMap;
+
 import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,30 @@ public class MailSenderService {
 		jms.send(msg);
 
 	}
+	
+	
+	
+	
+	public void sendFeedbackEmail(HashMap<String, String> map) throws MessagingException {
+		SimpleMailMessage feedback = new SimpleMailMessage();
+		feedback.setTo(map.get("adminEmail"));
+		feedback.setCc(map.get("mailID"));
+	
+		feedback.setSubject("Feedback...");
+
+		String body = "Suggessions : "+map.get("sugges")+"\r\r\n"
+		+"Academic Feedback :" +map.get("sugges")
+		+"\r\n\r\n \n\r\n"
+
+		+"Thanks & Regards\r\n"
+
+		+"Team TagAcademy\r\n"	;
+		feedback.setText(body);
+		jms.send(feedback);
+
+	}
+	
+	
 	
 	/**
 	 * Send reset password url to student email

@@ -82,13 +82,13 @@ function registerEvent12(){
 }
 
 
-function viewAllProduct(){
+function getAllProducts(){
 	console.log("Success......");
 	//var formData =  $('#registerForm1').serialize();  
 	
 	var userId=1;
 	$.ajax({
-		url : './StudentPortal/Event/viewAllProduct',
+		url : './StudentPortal/Event/viewallproducts',
 		type: 'GET',
 		/*dataType: 'TEXT',
 		processData: false,
@@ -96,8 +96,28 @@ function viewAllProduct(){
 		async: false,
 		dataType: 'TEXT',
 		success: function(page){
-			$('#payFormDiv').html("");
-			$('#payFormDiv').html(page);
+			//alert(page);
+			var test='<div class="row" style="padding:1%;">'+
+		    '<div class="col-md"><div class="card card-cascade narrower" style="padding:1%;"><div class="view view-cascade overlay">'+
+			    '<img id="image-${loopCounter.index}" class="card-img-top" src="data:image/jpg;base64,${listOfEvents.base64Image}" alt="Card image cap">'+
+			    '<a><div class="mask rgba-white-slight"></div></a></div><div class="card-body card-body-cascade text-center">'+
+			    '<h4 class="card-title"><strong><c:out value="${listOfEvents.eventName}"/></strong></h4>'+
+			    '<h5 class="blue-text pb-2"><strong><c:out value="${listOfEvents.eventOrgName}"/></strong></h5>'+
+			    '<p class="card-text"><c:out value="${listOfEvents.eventDescription}"/></p>'+
+		 	    '<p class="font-weight-normal"><i class="fas fa-certificate pr-2"></i><span>Category: <c:out value="${listOfEvents.eventCatogery}"/></span></p>'+
+			    '<p class="font-weight-normal"><i class="fas fa-book-reader pr-2"></i><span>Type: <c:out value="${listOfEvents.eventType}"/></span></p>'+
+			     '<p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <fmt:formatDate pattern="dd MMMM yyyy" value="${listOfEvents.eventDate}" /></span></p>'+
+			    '<a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a><a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a><a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a></div>'+
+			'</div></div>'+
+		  '<div class="row" style="padding:1%;">'+
+		   ' </div>';
+			alert(page);
+			setTimeout(function(){ 
+				$("#allProd").html(test);
+			
+			}, 3000);
+			
+		  
 		},
 		error : function() {
 			alert("Limit exceed*******************");
@@ -105,6 +125,35 @@ function viewAllProduct(){
 		});
 	
 }
+
+
+function sendfeedback(){
+
+	console.log("sendfeedback*****************************");
+	$('#preloader').show();
+	var formData =  $('#feedBackForm').serialize();  
+	//$("#conformationbtn").attr("disabled", true)
+	$.ajax({
+		url : './StudentPortal/Event/sendfeedback',
+		type: 'POST',
+		data: formData,
+		dataType: 'TEXT',
+		/*processData: false,
+		contentType: false,	*/ 	
+		async: false,
+		success : function(reponse) {
+			
+			allert("Success");
+		},
+		error : function() {
+			alert("Error*******************");
+		}
+	});
+	$('#preloader').show();
+	
+
+}
+
 
 
 
