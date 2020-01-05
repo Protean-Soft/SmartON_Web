@@ -45,16 +45,18 @@
 <div id='PopUp'></div>
  
  
-		<%
-        	Object userId = request.getAttribute("userId");
-        	Object fullName = request.getAttribute("fullName");
-        	Object userName = request.getAttribute("userName");
+	<%-- 	<%
+        	Long userId = (Long)request.getAttribute("userId");
+        	String fullName = (String)request.getAttribute("fullName");
+        	String userName = (String)request.getAttribute("userName");
+        	String email = (String)request.getAttribute("email");
+        	
+        	System.out.println("JSP full name " + fullName);
         	session.setAttribute("userId", userId);
         	session.setAttribute("fullName", fullName);
         	session.setAttribute("userName", userName);
-        	RegisterUserDetails accountInfo = (RegisterUserDetails)request.getAttribute("studentDetails");
-        	session.setAttribute("userEmail", accountInfo.getEmail());
-        %> 
+        	session.setAttribute("userEmail", email);
+        %>  --%>
 <%@ include file="navigationbar.jsp" %>
 
 <div class="modal fade" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -855,7 +857,7 @@
 	</section>
   
 <div id="mybutton">
-<a class="btn-floating btn-lg btn-default peach-gradient" id="navigateReward"><i class="fas fa-bolt"></i></a><span class="counter">Tag Money: ${rewardPoints}</span>
+<a class="btn-floating btn-lg btn-default peach-gradient" id="navigateReward"><i class="fas fa-bolt"></i></a><span class="counter" >Tag Money :${rewardPoints}</span>
 </div>
 
 
@@ -1016,12 +1018,23 @@
 <script type="text/javascript">
  
 			$(document).ready(function() {
+
+				$.ajax({
+		    		url: '/getLogonUserDetails',
+		    		type: 'GET',
+		    		success: function(data){
+		    			alert(JSON.stringify(data));		    		
+		    		}
+		    	});
+				
 				$("#navigateReward").on('click',function(){
 					var rewardPoints = $("#mybutton").text();
-					if(rewardPoints == 10000 || rewardPoints != null){
+					var rewardPointVal=rewardPoints.split(":")[1].trim();
+					if (rewardPointVal != "" && rewardPointVal != null && rewardPointVal !="0" ) {
+						alert(rewardPointVal);
 						$("#navigateReward").attr("href","../offers.jsp")
-					} else {
-						alert("To enable this feature you need 10000 reward points!!!! ");				 
+					} else {					
+						alert("To enable this feature you need 10000 reward points!!!! ");	
 					}
 				});
 			});
