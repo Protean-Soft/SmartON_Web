@@ -857,7 +857,7 @@
 	</section>
   
 <div id="mybutton">
-<a class="btn-floating btn-lg btn-default peach-gradient" id="navigateReward"><i class="fas fa-bolt"></i></a><span class="counter" >Tag Money :${rewardPoints}</span>
+<a class="btn-floating btn-lg btn-default peach-gradient" id="navigateReward"><i class="fas fa-bolt"></i></a><span class="counter"  id="rew_points">Tag Money :${rewardPoints}</span>
 </div>
 
 
@@ -1014,30 +1014,35 @@
   <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="vendor/bootstrap/js/mdb.min.js"></script>
-  
-<script type="text/javascript">
- 
-			$(document).ready(function() {
+  <script type="text/javascript" src="vendor/bootstrap/js/session.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
 
-				$.ajax({
-		    		url: '/getLogonUserDetails',
-		    		type: 'GET',
-		    		success: function(data){
-		    			alert(JSON.stringify(data));		    		
-		    		}
-		    	});
-				
-				$("#navigateReward").on('click',function(){
-					var rewardPoints = $("#mybutton").text();
-					var rewardPointVal=rewardPoints.split(":")[1].trim();
-					if (rewardPointVal != "" && rewardPointVal != null && rewardPointVal !="0" ) {
-						alert(rewardPointVal);
-						$("#navigateReward").attr("href","../offers.jsp")
-					} else {					
-						alert("To enable this feature you need 10000 reward points!!!! ");	
-					}
-				});
-			});
+	$.ajax({
+  		url: './getLogonUserDetails',
+  		type: 'GET',
+  		success: function(data){
+  			//alert(JSON.stringify(data));
+  			console.log(data.fullName);
+  			$.session.set("userId",data.userId);
+  			$.session.set("fullName",data.fullName);	
+  			$.session.set("email",data.email);
+  			console.log(data.rewardPoints);	 
+  			$("#rew_points").text("Tag Money: " +data.rewardPoints);	
+  		}
+  	});
+		
+		$("#navigateReward").on('click',function(){
+			var rewardPoints = $("#mybutton").text();
+			var rewardPointVal=rewardPoints.split(":")[1].trim();
+			if (rewardPointVal != "" && rewardPointVal != null && rewardPointVal !="0" ) {
+				alert(rewardPointVal);
+				$("#navigateReward").attr("href","../offers.jsp")
+			} else {					
+				alert("To enable this feature you need 10000 reward points!!!! ");	
+			}
+		});
+	});
   </script>
 </body>
 </html>
