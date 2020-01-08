@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<!DOCTYPE html>
+<!DOCTYPE>
  <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -1022,14 +1022,24 @@
   		url: './getLogonUserDetails',
   		type: 'GET',
   		success: function(data){
-  			//alert(JSON.stringify(data));
-  			console.log(data.fullName);
-  			$.session.set("userId",data.userId);
-  			$.session.set("fullName",data.fullName);	
-  			$.session.set("email",data.email);
-  			console.log(data.rewardPoints);	 
-  			$("#rew_points").text("Tag Money: " +data.rewardPoints);	
-  		}
+  			alert(JSON.stringify(data.userDetails));
+  			//console.log(data.fullName);
+  			$.each(data.userDetails, function(key, value) {
+  			    console.log(value.userId);
+  			  console.log(value.firstName);
+  			console.log(value.email);
+  			console.log(value.rewpoints);
+  			  	$.session.set("userId",value.userId);
+	  			$.session.set("fullName",value.firstName);	
+	  			$.session.set("email",value.email);
+	  			$("#rew_points").text("Tag Money: " +value.rewpoints);
+  		
+  			});
+
+			$.each(data.EventDetails,function(key,value){
+				console.log("Event Discription : " + value.eventDiscription);
+			});
+   		}
   	});
 		
 		$("#navigateReward").on('click',function(){

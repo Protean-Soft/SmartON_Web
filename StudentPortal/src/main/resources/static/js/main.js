@@ -3,6 +3,7 @@
     "use strict";
 	
 	$(document).ready(function(){
+		$.session.clear();
 	  var cur_loc = $(location).attr('href');
 	  if(cur_loc.indexOf('paymentSuccess') != -1){
 		  customAlert('success','Payment completed! You have registered successfully.');

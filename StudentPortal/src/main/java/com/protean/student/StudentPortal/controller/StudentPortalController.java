@@ -2,8 +2,11 @@ package com.protean.student.StudentPortal.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -79,9 +82,10 @@ public class StudentPortalController {
 	
 	@GetMapping(value = "/getLogonUserDetails", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public String getUserDetails(Authentication authentication) throws UnsupportedEncodingException {
+	public Map<String, List<Object>> getUserDetails(Authentication authentication) throws UnsupportedEncodingException {
 		System.out.println("Authenticatio name " + authentication.getName());
 		String userName = authentication.getName();
+		List<Object> registerUserDetails = new ArrayList<>();
 		RegisterUserDetails regDetails = studentService.getLogonDetails(userName);
 		//model.addAttribute("studentDetails", regDetails);
 		
@@ -112,11 +116,13 @@ public class StudentPortalController {
 			regDetails.setIsPremium("guest");
 			studentService.updateUserDetails(regDetails);
 		}
+		
+		
 
 		List<EventDetails> evt = event.findAllByDeletedflag();
 		List<Long> evtbyUser = evtreg.getEventRegisterEventByuserId(userId);
 		System.out.println("evtbyUser........." + evtbyUser);
-		List<EventDetails> evt1 = new ArrayList<EventDetails>();
+		List<Object> evt1 = new ArrayList<>();
 		Iterator ir = evt.listIterator();
 		while (ir.hasNext()) {
 			EventDetails evtdet = (EventDetails) ir.next();
@@ -131,15 +137,24 @@ public class StudentPortalController {
 		/*model.addAttribute("attenevts", evtbyUser);
 		model.addAttribute("listOfEvt", evt1);*/
 		
-		JSONObject userWithEventDetails = new JSONObject();
-		userWithEventDetails.put("userId", userId);
-		userWithEventDetails.put("userName", userName);
-		userWithEventDetails.put("email", mailId);
-		userWithEventDetails.put("fullName", studentName);
-		userWithEventDetails.put("rewardPoints", regDetails.getRewpoints());
-		userWithEventDetails.put("event_list", evt1);
-		System.out.println("userWithEventDetails" + userWithEventDetails.toString());
-		return userWithEventDetails.toString();
+		/*
+		 * JSONObject userWithEventDetails = new JSONObject();
+		 * userWithEventDetails.put("userId", userId);
+		 * userWithEventDetails.put("userName", userName);
+		 * userWithEventDetails.put("email", mailId);
+		 * userWithEventDetails.put("fullName", studentName);
+		 * userWithEventDetails.put("rewardPoints", regDetails.getRewpoints());
+		 * userWithEventDetails.put("event_list", evt1);
+		 * System.out.println("userWithEventDetails" + userWithEventDetails.toString());
+		 */
+		
+		registerUserDetails.add(regDetails);
+		
+		Map<String,List<Object>> map = new HashMap<>();
+		map.put("userDetails", registerUserDetails);
+		map.put("EventDetails", evt1);
+		
+		return map;
 	}
 	
 	@RequestMapping("/logout")
