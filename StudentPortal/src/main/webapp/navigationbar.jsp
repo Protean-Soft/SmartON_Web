@@ -45,9 +45,9 @@
         </li>
         <li class="nav-item">
         
-        <input type="hidden" id="userId" value = "<% out.println(session.getAttribute("userId")); %>" />
-        <input type="hidden" id="email" value = "<% out.println(session.getAttribute("userEmail")); %>">  
-        <span class="nav-link clearfix d-none d-sm-inline-block">Welcome <% out.println(session.getAttribute("fullName")); %></span>
+        <input type="hidden" id="userId" <%-- value = "<% out.println(session.getAttribute("userId")); %>" --%> />
+        <input type="hidden" id="email"<%--  value = "<% out.println(session.getAttribute("userEmail")); %>" --%>>  
+        <span class="nav-link clearfix d-none d-sm-inline-block" id="fullname">Welcome <%-- <% out.println(session.getAttribute("fullName")); %> --%></span>
         </li>
         <!--<li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -77,9 +77,15 @@
     <!-- /.Navbar -->
   </header>
   <!--/.Double navigation-->
-
+<script type="text/javascript" src="vendor/bootstrap/js/session.js"></script>
 <script type="text/javascript">
  $(document).ready(function(){
+	
+		var session_userid = $.session.get("userId");
+		console.log("session id " + $.session.get("fullName"));
+		$("#userId").val(session_userid);
+		$("#email").val($.session.get("email"));
+		$("#fullname").text("Welcome " +$.session.get("fullName"));
 		
 		/**
 		 * ========= FETCH PROFILE PICS ========== 

@@ -325,6 +325,6 @@
 	<script src="vendor/bootstrap/js/bootstrap-datepicker.min.js"></script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
-	
+	<script type="text/javascript" src="vendor/bootstrap/js/session.js"></script>
 </body>
 </html>

@@ -20,6 +20,10 @@
   <link rel="stylesheet" href="css/mdb.min.css">
   <!-- Your custom styles (optional) -->
   <link rel="stylesheet" href="css/style.css">
+  
+  <div id="preloader" style="display:none;">
+		  <div id="loader"></div>
+		</div>
 
 </head>
    <%
@@ -28,7 +32,7 @@
         
         	
         %> 
-       <body class="hidden-sn mdb-skin">
+       <body class="hidden-sn mdb-skin" id="mymodelconform">
  
   <!--Double navigation-->
   <header>
@@ -289,7 +293,7 @@
        <input type="hidden" id="eventid" name="eventId" value = '<%=eventid%>' /> 
      <input type="hidden" id="userid" name="userId"  value = '<%=userid%>' /> 
        
-        <a data-toggle="modal" onclick="registerEvent()" class="btn btn-info" id="conformationbtn">Yes</a>
+        <a data-toggle="modal" onclick="registerEvent()" data-target="#modalPushSuccess"  class="btn btn-info" id="conformationbtn">Yes</a>
         <a type="button" class="btn btn-outline-info waves-effect" data-dismiss="modal">No</a>
         </form>
       </div>
@@ -308,22 +312,23 @@
     <div class="modal-content text-center">
       <!--Header-->
       <div class="modal-header d-flex justify-content-center">
-        <p class="heading">Booked</p>
+        <p class="heading" id="conformationheading"></p>
       </div>
 
       <!--Body-->
       <div class="modal-body">
 
 	<i class="fas fa-check fa-4x animated rotateIn mb-4"></i>
-
-        <p> Thank you for booking. Instructions to join next Event </p>
+<p id="conformationmsg"></p>
+    <!--     <p> Thank you for booking. Instructions to join next Event </p>
 	<p> You have booked <span id="noofeventattend"></span>of Event(s), Still you can book <span id="noofeventyettoattend"></span> of Event(s) for this renewal.</p>
-
+ -->
       </div>
 
       <!--Footer-->
       <div class="modal-footer flex-center">
-        <a href="confirmation.html" class="btn btn-info">Done</a>
+        <!-- <button class="btn btn-info" onclick="regcomplete()">Done</button> -->
+         <a href="./index.jsp" class="btn btn-info">Done</a>
       </div>
     </div>
     <!--/.Content-->

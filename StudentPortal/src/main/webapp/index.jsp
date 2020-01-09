@@ -45,16 +45,18 @@
 <div id='PopUp'></div>
  
  
-		<%
-        	Object userId = request.getAttribute("userId");
-        	Object fullName = request.getAttribute("fullName");
-        	Object userName = request.getAttribute("userName");
+	<%-- 	<%
+        	Long userId = (Long)request.getAttribute("userId");
+        	String fullName = (String)request.getAttribute("fullName");
+        	String userName = (String)request.getAttribute("userName");
+        	String email = (String)request.getAttribute("email");
+        	
+        	System.out.println("JSP full name " + fullName);
         	session.setAttribute("userId", userId);
         	session.setAttribute("fullName", fullName);
         	session.setAttribute("userName", userName);
-        	RegisterUserDetails accountInfo = (RegisterUserDetails)request.getAttribute("studentDetails");
-        	session.setAttribute("userEmail", accountInfo.getEmail());
-        %> 
+        	session.setAttribute("userEmail", email);
+        %>  --%>
 <%@ include file="navigationbar.jsp" %>
 
 <div class="modal fade" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -99,6 +101,7 @@
 
 <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
+  <form id="feedBackForm">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
@@ -110,34 +113,35 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <i class="fas fa-user prefix grey-text"></i>
-          <input type="text" id="name" class="form-control validate">
+          <input type="text" id="name" name="name" class="form-control validate">
           <label data-error="wrong" data-success="right" for="name">Your name</label>
         </div>
 
         <div class="md-form mb-5">
           <i class="fas fa-envelope prefix grey-text"></i>
-          <input type="email" id="email" class="form-control validate">
+          <input type="email" id="email"  name="email" class="form-control validate">
           <label data-error="wrong" data-success="right" for="email">Your email</label>
         </div>
 
         <div class="md-form mb-5">
           <i class="fas fa-tag prefix grey-text"></i>
-          <input type="text" id="sugges" class="form-control validate">
+          <input type="text" id="sugges" name="sugges" class="form-control validate">
           <label data-error="wrong" data-success="right" for="sugges">Your suggestion to us</label>
         </div>
 
         <div class="md-form mb-5">
           <i class="fas fa-tag prefix grey-text"></i>
-          <input type="text" id="feedback" class="form-control validate">
+          <input type="text" id="feedback" name="feedback" class="form-control validate">
           <label data-error="wrong" data-success="right" for="feedback">Academic Feedback</label>
         </div>
 
       </div>
       <div class="modal-footer d-flex justify-content-center">
-        <button class="btn btn-unique">Send <i class="fas fa-paper-plane-o ml-1"></i></button>
+        <button class="btn btn-unique" onclick="sendfeedback()">Send <i class="fas fa-paper-plane-o ml-1"></i></button>
       </div>
     </div>
   </div>
+  </form>
 </div>
 
 
@@ -225,66 +229,8 @@
 <div class="tab-content">
  <!--Panel 1-->
  <div class="tab-pane fade show in active" id="panel11" role="tabpanel">
-  <div class="row" style="padding:1%;">
-  
-   <c:forEach var="listOfEvents" items="${listOfEvt}"  varStatus="loopCounter" begin = "0" end = "8">
-     <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
-    <div class="col-md">
-
-	<!-- Card Narrower -->
-	<div class="card card-cascade narrower" style="padding:1%;">
-
-	  <!-- Card image -->
-	  <div class="view view-cascade overlay">
-	    <img id="image-${loopCounter.index}" class="card-img-top" src="data:image/jpg;base64,${listOfEvents.base64Image}" alt="Card image cap">
-	    <a>
-	      <div class="mask rgba-white-slight"></div>
-	    </a>
-	  </div>
-
-	  <!-- Card content -->
-	  <div class="card-body card-body-cascade text-center">
-
-	    <!-- Title -->
-	   
-   
-
-	    <h4 class="card-title"><strong><c:out value="${listOfEvents.eventName}"/></strong></h4>
-	    <!-- Subtitle -->
-	    <h5 class="blue-text pb-2"><strong><c:out value="${listOfEvents.eventOrgName}"/></strong></h5>
-	    <!-- Text -->
-	    <p class="card-text"><c:out value="${listOfEvents.eventDescription}"/></p>
-	     <!-- Text -->
- 	    <p class="font-weight-normal"><i class="fas fa-certificate pr-2"></i><span>Category: <c:out value="${listOfEvents.eventCatogery}"/></span></p>
-	    <p class="font-weight-normal"><i class="fas fa-book-reader pr-2"></i><span>Type: <c:out value="${listOfEvents.eventType}"/></span></p>
-	    <%-- <p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <c:out value="${listOfEvents.eventDate}"/></span></p> --%>
-	     <p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <fmt:formatDate pattern="dd MMMM yyyy" value="${listOfEvents.eventDate}" /></span></p>
-	  
-
-<%-- <c:if test="${fn:contains(attenevts,listOfEvents.eventid)}"> --%>
-    <c:choose>
-    <c:when test="${fn:contains(attenevts,listOfEvents.eventid)==true}">
-	    <button class="btn btn-unique" disabled onClick="registerEvent(${listOfEvents.eventid})">Book Now</button>
-	    </c:when>    
-    <c:otherwise>
-     <a class="btn btn-unique" onClick="registerEvent(${listOfEvents.eventid})">Book Now</a>
- </c:otherwise>
- </c:choose>
-	 <%--    </c:if> --%>
-	    <!-- Linkedin -->
-	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
-	    <!-- Twitter -->
-	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
-	    <!-- Dribbble -->
-	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
-
-	  </div>
-	</div>
-	<!-- Card Narrower -->
-    </div>
-  
-    </c:forEach>
-    </div>
+ <span id=panel1></span>
+ 
 
   <div class="row" style="padding:1%;">
     </div>
@@ -293,75 +239,7 @@
 <!--Panel 2-->
 
  <div class="tab-pane fade" id="panel12" role="tabpanel">
-   <div class="row" style="padding:1%;">
-  <c:set var="count"  value="${0}"/>  
-   <c:forEach var="listOfEvents" items="${listOfEvt}"  varStatus="loopCounter" >
-    <c:if test="${listOfEvents.eventCatogery=='TECHNICALS'}">
-      <c:if test="${count<9}">
-     <c:if test="${count % 3 == 0}"></div> <div class="row" style="padding:1%;"></c:if>
-     <c:set var="count" value="${count+1}"/> 
-    <div class="col-md">
-
-	<!-- Card Narrower -->
-	<div class="card card-cascade narrower" style="padding:1%;">
-
-	  <!-- Card image -->
-	  <div class="view view-cascade overlay">
-	    <img id="image-${loopCounter.index}" class="card-img-top" src="data:image/jpg;base64,${listOfEvents.base64Image}" alt="Card image cap">
-	    <a>
-	      <div class="mask rgba-white-slight"></div>
-	    </a>
-	  </div>
-
-	  <!-- Card content -->
-	  <div class="card-body card-body-cascade text-center">
-
-	    <!-- Title -->
-	   
-   
-
-	    <h4 class="card-title"><strong><c:out value="${listOfEvents.eventName}"/></strong></h4>
-	    <!-- Subtitle -->
-	    <h5 class="blue-text pb-2"><strong><c:out value="${listOfEvents.eventOrgName}"/></strong></h5>
-	    <!-- Text -->
-	    <p class="card-text"><c:out value="${listOfEvents.eventDescription}"/></p>
-	     <!-- Text -->
- 	    <p class="font-weight-normal"><i class="fas fa-certificate pr-2"></i><span>Category: <c:out value="${listOfEvents.eventCatogery}"/></span></p>
-	    <p class="font-weight-normal"><i class="fas fa-book-reader pr-2"></i><span>Type: <c:out value="${listOfEvents.eventType}"/></span></p>
-	    <%-- <p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <c:out value="${listOfEvents.eventDate}"/></span></p> --%>
-	     <p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <fmt:formatDate pattern="dd MMMM yyyy" value="${listOfEvents.eventDate}" /></span></p>
-	  
-
-<%-- <c:if test="${fn:contains(attenevts,listOfEvents.eventid)}"> --%>
-    <c:choose>
-    <c:when test="${fn:contains(attenevts,listOfEvents.eventid)==true}">
-	    <button class="btn btn-unique" disabled onClick="registerEvent(${listOfEvents.eventid})">Book Now</button>
-	    </c:when>    
-    <c:otherwise>
-     <a class="btn btn-unique" onClick="registerEvent(${listOfEvents.eventid})">Book Now</a>
- </c:otherwise>
- </c:choose>
-	 <%--    </c:if> --%>
-	    <!-- Linkedin -->
-	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
-	    <!-- Twitter -->
-	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
-	    <!-- Dribbble -->
-	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
-
-	  </div>
-	</div>
-	<!-- Card Narrower -->
-    </div>
-  </c:if>
-  </c:if>
-    </c:forEach>
-    </div>
-    
-
-  <div class="row" style="padding:1%;">
-    </div>
-    
+   <span id=panel2></span>
   
  </div>
  
@@ -370,71 +248,8 @@
 
 <!--Panel 3-->
 <div class="tab-pane fade" id="panel13" role="tabpanel">
-   <div class="row" style="padding:1%;">
-   <c:set var="count"  value="${0}"/> 
-   <c:forEach var="listOfEvents" items="${listOfEvt}"  varStatus="loopCounter" >
-    <c:if test="${listOfEvents.eventCatogery=='LIFE STYLE CHOICES'}">
-      <c:if test="${count<9}">
-     <c:if test="${count % 3 == 0}"></div> <div class="row" style="padding:1%;"></c:if>
-     <c:set var="count" value="${count+1}"/> 
-    <div class="col-md">
-
-	<!-- Card Narrower -->
-	<div class="card card-cascade narrower" style="padding:1%;">
-
-	  <!-- Card image -->
-	  <div class="view view-cascade overlay">
-	    <img id="image-${loopCounter.index}" class="card-img-top" src="data:image/jpg;base64,${listOfEvents.base64Image}" alt="Card image cap">
-	    <a>
-	      <div class="mask rgba-white-slight"></div>
-	    </a>
-	  </div>
-
-	  <!-- Card content -->
-	  <div class="card-body card-body-cascade text-center">
-
-	    <!-- Title -->
-	   
    
-
-	    <h4 class="card-title"><strong><c:out value="${listOfEvents.eventName}"/></strong></h4>
-	    <!-- Subtitle -->
-	    <h5 class="blue-text pb-2"><strong><c:out value="${listOfEvents.eventOrgName}"/></strong></h5>
-	    <!-- Text -->
-	    <p class="card-text"><c:out value="${listOfEvents.eventDescription}"/></p>
-	     <!-- Text -->
- 	    <p class="font-weight-normal"><i class="fas fa-certificate pr-2"></i><span>Category: <c:out value="${listOfEvents.eventCatogery}"/></span></p>
-	    <p class="font-weight-normal"><i class="fas fa-book-reader pr-2"></i><span>Type: <c:out value="${listOfEvents.eventType}"/></span></p>
-	    <%-- <p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <c:out value="${listOfEvents.eventDate}"/></span></p> --%>
-	     <p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <fmt:formatDate pattern="dd MMMM yyyy" value="${listOfEvents.eventDate}" /></span></p>
-	  
-
-<%-- <c:if test="${fn:contains(attenevts,listOfEvents.eventid)}"> --%>
-    <c:choose>
-    <c:when test="${fn:contains(attenevts,listOfEvents.eventid)==true}">
-	    <button class="btn btn-unique" disabled onClick="registerEvent(${listOfEvents.eventid})">Book Now</button>
-	    </c:when>    
-    <c:otherwise>
-     <a class="btn btn-unique" onClick="registerEvent(${listOfEvents.eventid})">Book Now</a>
- </c:otherwise>
- </c:choose>
-	 <%--    </c:if> --%>
-	    <!-- Linkedin -->
-	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
-	    <!-- Twitter -->
-	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
-	    <!-- Dribbble -->
-	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
-
-	  </div>
-	</div>
-	<!-- Card Narrower -->
-    </div>
-  </c:if>
-  </c:if>
-    </c:forEach>
-    </div>
-
+<span id=panel3></span>
   <div class="row" style="padding:1%;">
     </div>
     
@@ -442,69 +257,7 @@
  </div>
  <!--Panel 4-->
  <div class="tab-pane fade" id="panel14" role="tabpanel">
-   <div class="row" style="padding:1%;">
-   <c:set var="count" value="${0}"/> 
-   <c:forEach var="listOfEvents" items="${listOfEvt}"  varStatus="loopCounter" >
-    <c:if test="${listOfEvents.eventCatogery=='PERSONALITY DEVELOPMENTS'}">
-    
-      <c:if test="${count<9}">
-     <c:if test="${count % 3 == 0}"></div> <div class="row" style="padding:1%;"></c:if>
-     <c:set var="count" value="${count+1}"/>
-   	<!-- Card Narrower -->
-	<div class="card card-cascade narrower" style="padding:1%;">
-
-	  <!-- Card image -->
-	  <div class="view view-cascade overlay">
-	    <img id="image-${loopCounter.index}" class="card-img-top" src="data:image/jpg;base64,${listOfEvents.base64Image}" alt="Card image cap">
-	    <a>
-	      <div class="mask rgba-white-slight"></div>
-	    </a>
-	  </div>
-
-	  <!-- Card content -->
-	  <div class="card-body card-body-cascade text-center">
-
-	    <!-- Title -->
-	   
-   
-
-	    <h4 class="card-title"><strong><c:out value="${listOfEvents.eventName}"/></strong></h4>
-	    <!-- Subtitle -->
-	    <h5 class="blue-text pb-2"><strong><c:out value="${listOfEvents.eventOrgName}"/></strong></h5>
-	    <!-- Text -->
-	    <p class="card-text"><c:out value="${listOfEvents.eventDescription}"/></p>
-	     <!-- Text -->
- 	    <p class="font-weight-normal"><i class="fas fa-certificate pr-2"></i><span>Category: <c:out value="${listOfEvents.eventCatogery}"/></span></p>
-	    <p class="font-weight-normal"><i class="fas fa-book-reader pr-2"></i><span>Type: <c:out value="${listOfEvents.eventType}"/></span></p>
-	    <%-- <p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <c:out value="${listOfEvents.eventDate}"/></span></p> --%>
-	     <p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <fmt:formatDate pattern="dd MMMM yyyy" value="${listOfEvents.eventDate}" /></span></p>
-	  
-
-<%-- <c:if test="${fn:contains(attenevts,listOfEvents.eventid)}"> --%>
-    <c:choose>
-    <c:when test="${fn:contains(attenevts,listOfEvents.eventid)==true}">
-	    <button class="btn btn-unique" disabled onClick="registerEvent(${listOfEvents.eventid})">Book Now</button>
-	    </c:when>    
-    <c:otherwise>
-     <a class="btn btn-unique" onClick="registerEvent(${listOfEvents.eventid})">Book Now</a>
- </c:otherwise>
- </c:choose>
-	 <%--    </c:if> --%>
-	    <!-- Linkedin -->
-	    <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
-	    <!-- Twitter -->
-	    <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
-	    <!-- Dribbble -->
-	    <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
-
-	  </div>
-	</div>
-	<!-- Card Narrower -->
-    </div>
-  </c:if>
-  </c:if>
-    </c:forEach>
-    </div>
+   <span id=panel4></span>
 
 
   <div class="row" style="padding:1%;">
@@ -516,7 +269,7 @@
  </div>
 
     <div class="text-center mt-4 mb-5">
-      <a class="black-text font-weight-bold" href="#!">View all product <i class="fa fa-angle-right"></i></a>
+      <a class="black-text font-weight-bold" href="../products.jsp" >View all product <i class="fa fa-angle-right"></i></a>
     </div>
 </div>
 
@@ -587,70 +340,7 @@
 
       <!--Panel 1-->
       <div class="tab-pane fade show in active" id="panel31" role="tabpanel">
-		<!--Carousel Wrapper-->
-		<div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
-
-		  <!--Controls-->
-		  <div class="controls-top">
-		    <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
-		    <a class="btn-floating" href="#multi-item-example" data-slide="next"><i
-			class="fas fa-chevron-right"></i></a>
-		  </div>
-		  <!--/.Controls-->
-
-		  <!--Indicators-->
-		  <ol class="carousel-indicators">
-		    <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
-		    <li data-target="#multi-item-example" data-slide-to="1"></li>
-		    <li data-target="#multi-item-example" data-slide-to="2"></li>
-		  </ol>
-		  <!--/.Indicators-->
-
-		  <!--Slides-->
-		  <div class="carousel-inner" role="listbox">
-
-		    <!--First slide-->
-		    <div class="carousel-item active">
-<c:forEach var="listOfEvents1" items="${listOfEvt}"  varStatus="loopCounter">
-<c:if test="${(loopCounter.index % 3 == 0) && (loopCounter.index !=0)}"></div> <div class="carousel-item"></c:if>
- <div class="col-md-4">
- <c:out value="${listOfEvents1.eventName}"/>
-			<div class="card mb-2">
-			  <img class="card-img-top"
-			    src="data:image/png;base64,<c:out value='${listOfEvents1.base64Image}'/>"
-			    alt="Card image cap">
-			  <div class="card-body">
-			    <h4 class="card-title"><strong><c:out value="${listOfEvents1.eventName}"/></strong></h4>
-			    <%-- <p class="card-text"><c:out value="${listOfEvents1.eventDescription}"/></p> --%>
-		 	    <p class="font-weight-normal"><i class="fas fa-certificate pr-2"></i><span>Category: <c:out value="${listOfEvents1.eventCatogery}"/></span></p>
-	    		<p class="font-weight-normal"><i class="fas fa-book-reader pr-2"></i><span>Type: <c:out value="${listOfEvents1.eventType}"/></span></p>
-	    		<p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <fmt:formatDate pattern="dd MMMM yyyy" value="${listOfEvents1.eventDate}" /></span></p>
-			    
-<%-- <c:if test="${fn:contains(attenevts,listOfEvents.eventid)}"> --%>
-    <c:choose>
-    <c:when test="${fn:contains(attenevts,listOfEvents1.eventid)==true}">
-	    <button class="btn btn-primary" disabled onClick="registerEvent(${listOfEvents1.eventid})">Book Now</button>
-	    </c:when>    
-    <c:otherwise>
-     <a class="btn btn-primary" onClick="registerEvent(${listOfEvents1.eventid})">Book Now</a>
- </c:otherwise>
- </c:choose>
-	 <%--    </c:if> --%>
-			    
-			<!--     <a class="btn btn-primary">Button</a> -->
-			  </div>
-			</div>
-		      </div>
-</c:forEach>
- </div>
-		  
-		    <!--/.Third slide-->
-
-		  </div>
-		  <!--/.Slides-->
-
-		</div>
-		<!--/.Carousel Wrapper-->
+		<span id=panel311></span>
       </div>
       <!--Panel 1-->
 
@@ -864,7 +554,7 @@
 	</section>
   
 <div id="mybutton">
-<a class="btn-floating btn-lg btn-default peach-gradient" id="navigateReward"><i class="fas fa-bolt"></i></a><span class="counter">Tag Money: ${rewardPoints}</span>
+<a class="btn-floating btn-lg btn-default peach-gradient" id="navigateReward"><i class="fas fa-bolt"></i></a><span class="counter"  id="rew_points">Tag Money :${rewardPoints}</span>
 </div>
 
 
@@ -1021,19 +711,9 @@
   <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="vendor/bootstrap/js/mdb.min.js"></script>
-  
-<script type="text/javascript">
- 
-			$(document).ready(function() {
-				$("#navigateReward").on('click',function(){
-					var rewardPoints = $("#mybutton").text();
-					if(rewardPoints == 10000 || rewardPoints != null){
-						$("#navigateReward").attr("href","../offers.jsp")
-					} else {
-						alert("To enable this feature you need 10000 reward points!!!! ");				 
-					}
-				});
-			});
+  <script type="text/javascript" src="vendor/bootstrap/js/session.js"></script>
+  <script type="text/javascript">
+
   </script>
 </body>
 </html>
