@@ -34,7 +34,7 @@
 			var rewardPoints = $("#mybutton").text();
 			var rewardPointVal=rewardPoints.split(":")[1].trim();
 			if (rewardPointVal != "" && rewardPointVal != null && rewardPointVal !="0" ) {
-				alert(rewardPointVal);
+				console.log(rewardPointVal);
 				$("#navigateReward").attr("href","../offers.jsp")
 			} else {					
 				alert("To enable this feature you need 10000 reward points!!!! ");	
@@ -236,7 +236,7 @@ function callEventsbyType(listevt,reglistevt){
 			    slidefinal+=' </div> <!--/.Slides--></div>';
 			    
 			    final=slidemain+slidevar+slidefinal;
-					alert("content "+slidemain+slidevar+slidefinal);
+					//alert("content "+slidemain+slidevar+slidefinal);
 			    $('#panel311').html(final);
 					
 			
@@ -322,7 +322,7 @@ function getAllProducts(){
 			'</div></div>'+
 		  '<div class="row" style="padding:1%;">'+
 		   ' </div>';
-			alert(page);
+			//alert(page);
 			setTimeout(function(){ 
 				$("#allProd").html(test);
 			
