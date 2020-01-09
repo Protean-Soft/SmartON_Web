@@ -3,6 +3,7 @@
     "use strict";
 	
 	$(document).ready(function(){
+		$.session.clear();
 	  var cur_loc = $(location).attr('href');
 	  if(cur_loc.indexOf('paymentSuccess') != -1){
 		  customAlert('success','Payment completed! You have registered successfully.');
@@ -16,10 +17,15 @@
 			    type: 'red'
 			});
 	  }
+	  
+	  /**
+	   * Login Form
+	   */
 	  $("#loginButton").click(function(event){
 		    event.preventDefault();
 		    verifyUserPayment();
 		});
+	  
       var date_input=$('.date'); 
       var options={
         format: 'mm/dd/yyyy',
@@ -266,6 +272,10 @@
     	//$('#preloader').hide();
     });
     
+    /**
+     * Clear the registration form page
+     */
+    
     $('.clearForm').click(function(){
     	clearFormData('registerForm');
     	$('#registerForm').find('input[type=text],input[type=password],select').each(function(){
@@ -273,6 +283,9 @@
     	});
     });
     
+    /**
+     * Forgot password 
+     */
     $('#recover-submit').click(function(){
     	if(validate($('#forgotEmail')) == false){
             showValidate(input[i]);

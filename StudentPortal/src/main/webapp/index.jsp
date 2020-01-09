@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<!DOCTYPE html>
+<!DOCTYPE>
  <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -45,16 +45,18 @@
 <div id='PopUp'></div>
  
  
-		<%
-        	Object userId = request.getAttribute("userId");
-        	Object fullName = request.getAttribute("fullName");
-        	Object userName = request.getAttribute("userName");
+	<%-- 	<%
+        	Long userId = (Long)request.getAttribute("userId");
+        	String fullName = (String)request.getAttribute("fullName");
+        	String userName = (String)request.getAttribute("userName");
+        	String email = (String)request.getAttribute("email");
+        	
+        	System.out.println("JSP full name " + fullName);
         	session.setAttribute("userId", userId);
         	session.setAttribute("fullName", fullName);
         	session.setAttribute("userName", userName);
-        	RegisterUserDetails accountInfo = (RegisterUserDetails)request.getAttribute("studentDetails");
-        	session.setAttribute("userEmail", accountInfo.getEmail());
-        %> 
+        	session.setAttribute("userEmail", email);
+        %>  --%>
 <%@ include file="navigationbar.jsp" %>
 
 <div class="modal fade" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -866,7 +868,7 @@
 	</section>
   
 <div id="mybutton">
-<a class="btn-floating btn-lg btn-default peach-gradient" id="navigateReward"><i class="fas fa-bolt"></i></a><span class="counter">Tag Money: ${rewardPoints}</span>
+<a class="btn-floating btn-lg btn-default peach-gradient" id="navigateReward"><i class="fas fa-bolt"></i></a><span class="counter"  id="rew_points">Tag Money :${rewardPoints}</span>
 </div>
 
 
@@ -1023,19 +1025,45 @@
   <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="vendor/bootstrap/js/mdb.min.js"></script>
-  
-<script type="text/javascript">
- 
-			$(document).ready(function() {
-				$("#navigateReward").on('click',function(){
-					var rewardPoints = $("#mybutton").text();
-					if(rewardPoints == 10000 || rewardPoints != null){
-						$("#navigateReward").attr("href","../offers.jsp")
-					} else {
-						alert("To enable this feature you need 10000 reward points!!!! ");				 
-					}
-				});
+  <script type="text/javascript" src="vendor/bootstrap/js/session.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
+
+	$.ajax({
+  		url: './getLogonUserDetails',
+  		type: 'GET',
+  		success: function(data){
+  			alert(JSON.stringify(data.userDetails));
+  			//console.log(data.fullName);
+  			$.each(data.userDetails, function(key, value) {
+  			    console.log(value.userId);
+  			  console.log(value.firstName);
+  			console.log(value.email);
+  			console.log(value.rewpoints);
+  			  	$.session.set("userId",value.userId);
+	  			$.session.set("fullName",value.firstName);	
+	  			$.session.set("email",value.email);
+	  			$("#rew_points").text("Tag Money: " +value.rewpoints);
+  		
+  			});
+
+			$.each(data.EventDetails,function(key,value){
+				console.log("Event Discription : " + value.eventDiscription);
 			});
+   		}
+  	});
+		
+		$("#navigateReward").on('click',function(){
+			var rewardPoints = $("#mybutton").text();
+			var rewardPointVal=rewardPoints.split(":")[1].trim();
+			if (rewardPointVal != "" && rewardPointVal != null && rewardPointVal !="0" ) {
+				alert(rewardPointVal);
+				$("#navigateReward").attr("href","../offers.jsp")
+			} else {					
+				alert("To enable this feature you need 10000 reward points!!!! ");	
+			}
+		});
+	});
   </script>
 </body>
 </html>
