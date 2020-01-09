@@ -123,17 +123,19 @@ public class StudentPortalController {
 		List<Long> evtbyUser = evtreg.getEventRegisterEventByuserId(userId);
 		System.out.println("evtbyUser........." + evtbyUser);
 		List<Object> evt1 = new ArrayList<>();
-		Iterator ir = evt.listIterator();
-		while (ir.hasNext()) {
-			EventDetails evtdet = (EventDetails) ir.next();
-			System.out.println(evtdet.getEventid() + "====" + evtdet.getEventName() + "=======" + evtdet.getEventImage());
-			if (evtdet.getEventImage() != null) {
-				String base64Image = common.Covertbase64(evtdet.getEventImage());
-				evtdet.setBase64Image(base64Image);
-			}
-			evt1.add(evtdet);
-
-		}
+	
+		evt1.add(evt);
+		evt1.add(evtbyUser);
+		/*
+		 * Iterator ir = evt.listIterator(); while (ir.hasNext()) { EventDetails evtdet
+		 * = (EventDetails) ir.next(); System.out.println(evtdet.getEventid() + "====" +
+		 * evtdet.getEventName() + "=======" + evtdet.getEventImage()); if
+		 * (evtdet.getEventImage() != null) { String base64Image =
+		 * common.Covertbase64(evtdet.getEventImage());
+		 * evtdet.setBase64Image(base64Image); } evt1.add(evtdet);
+		 * 
+		 * }
+		 */
 		/*model.addAttribute("attenevts", evtbyUser);
 		model.addAttribute("listOfEvt", evt1);*/
 		
@@ -185,6 +187,12 @@ public class StudentPortalController {
 	public String registerUser(RegisterUserDetails registerDetails){
 		String password = new BCryptPasswordEncoder().encode(registerDetails.getPassword());
 		registerDetails.setPassword(password);
+		if(registerDetails.getIsPremium()=="premium") {
+			registerDetails.setNoofevtallowed((long) 5);
+		}else {
+			registerDetails.setNoofevtallowed((long) 0);
+		}
+		
 		studentService.registerUser( registerDetails);
 		registerDetails = studentService.getUserDetailsByProfileId(registerDetails.getRefcode());
 		if(registerDetails != null) {
