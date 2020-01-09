@@ -101,6 +101,7 @@
 
 <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
+  <form id="feedBackForm">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
@@ -112,34 +113,35 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <i class="fas fa-user prefix grey-text"></i>
-          <input type="text" id="name" class="form-control validate">
+          <input type="text" id="name" name="name" class="form-control validate">
           <label data-error="wrong" data-success="right" for="name">Your name</label>
         </div>
 
         <div class="md-form mb-5">
           <i class="fas fa-envelope prefix grey-text"></i>
-          <input type="email" id="email" class="form-control validate">
+          <input type="email" id="email"  name="email" class="form-control validate">
           <label data-error="wrong" data-success="right" for="email">Your email</label>
         </div>
 
         <div class="md-form mb-5">
           <i class="fas fa-tag prefix grey-text"></i>
-          <input type="text" id="sugges" class="form-control validate">
+          <input type="text" id="sugges" name="sugges" class="form-control validate">
           <label data-error="wrong" data-success="right" for="sugges">Your suggestion to us</label>
         </div>
 
         <div class="md-form mb-5">
           <i class="fas fa-tag prefix grey-text"></i>
-          <input type="text" id="feedback" class="form-control validate">
+          <input type="text" id="feedback" name="feedback" class="form-control validate">
           <label data-error="wrong" data-success="right" for="feedback">Academic Feedback</label>
         </div>
 
       </div>
       <div class="modal-footer d-flex justify-content-center">
-        <button class="btn btn-unique">Send <i class="fas fa-paper-plane-o ml-1"></i></button>
+        <button class="btn btn-unique" onclick="sendfeedback()">Send <i class="fas fa-paper-plane-o ml-1"></i></button>
       </div>
     </div>
   </div>
+  </form>
 </div>
 
 
@@ -296,10 +298,12 @@
 
  <div class="tab-pane fade" id="panel12" role="tabpanel">
    <div class="row" style="padding:1%;">
-  
+  <c:set var="count"  value="${0}"/>  
    <c:forEach var="listOfEvents" items="${listOfEvt}"  varStatus="loopCounter" >
     <c:if test="${listOfEvents.eventCatogery=='TECHNICALS'}">
-     <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
+      <c:if test="${count<9}">
+     <c:if test="${count % 3 == 0}"></div> <div class="row" style="padding:1%;"></c:if>
+     <c:set var="count" value="${count+1}"/> 
     <div class="col-md">
 
 	<!-- Card Narrower -->
@@ -354,8 +358,10 @@
 	<!-- Card Narrower -->
     </div>
   </c:if>
+  </c:if>
     </c:forEach>
     </div>
+    
 
   <div class="row" style="padding:1%;">
     </div>
@@ -369,10 +375,12 @@
 <!--Panel 3-->
 <div class="tab-pane fade" id="panel13" role="tabpanel">
    <div class="row" style="padding:1%;">
-  
+   <c:set var="count"  value="${0}"/> 
    <c:forEach var="listOfEvents" items="${listOfEvt}"  varStatus="loopCounter" >
     <c:if test="${listOfEvents.eventCatogery=='LIFE STYLE CHOICES'}">
-     <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
+      <c:if test="${count<9}">
+     <c:if test="${count % 3 == 0}"></div> <div class="row" style="padding:1%;"></c:if>
+     <c:set var="count" value="${count+1}"/> 
     <div class="col-md">
 
 	<!-- Card Narrower -->
@@ -426,6 +434,7 @@
 	</div>
 	<!-- Card Narrower -->
     </div>
+  </c:if>
   </c:if>
     </c:forEach>
     </div>
@@ -438,13 +447,14 @@
  <!--Panel 4-->
  <div class="tab-pane fade" id="panel14" role="tabpanel">
    <div class="row" style="padding:1%;">
-  
+   <c:set var="count" value="${0}"/> 
    <c:forEach var="listOfEvents" items="${listOfEvt}"  varStatus="loopCounter" >
     <c:if test="${listOfEvents.eventCatogery=='PERSONALITY DEVELOPMENTS'}">
-     <c:if test="${loopCounter.index % 3 == 0}"></div><div class="row" style="padding:1%;"></c:if>
-    <div class="col-md">
-
-	<!-- Card Narrower -->
+    
+      <c:if test="${count<9}">
+     <c:if test="${count % 3 == 0}"></div> <div class="row" style="padding:1%;"></c:if>
+     <c:set var="count" value="${count+1}"/>
+   	<!-- Card Narrower -->
 	<div class="card card-cascade narrower" style="padding:1%;">
 
 	  <!-- Card image -->
@@ -496,8 +506,10 @@
 	<!-- Card Narrower -->
     </div>
   </c:if>
+  </c:if>
     </c:forEach>
     </div>
+
 
   <div class="row" style="padding:1%;">
     </div>
@@ -507,9 +519,8 @@
  </div>
  </div>
 
-
     <div class="text-center mt-4 mb-5">
-      <a class="black-text font-weight-bold" href="#!">View all product <i class="fa fa-angle-right"></i></a>
+      <a class="black-text font-weight-bold" href="../products.jsp" onclick="getAllProducts()">View all product <i class="fa fa-angle-right"></i></a>
     </div>
 </div>
 

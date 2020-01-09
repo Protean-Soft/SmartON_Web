@@ -43,9 +43,10 @@ public class EventRegisterServiceImpl implements EventRegisterService{
 		if(evtreg==null) {
 		  RegisterUserDetails userdetail=userdetails.findByUserId(userId);
 		  System.out.println(userdetail);
-		  System.out.println("local................."+userdetail.getNoofevtallowed());
+		 
 		  
 		 if(userdetail!=null &&userdetail.getNoofevtallowed()>0 &&userdetail.getNoofevtallowed()!=null  ) {
+			 System.out.println("local................."+userdetail.getNoofevtallowed());
 			 Long noofevnts=userdetail.getNoofevtallowed()-1;
 		 userdetails.updateNoofevent(noofevnts,userId);
 		 eventregister.setIscancelled(false);
@@ -55,7 +56,7 @@ public class EventRegisterServiceImpl implements EventRegisterService{
 		EventDetails evtdet= eventdetail.getEventById(eventregister.getEventid());
 		mailSender.sendEmailRegisterevent(userdetail,evtdet);
 		 responseMsg= "Registration success";
-		 }else if(userdetail.getNoofevtallowed()==0) {
+		 }else if(userdetail.getNoofevtallowed()==0 || userdetail.getNoofevtallowed()==null) {
 			 responseMsg="UserExceedtheLimit";
 		 }
 		 }else {
