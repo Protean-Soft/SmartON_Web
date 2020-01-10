@@ -1,18 +1,17 @@
-  $(document).ready(function() {
-
+$(document).ready(function() {
 		$.ajax({
 	  		url: './getLogonUserDetails',
 	  		type: 'GET',
 	  		success: function(data){
-	  			 console.log(JSON.stringify(data.userDetails));
+	  			 //console.log(JSON.stringify(data.userDetails));
 	  			callEventsbyType(data.EventDetails[0],data.EventDetails[1]);
 	  			 console.log("Event lst:::"+data.EventDetails[0]);
 	  			 console.log("Evtlstregbyuser:::"+data.EventDetails[1]);
 	  			$.each(data.userDetails, function(key, value) {
 	  			    console.log(value.userId);
-	  			  console.log(value.firstName);
-	  			console.log(value.email);
-	  			console.log(value.rewpoints);
+	  			    console.log(value.firstName);
+	  			    console.log(value.email);
+	  			    console.log(value.rewpoints);
 	  			  	$.session.set("userId",value.userId);
 		  			$.session.set("fullName",value.firstName);	
 		  			$.session.set("email",value.email);
@@ -21,11 +20,12 @@
 	  			});
 	  			 console.log(data.EventDetails[0]);
 	  			 console.log(data.EventDetails[1]);
-	  			/*$.each(data.EventDetails, function(key, value) {
-	  			   
-	  			 
-	  		
-	  			});*/
+	  			var session_userid = $.session.get("userId");
+	  			console.log("session id " + session_userid);
+	  			console.log("session id " + $.session.get("fullName"));
+	  			$("#userId").val(session_userid);
+	  			$("#email").val($.session.get("email"));
+	  			$("#fullname").text("Welcome " +$.session.get("fullName"));
 	  			
 	   		}
 	  	});
