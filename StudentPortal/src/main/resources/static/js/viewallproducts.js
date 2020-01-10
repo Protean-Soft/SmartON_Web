@@ -1,51 +1,76 @@
   $(document).ready(function() {
-
+	  //$.session.set("userId",value.userId)
+	  
+	  console.log($.session.get("userId"));
+	  
+	  var userid=$.session.get("userId");
 		$.ajax({
-	  		url: './getLogonUserDetails',
+			url : './StudentPortal/Event/getOngoingEvents/'+userid,
 	  		type: 'GET',
 	  		success: function(data){
-	  			 console.log(JSON.stringify(data.userDetails));
-	  			callEventsbyType(data.EventDetails[0],data.EventDetails[1]);
-	  			 console.log("Event lst:::"+data.EventDetails[0]);
-	  			 console.log("Evtlstregbyuser:::"+data.EventDetails[1]);
-	  			$.each(data.userDetails, function(key, value) {
-	  			    console.log(value.userId);
-	  			  console.log(value.firstName);
-	  			console.log(value.email);
-	  			console.log(value.rewpoints);
-	  			  	$.session.set("userId",value.userId);
-		  			$.session.set("fullName",value.firstName);	
-		  			$.session.set("email",value.email);
-		  			$("#rew_points").text("Tag Money: " +value.rewpoints);
-	  		
-	  			});
-	  			 console.log(data.EventDetails[0]);
-	  			 console.log(data.EventDetails[1]);
-	  			/*$.each(data.EventDetails, function(key, value) {
-	  			   
+	  			console.log(JSON.stringify(data));
+	  			var rowObj=data[0];
+	  			var reglistevt=data[1];
+	  			var samp='';
+	  			var final='';
 	  			 
-	  		
-	  			});*/
 	  			
-	   		}
-	  	});
-		
-		$("#navigateReward").on('click',function(){
-			var rewardPoints = $("#mybutton").text();
-			var rewardPointVal=rewardPoints.split(":")[1].trim();
-			if (rewardPointVal != "" && rewardPointVal != null && rewardPointVal !="0" ) {
-				console.log(rewardPointVal);
-				$("#navigateReward").attr("href","../offers.jsp")
-			} else {					
-				alert("To enable this feature you need 10000 reward points!!!! ");	
+	  			for(var i=0;i<rowObj.length;i++){
+					
+	  				samp='<div class="col-md-4"><div class="card card-cascade narrower" style="padding:1%;"> <div class="view view-cascade overlay">';
+	  				samp+='<img  class="card-img-top" src="data:image/png;base64,'+rowObj[i].eventImage+'" alt="Card image cap"><a><div class="mask rgba-white-slight"></div></a></div><div class="card-body card-body-cascade text-center">';
+	  				samp+='<h4 class="card-title"><strong>'+rowObj[i].eventName+'</strong></h4>';
+	  				samp+=   '<h5 class="blue-text pb-2"><strong>'+rowObj[i].eventOrgName+'</strong></h5>';
+	  				samp+=  '<p class="card-text">'+rowObj[i].eventDescription+'</p>';
+	  				samp+=  ' <p class="font-weight-normal"><i class="fas fa-certificate pr-2"></i><span>Category: '+rowObj[i].eventCatogery+'</span></p>';
+	  				samp+=  '   <p class="font-weight-normal"><i class="fas fa-book-reader pr-2"></i><span>Type: '+rowObj[i].eventType+'</span></p>';
+	  				samp+=  '   <p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: '+rowObj[i].eventDate+'</span></p>';
+	  					  
+
+	  				if(reglistevt.includes(rowObj[i].eventid)){
+	  					samp+='<button class="btn btn-unique"  disabled onClick="registerEvent('+rowObj[i].eventid+')">Book Now</button> ';
+	  				}else{
+	  					samp+='<button class="btn btn-unique" onClick="registerEvent('+rowObj[i].eventid+')">Book Now</button> ';
+	  				}
+	  			
+	  				samp+='<a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a><a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a><a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a></div></div></div>';
+	  				
+	  				if(i==0 ){
+	  					console.log("Temp::::::::::::::"+i);
+	  					samp='<div class="row" style="padding:1%;">'+samp;
+	  				}else if(i%3==0){
+	  					samp='</div><div class="row" style="padding:1%;">'+samp;
+	  				}
+	  				final+=samp;
+	  				}
+	  				final=final+'</div>';
+	  				$('#allProd').html(final);
+	  			
+	  			
+	  			
+	  			
+	  			
+	  			
+	  			
+	  			
+	  			
+	  			
+	  			
+	  		
+	  			
+	   		},
+	   		error : function() {
+				alert("Limit exceed*******************");
 			}
-		});
+	  	});
 	});
 
 function callEventsbyType(listevt,reglistevt){
 	var samp='';
 	var final='';
-
+	 
+	var arr=jQuery.makeArray( reglistevt );
+	console.log("Success.........."+listevt.length+"========="+arr);
 	var rowObj = listevt;
 	
 	for(var i=0;i<rowObj.length && i<9;i++){
@@ -236,7 +261,7 @@ function callEventsbyType(listevt,reglistevt){
 			    slidefinal+=' </div> <!--/.Slides--></div>';
 			    
 			    final=slidemain+slidevar+slidefinal;
-					//alert("content "+slidemain+slidevar+slidefinal);
+					alert("content "+slidemain+slidevar+slidefinal);
 			    $('#panel311').html(final);
 					
 			
@@ -299,7 +324,7 @@ function getAllProducts(){
 	
 	var userId=1;
 	$.ajax({
-		url : './StudentPortal/Event/viewallproducts',
+		url : './StudentPortal/Event/viewallproduct',
 		type: 'GET',
 		/*dataType: 'TEXT',
 		processData: false,
@@ -322,7 +347,7 @@ function getAllProducts(){
 			'</div></div>'+
 		  '<div class="row" style="padding:1%;">'+
 		   ' </div>';
-			//alert(page);
+			alert(page);
 			setTimeout(function(){ 
 				$("#allProd").html(test);
 			
