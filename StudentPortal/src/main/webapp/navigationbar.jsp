@@ -80,12 +80,12 @@
 <script type="text/javascript" src="vendor/bootstrap/js/session.js"></script>
 <script type="text/javascript">
  $(document).ready(function(){
-	
-		var session_userid = $.session.get("userId");
-		console.log("session id " + $.session.get("fullName"));
-		$("#userId").val(session_userid);
+	  
+		
+		
+		/*$("#userId").val(session_userid);
 		$("#email").val($.session.get("email"));
-		$("#fullname").text("Welcome " +$.session.get("fullName"));
+		$("#fullname").text("Welcome " +$.session.get("fullName"));*/
 		
 		/**
 		 * ========= FETCH PROFILE PICS ========== 
