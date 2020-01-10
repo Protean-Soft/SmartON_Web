@@ -3,26 +3,26 @@ $(document).ready(function() {
 	  		url: './getLogonUserDetails',
 	  		type: 'GET',
 	  		success: function(data){
-	  			 //console.log(JSON.stringify(data.userDetails));
+	  			// console.log(JSON.stringify(data.userDetails));
 	  			callEventsbyType(data.EventDetails[0],data.EventDetails[1]);
-	  			 console.log("Event lst:::"+data.EventDetails[0]);
-	  			 console.log("Evtlstregbyuser:::"+data.EventDetails[1]);
+	  			// console.log("Event lst:::"+data.EventDetails[0]);
+	  			// console.log("Evtlstregbyuser:::"+data.EventDetails[1]);
 	  			$.each(data.userDetails, function(key, value) {
-	  			    console.log(value.userId);
-	  			    console.log(value.firstName);
-	  			    console.log(value.email);
-	  			    console.log(value.rewpoints);
+	  			  //  console.log(value.userId);
+	  			 // console.log(value.firstName);
+	  		//	console.log(value.email);
+	  		//	console.log(value.rewpoints);
 	  			  	$.session.set("userId",value.userId);
 		  			$.session.set("fullName",value.firstName);	
 		  			$.session.set("email",value.email);
 		  			$("#rew_points").text("Tag Money: " +value.rewpoints);
 	  		
 	  			});
-	  			 console.log(data.EventDetails[0]);
-	  			 console.log(data.EventDetails[1]);
+	  			 //console.log(data.EventDetails[0]);
+	  			 //console.log(data.EventDetails[1]);
 	  			var session_userid = $.session.get("userId");
-	  			console.log("session id " + session_userid);
-	  			console.log("session id " + $.session.get("fullName"));
+	  			//console.log("session id " + session_userid);
+	  			//console.log("session id " + $.session.get("fullName"));
 	  			$("#userId").val(session_userid);
 	  			$("#email").val($.session.get("email"));
 	  			$("#fullname").text("Welcome " +$.session.get("fullName"));
@@ -69,7 +69,7 @@ function callEventsbyType(listevt,reglistevt){
 		samp+='<a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a><a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a><a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a></div></div></div>';
 		
 		if(i==0 ){
-			console.log("Temp::::::::::::::"+i);
+			//console.log("Temp::::::::::::::"+i);
 			samp='<div class="row" style="padding:1%;">'+samp;
 		}else if(i%3==0){
 			samp='</div><div class="row" style="padding:1%;">'+samp;
@@ -104,14 +104,14 @@ function callEventsbyType(listevt,reglistevt){
 			samp+='<a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a><a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a><a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a></div></div></div>';
 			
 			if(pan2==0 ){
-				console.log("Temp::::::::::::::"+i);
+				//console.log("Temp::::::::::::::"+i);
 				samp='<div class="row" style="padding:1%;">'+samp;
 			}else if(pan2%3==0){
 				samp='</div><div class="row" style="padding:1%;">'+samp;
 			}
 			final+=samp;
 			pan2++;
-			console.log("rowcount==="+pan2)
+			//console.log("rowcount==="+pan2)
 		}
 			}
 			final=final+'</div>';
@@ -143,7 +143,7 @@ function callEventsbyType(listevt,reglistevt){
 				samp+='<a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a><a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a><a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a></div></div></div>';
 				
 				if(pan2==0 ){
-					console.log("Temp::::::::::::::"+i);
+					//console.log("Temp::::::::::::::"+i);
 					samp='<div class="row" style="padding:1%;">'+samp;
 				}else if(pan2%3==0){
 					samp='</div><div class="row" style="padding:1%;">'+samp;
@@ -184,7 +184,7 @@ function callEventsbyType(listevt,reglistevt){
 					samp+='<a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a><a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a><a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a></div></div></div>';
 					
 					if(pan2==0 ){
-						console.log("Temp::::::::::::::"+i);
+						//console.log("Temp::::::::::::::"+i);
 						samp='<div class="row" style="padding:1%;">'+samp;
 					}else if(pan2%3==0){
 						samp='</div><div class="row" style="padding:1%;">'+samp;
@@ -209,35 +209,211 @@ function callEventsbyType(listevt,reglistevt){
 				slidemain+='<!--Indicators--><ol class="carousel-indicators"><li data-target="#multi-item-example" data-slide-to="0" class="active"></li><li data-target="#multi-item-example" data-slide-to="1"></li><li data-target="#multi-item-example" data-slide-to="2"></li></ol><!--/.Indicators-->';
 
 				slidemain+='<!--Slides--><div class="carousel-inner" role="listbox"><!--First slide-->';
-				
+				var pan2="";
 				for(var i=0;i<rowObj.length && i<9;i++){
 				//slidevar+='<div class="carousel-item active">';
 
-				slidevar+='<div class="col-md-4"><div class="card mb-2"><img class="card-img-top" src="data:image/png;base64,'+rowObj[i].eventImage+'" alt="Card image cap"> <div class="card-body">';
+				slidevar='<div class="col-md-4"><div class="card mb-2"> <img class="card-img-top" src="data:image/png;base64,'+rowObj[i].eventImage+'" alt="Card image cap"><div class="card-body">';
 				slidevar+='<h4 class="card-title">'+rowObj[i].eventName+'</h4><p class="card-text">'+rowObj[i].eventDescription+'</p>';
-			/*	if(reglistevt.includes(rowObj[i].eventid)){
-					slidevar+='  <button class="btn btn-primary" disabled onClick="registerEvent('+rowObj[i].eventid+')>Button</button>';
+				if(reglistevt.includes(rowObj[i].eventid)){
+					slidevar+=' <button class="btn btn-primary" disabled onClick="registerEvent('+rowObj[i].eventid+')">Button</button>';
+					//slidevar+='<a class="btn btn-primary">Button</a>';
 				}else{
-					slidevar+='  <button class="btn btn-primary" onClick="registerEvent('+rowObj[i].eventid+')>Button</button>';
-				}*/
+					slidevar+='<button class="btn btn-primary" onClick="registerEvent('+rowObj[i].eventid+')">Button</button>';
+					//slidevar+='<a class="btn btn-primary">Button</a>';
+				}
 			
 				slidevar+= '</div></div>   </div><!--/.First slide--> '
 					
 					
 					if(i==0 ){
-						console.log("Temp::::::::::::::"+i);
+						//console.log("Temp::::::::::::::"+i);
 						slidevar='<div class="carousel-item active">'+slidevar;
+						
 					}else if(i%3==0){
+						//console.log("elseTemp::::::::::::::"+i);
 						slidevar='</div><div class="carousel-item">'+slidevar;
 					}
-				//console.log(slidevar);
-						  
+				
+				//console.log(i+"=="+slidevar);
+				pan2+=slidevar;
 				}		  
-			    slidefinal+=' </div> <!--/.Slides--></div>';
-			    
-			    final=slidemain+slidevar+slidefinal;
+			    slidefinal+=' </div></div> <!--/.Slides--></div>';
+			   
+			    final=slidemain+pan2+slidefinal;
+			   // console.log("=="+final)
 					//alert("content "+slidemain+slidevar+slidefinal);
 			    $('#panel311').html(final);
+			    
+			    
+			    
+			    
+			    /*Workshop*/
+			    
+			    
+				
+				var slidemain='',slidevar='',slidefinal='';	
+					
+					
+				slidemain+='<div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">';
+
+				slidemain+='<!--Controls--><div class="controls-top"><a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-left"></i></a><a class="btn-floating" href="#multi-item-example" data-slide="next"><i class="fas fa-chevron-right"></i></a></div><!--/.Controls-->';
+
+				slidemain+='<!--Indicators--><ol class="carousel-indicators"><li data-target="#multi-item-example" data-slide-to="0" class="active"></li><li data-target="#multi-item-example" data-slide-to="1"></li><li data-target="#multi-item-example" data-slide-to="2"></li></ol><!--/.Indicators-->';
+
+				slidemain+='<!--Slides--><div class="carousel-inner" role="listbox"><!--First slide-->';
+				var pan=0;
+				var pan2="";
+				for(var i=0;i<rowObj.length && pan<9;i++){
+					
+					if(rowObj[i].eventType=='WORKSHOPS'){
+						
+				
+				slidevar='<div class="col-md-4"><div class="card mb-2"><img class="card-img-top" src="data:image/png;base64,'+rowObj[i].eventImage+'" alt="Card image cap"> <div class="card-body">';
+				slidevar+='<h4 class="card-title">'+rowObj[i].eventName+'</h4><p class="card-text">'+rowObj[i].eventDescription+'</p>';
+				if(reglistevt.includes(rowObj[i].eventid)){
+					slidevar+=' <button class="btn btn-primary" disabled onClick="registerEvent('+rowObj[i].eventid+')">Button</button>';
+					//slidevar+='<a class="btn btn-primary">Button</a>';
+				}else{
+					slidevar+='<button class="btn btn-primary" onClick="registerEvent('+rowObj[i].eventid+')">Button</button>';
+					//slidevar+='<a class="btn btn-primary">Button</a>';
+				}
+			
+				slidevar+= '</div></div>   </div><!--/.First slide--> '
+					
+					
+					if(pan==0 ){
+						//console.log("Temp::::::::::::::"+i);
+						slidevar='<div class="carousel-item active">'+slidevar;
+						
+					}else if(pan%3==0){
+						//console.log("elseTemp::::::::::::::"+i);
+						slidevar='</div><div class="carousel-item">'+slidevar;
+					}
+				
+				//console.log(i+"=="+slidevar);
+				pan2+=slidevar;
+				pan++;
+					}
+				}		  
+			    slidefinal+=' </div></div> <!--/.Slides--></div>';
+			   
+			    final=slidemain+pan2+slidefinal;
+			 // console.log("WORKSHOPS=="+final)
+					//alert("content "+slidemain+slidevar+slidefinal);
+			    $('#panel312').html(final);
+			    
+			    
+			    
+			    
+			    /*TECHMEETS*/
+			    
+				
+				var slidemain='',slidevar='',slidefinal='';	
+					
+					
+				slidemain+='<div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">';
+
+				slidemain+='<!--Controls--><div class="controls-top"><a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-left"></i></a><a class="btn-floating" href="#multi-item-example" data-slide="next"><i class="fas fa-chevron-right"></i></a></div><!--/.Controls-->';
+
+				slidemain+='<!--Indicators--><ol class="carousel-indicators"><li data-target="#multi-item-example" data-slide-to="0" class="active"></li><li data-target="#multi-item-example" data-slide-to="1"></li><li data-target="#multi-item-example" data-slide-to="2"></li></ol><!--/.Indicators-->';
+
+				slidemain+='<!--Slides--><div class="carousel-inner" role="listbox"><!--First slide-->';
+				var pan2="";
+				var pan=0;
+				for(var i=0;i<rowObj.length && pan<9;i++){
+					if(rowObj[i].eventType=='TECH MEETS'){
+				//slidevar+='<div class="carousel-item active">';
+
+				slidevar='<div class="col-md-4"><div class="card mb-2"> <img class="card-img-top" src="data:image/png;base64,'+rowObj[i].eventImage+'" alt="Card image cap"><div class="card-body">';
+				slidevar+='<h4 class="card-title">'+rowObj[i].eventName+'</h4><p class="card-text">'+rowObj[i].eventDescription+'</p>';
+				if(reglistevt.includes(rowObj[i].eventid)){
+					slidevar+=' <button class="btn btn-primary" disabled onClick="registerEvent('+rowObj[i].eventid+')">Button</button>';
+					//slidevar+='<a class="btn btn-primary">Button</a>';
+				}else{
+					slidevar+='<button class="btn btn-primary" onClick="registerEvent('+rowObj[i].eventid+')">Button</button>';
+					//slidevar+='<a class="btn btn-primary">Button</a>';
+				}
+			
+				slidevar+= '</div></div>   </div><!--/.First slide--> '
+					
+					
+					if(pan==0 ){
+						//console.log("Temp::::::::::::::"+i);
+						slidevar='<div class="carousel-item active">'+slidevar;
+						
+					}else if(pan%3==0){
+						//console.log("elseTemp::::::::::::::"+i);
+						slidevar='</div><div class="carousel-item">'+slidevar;
+					}
+				
+				//console.log(i+"=="+slidevar);
+				pan2+=slidevar;
+				pan++;
+					}
+				}		  
+			    slidefinal+=' </div></div> <!--/.Slides--></div>';
+			   
+			    final=slidemain+pan2+slidefinal;
+			    //console.log("Techmetes=="+final)
+					//alert("content "+slidemain+slidevar+slidefinal);
+			    $('#panel313').html(final);
+			    
+			    
+			    /*COURSES*/
+			    
+				
+				var slidemain='',slidevar='',slidefinal='';	
+					
+					
+				slidemain+='<div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">';
+
+				slidemain+='<!--Controls--><div class="controls-top"><a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-left"></i></a><a class="btn-floating" href="#multi-item-example" data-slide="next"><i class="fas fa-chevron-right"></i></a></div><!--/.Controls-->';
+
+				slidemain+='<!--Indicators--><ol class="carousel-indicators"><li data-target="#multi-item-example" data-slide-to="0" class="active"></li><li data-target="#multi-item-example" data-slide-to="1"></li><li data-target="#multi-item-example" data-slide-to="2"></li></ol><!--/.Indicators-->';
+
+				slidemain+='<!--Slides--><div class="carousel-inner" role="listbox"><!--First slide-->';
+				var pan2="";
+				var pan=0
+				for(var i=0;i<rowObj.length && pan<9;i++){
+				//slidevar+='<div class="carousel-item active">';
+					if(rowObj[i].eventType=='COURSES'){
+
+				slidevar='<div class="col-md-4"><div class="card mb-2"> <img class="card-img-top" src="data:image/png;base64,'+rowObj[i].eventImage+'" alt="Card image cap"><div class="card-body">';
+				slidevar+='<h4 class="card-title">'+rowObj[i].eventName+'</h4><p class="card-text">'+rowObj[i].eventDescription+'</p>';
+				if(reglistevt.includes(rowObj[i].eventid)){
+					slidevar+=' <button class="btn btn-primary" disabled onClick="registerEvent('+rowObj[i].eventid+')">Button</button>';
+					//slidevar+='<a class="btn btn-primary">Button</a>';
+				}else{
+					slidevar+='<button class="btn btn-primary" onClick="registerEvent('+rowObj[i].eventid+')">Button</button>';
+					//slidevar+='<a class="btn btn-primary">Button</a>';
+				}
+			
+				slidevar+= '</div></div>   </div><!--/.First slide--> '
+					
+					
+					if(pan==0 ){
+						//console.log("Temp::::::::::::::"+i);
+						slidevar='<div class="carousel-item active">'+slidevar;
+						
+					}else if(pan%3==0){
+						//console.log("elseTemp::::::::::::::"+i);
+						slidevar='</div><div class="carousel-item">'+slidevar;
+					}
+				
+				//console.log(i+"=="+slidevar);
+				pan2+=slidevar;
+				pan++;
+					}
+				}		  
+			    slidefinal+=' </div></div> <!--/.Slides--></div>';
+			   
+			    final=slidemain+pan2+slidefinal;
+			  // console.log("Cources=="+final)
+					//alert("content "+slidemain+slidevar+slidefinal);
+			    $('#panel314').html(final);
+			    
+			    
 					
 			
 			
