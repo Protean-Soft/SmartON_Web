@@ -136,36 +136,18 @@ System.out.println("noofeventatt=========="+noofeventatt);
 	}
 
 	/* List out all ongoing events */
-	@GetMapping(value = "getOngoingEvents",produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public ModelAndView getAllNonDeletedEvents(ModelMap model) {
+	@GetMapping(value = "/getOngoingEvents/{userid}")
+	public  List getAllNonDeletedEvents(@PathVariable Long userid) {
 		System.out.println("Successfully Registerd..............");
 		List<EventDetails> evt=eventDetailsService.findAllByDeletedflag();
-		List<EventDetails> evt1=new ArrayList<EventDetails>();
-		Iterator ir=evt.listIterator();
-		while(ir.hasNext()) {
-			EventDetails evtdet=(EventDetails) ir.next();
-			System.out.println(evtdet.getEventid()+"===="+evtdet.getEventName()+"======="+evtdet.getEventImage());
-			if(evtdet.getEventImage()!=null) {
-				String base64Image=commonutil.Covertbase64(evtdet.getEventImage());
-			evtdet.setBase64Image(base64Image);
-		}
-			evt1.add(evtdet);
-		}
-		RegisterUserDetails regDetails = studentService.getLogonDetails("andrew");
-		
-		model.addAttribute("studentDetails", regDetails);
-		model.addAttribute("userName", regDetails.getFirstName());
-		model.addAttribute("fullName",regDetails.getFirstName() + " " + regDetails.getLastName());
-		String mailId = regDetails.getEmail();
-		long userId = regDetails.getUserId();
-		model.addAttribute("userId",userId);
-		model.addAttribute("listOfEvt",evt1);
-		//model.setViewName("index.jsp");
-		return new ModelAndView("redirect:/index.jsp", model);
+		List<Long> evtbyUser = eventreg.getEventRegisterEventByuserId(userid);
+		System.out.println("Completed");
+		List<Object> newlst=new ArrayList<Object>();
+		newlst.add(evt);
+		newlst.add(evtbyUser);
+		return newlst;
 		//return model;
 	}
-
 	@GetMapping(value = "viewAllProduct",produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<EventDetails> viewAllProduct(ModelMap model) {

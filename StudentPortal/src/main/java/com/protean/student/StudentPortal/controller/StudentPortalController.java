@@ -123,6 +123,7 @@ public class StudentPortalController {
 		List<Long> evtbyUser = evtreg.getEventRegisterEventByuserId(userId);
 		System.out.println("evtbyUser........." + evtbyUser);
 		List<Object> evt1 = new ArrayList<>();
+	
 		evt1.add(evt);
 		evt1.add(evtbyUser);
 		/*
@@ -186,6 +187,12 @@ public class StudentPortalController {
 	public String registerUser(RegisterUserDetails registerDetails){
 		String password = new BCryptPasswordEncoder().encode(registerDetails.getPassword());
 		registerDetails.setPassword(password);
+		if(registerDetails.getIsPremium()=="premium") {
+			registerDetails.setNoofevtallowed((long) 5);
+		}else {
+			registerDetails.setNoofevtallowed((long) 0);
+		}
+		
 		studentService.registerUser( registerDetails);
 		registerDetails = studentService.getUserDetailsByProfileId(registerDetails.getRefcode());
 		if(registerDetails != null) {
