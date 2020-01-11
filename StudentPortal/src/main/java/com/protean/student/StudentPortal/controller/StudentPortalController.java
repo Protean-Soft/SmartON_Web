@@ -33,6 +33,7 @@ import com.protean.student.StudentPortal.StudentPortalApplication;
 import com.protean.student.StudentPortal.model.EventDetails;
 import com.protean.student.StudentPortal.model.RegisterUserDetails;
 import com.protean.student.StudentPortal.model.TransactionDetails;
+import com.protean.student.StudentPortal.repository.EventsDetailsRepository;
 import com.protean.student.StudentPortal.repository.RegistrationDao;
 import com.protean.student.StudentPortal.service.EventDetailsServiceImpl;
 import com.protean.student.StudentPortal.service.MailSenderService;
@@ -67,6 +68,9 @@ public class StudentPortalController {
 	
 	@Autowired
 	commonUtils common;
+	
+	@Autowired
+	EventsDetailsRepository   eventDetailsRepository;
 	
 	
 	
@@ -117,14 +121,20 @@ public class StudentPortalController {
 			studentService.updateUserDetails(regDetails);
 		}
 		
+		System.out.println("Entereddd....................");
 		
-
-		List<EventDetails> evt = event.findAllByDeletedflag();
+		/*
+		 * System.out.println("Error in lig.................."+eventDetailsRepository.
+		 * findAllByDeletedflag(0));
+		 */
+		List<EventDetails> eventDetailsByFlag = eventDetailsRepository.findAllByDeletedflag(0);
+System.out.println("Completedddd............");
+		//List<EventDetails> evt = event.findAllByDeletedflag();
 		List<Long> evtbyUser = evtreg.getEventRegisterEventByuserId(userId);
 		System.out.println("evtbyUser........." + evtbyUser);
 		List<Object> evt1 = new ArrayList<>();
 	
-		evt1.add(evt);
+		evt1.add(eventDetailsByFlag);
 		evt1.add(evtbyUser);
 		/*
 		 * Iterator ir = evt.listIterator(); while (ir.hasNext()) { EventDetails evtdet
@@ -188,11 +198,13 @@ public class StudentPortalController {
 		String password = new BCryptPasswordEncoder().encode(registerDetails.getPassword());
 		registerDetails.setPassword(password);
 		if(registerDetails.getIsPremium()=="premium") {
+			System.out.println("IF PART");
 			registerDetails.setNoofevtallowed((long) 5);
 		}else {
+			System.out.println("ELSE PART");
 			registerDetails.setNoofevtallowed((long) 0);
 		}
-		
+		System.out.println("No of event allowed....."+registerDetails.getNoofevtallowed());
 		studentService.registerUser( registerDetails);
 		registerDetails = studentService.getUserDetailsByProfileId(registerDetails.getRefcode());
 		if(registerDetails != null) {
@@ -201,6 +213,7 @@ public class StudentPortalController {
 				rewardPoints = 0l;
 			}
 			rewardPoints = rewardPoints + 1000;
+			
 			studentService.updateRewards(rewardPoints,registerDetails.getUserName());
 		}
 		//studentService.updateRewards(registerDetails.getProfileID());

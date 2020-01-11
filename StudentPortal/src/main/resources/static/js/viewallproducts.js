@@ -291,7 +291,7 @@ function registerEvent(eventId){
 	
 	// jQuery("#PopUp").load("confirmation.jsp");
 	});*/
-	window.location.href="/confirmation.jsp?eventid="+eventId+"&userid="+useridtemp;
+	window.location.href="./confirmation.jsp?eventid="+eventId+"&userid="+useridtemp;
 
 }
 
