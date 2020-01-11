@@ -345,6 +345,7 @@ function verifyUserPayment(){
 			}else if(data.acknwlge == 'acknowledged'){
 				$("#logonForm").submit();
 			}else{
+				//alert(data.firstName + data.email + data.url);
 				$.confirm({
 					columnClass: 'col-md-6 col-md-offset-3',
 				    title: 'Membership Confirmation!',
