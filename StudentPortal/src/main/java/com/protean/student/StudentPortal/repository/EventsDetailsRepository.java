@@ -30,28 +30,28 @@ public interface EventsDetailsRepository extends JpaRepository<EventDetails, Lon
 	 * @Modifying
 	 * 
 	 * @Query(value =
-	 * "select * from event_Details where deletedflag= :flag",nativeQuery = true)
+	 * "select * from event_details where deletedflag= :flag",nativeQuery = true)
 	 */
 	@Transactional
     @Modifying
-    @Query(value = "Select * from event_Details e where e.deletedflag = :flag and e.event_date>= CURRENT_TIMESTAMP",nativeQuery = true)	
-	List<EventDetails> findAllByDeletedflag(@Param("flag") Long flag);
+    @Query(value = "Select * from event_details e where e.deletedflag = :flag and e.event_date>= CURRENT_TIMESTAMP",nativeQuery = true)	
+	public List<EventDetails> findAllByDeletedflag(@Param("flag") int flag);
 	
 	@Transactional
     @Modifying
-    @Query(value = "update event_Details set deletedflag=1 where eventid = :eventid",nativeQuery = true)
+    @Query(value = "update event_details set deletedflag=1 where eventid = :eventid",nativeQuery = true)
 	int deleteEventDetail(@Param("eventid") Long eventid);
 	
 	
 	@Transactional
     @Modifying
-    @Query(value = "Select * from event_Details e where e.event_catogery =:catogery and e.event_type = :type",nativeQuery = true)
+    @Query(value = "Select * from event_details e where e.event_catogery =:catogery and e.event_type = :type",nativeQuery = true)
 	List<EventDetails> findAllByEventCategoryandType(@Param("catogery") String catogery,@Param("type") String type);
 	
 	
 	@Transactional
     @Modifying
-    @Query(value = "Update  event_Details set event_image=:eventimage where eventid=:eventid",nativeQuery = true)
+    @Query(value = "Update  event_details set event_image=:eventimage where eventid=:eventid",nativeQuery = true)
 	int updateEventDetail(@Param("eventid") Long eventid,@Param("eventimage") byte[] eventimage);
 
 	//List<EventDetails> findAllByDeletedflag(Long flag);

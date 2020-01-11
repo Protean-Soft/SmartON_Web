@@ -269,7 +269,7 @@
  </div>
 
     <div class="text-center mt-4 mb-5">
-      <a class="black-text font-weight-bold" href="../products.jsp" >View all product <i class="fa fa-angle-right"></i></a>
+      <a class="black-text font-weight-bold" href="./products.jsp" >View all product <i class="fa fa-angle-right"></i></a>
     </div>
 </div>
 

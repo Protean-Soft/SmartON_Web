@@ -42,7 +42,7 @@ public class StudentUserDetailsService implements UserDetailsService {
 	
 	public void registerUser(RegisterUserDetails registerDetails) {
 		registerDetails.setProfileID(GenarateProfileID(registerDetails));
-		registerDao.save(registerDetails);
+		RegisterUserDetails reg=  registerDao.save(registerDetails);
 	}
 	
 	public void updateRewards(Long rewardPoints, String userName) {

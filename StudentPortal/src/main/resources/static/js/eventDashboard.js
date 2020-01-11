@@ -442,7 +442,7 @@ function registerEvent(eventId){
 	
 	// jQuery("#PopUp").load("confirmation.jsp");
 	});*/
-	window.location.href="/confirmation.jsp?eventid="+eventId+"&userid="+useridtemp;
+	window.location.href="./confirmation.jsp?eventid="+eventId+"&userid="+useridtemp;
 
 }
 
@@ -530,7 +530,7 @@ function sendfeedback(){
 		async: false,
 		success : function(reponse) {
 			
-			allert("Success");
+			alert("Success");
 		},
 		error : function() {
 			alert("Error*******************");
