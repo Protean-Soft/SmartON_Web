@@ -90,7 +90,7 @@ public class UserProfileController {
 			@RequestParam("lastName") String lastName,@RequestParam("email") String email,
 			@RequestParam("phoneNo") String mobileNum,@RequestParam("city") String city,@RequestParam("state") String state
 			,ModelAndView view) {
-		
+		System.out.println(userId + userName + email);
 		RegisterUserDetails userDetails = new RegisterUserDetails(userId,firstName,lastName,userName,mobileNum,city,state);
 		int response = studentService.updateUserDetailsData(userDetails);	
 		if(response == 1) {
@@ -136,8 +136,8 @@ public class UserProfileController {
 	@PostMapping(value = "/uploadImage",consumes = {"multipart/form-data"},
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ImageModel uploadMultiPartUpload(@RequestParam("pic") MultipartFile pic,
-			@RequestParam("id") Long studentId,Model model ) throws JsonProcessingException {
-			
+			@RequestParam("userId") Long studentId,Model model ) throws JsonProcessingException {
+			System.out.println("upload user profile " + studentId );
 			 if (pic != null && studentId != null) {
 				ImageModel imageModel = new ImageModel();
 				byte[] bytePic = null;
@@ -150,7 +150,7 @@ public class UserProfileController {
 	           
 				imageModel.setPic(bytePic);
 				imageModel.setStudentId(studentId);
-				
+				System.out.println( " multipart pic " + imageModel.getPic());
 				return studentService.saveImage(imageModel);				
 			} else {
 				System.out.println( "Not able to find the user.... contact admin !!");

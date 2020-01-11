@@ -1,11 +1,13 @@
 $(document).ready(function() {
-	
+	$(".button-collapse").sideNav();
 	
 	/**
 	 * =========== LOAD USER DETAILS =============
 	 */
 	
-	var userName = $("#userName").val();
+	var userName = $.session.get("userName");
+	$("#card_profile_name").text($.session.get("fullName"));
+	//$("#card_profile_id").val($.session.get("userId"));
 	
 	if (userName != null) {
 		$.ajax({
@@ -15,7 +17,7 @@ $(document).ready(function() {
 			dataType: 'json',
 			success : function(data) { 
 				
-						$("#userName").val(data.userName).trigger("change");
+						$("#profile_user_name").val(data.userName).trigger("change");
 						$("#firstName").val(data.firstName).trigger("change");
 						$("#lastName").val(data.lastName).trigger("change");
 						$("#collegeName").val(data.college).trigger("change");
@@ -23,11 +25,10 @@ $(document).ready(function() {
 						$("#phoneNo").val(data.mobileNum).trigger("change");
 						$("#city").val(data.city).trigger("change");
 						$("#state").val(data.state).trigger("change");
-						// $("#pinCode").val(data.mobileNum);
 					}
 				});
 			} else {
-				alert('Invalid userName!');
+				alert('UserName invalid.. ');
 			}
 		
 	
@@ -35,18 +36,24 @@ $(document).ready(function() {
 	   * ========== UPDATE USER DETAILS ==========
 	   */
 
-		$("#userDetailsForm").on("submit",function(){
-			var userId =  $("#userId").val()
+		$("form#userDetailsForm").on("submit",function(){
+			var userId =  $.session.get("userId");//$("#userId").val()
+			//alert(userId);
 			var userDetailsForm = $('#userDetailsForm').serialize(); 
 			userDetailsForm +"&userId=" + userId;		
+			alert(JSON.stringify(userDetaisForm));
 			$.ajax({
 				url : 'tag/userProfile/updateUserDetails',
 				type : 'POST',	
 				data : userDetailsForm,
 				success : function(data) {					
-					//alert("user details " + JSON.stringify(data));
+					alert("user details " + JSON.stringify(data));
 					location.reload();
+				},
+				error : function(data) {
+					alert(JSON.stringify(data));
 				}
+
 			});
 		});
 		
@@ -56,11 +63,19 @@ $(document).ready(function() {
 		 * */
 
 		$('#profile_pic').on('change', function() {
-		var formData = new FormData($("#profile_form")[0]);
+		/*var formData = new FormData($("#profile_form")[0]);
+		var form = new FormData(this.files[0]);
+		alert(JSON.stringify(this.files[0]));*/
+		var form_data = new FormData($('input[name="pic"]'));
+		var fd = new FormData();
+        var files = $('#profile_pic')[0].files[0];
+        fd.append('pic',files);
+        fd.append('userId',$.session.get("userId"));
+        alert(JSON.stringify(form_data));
 		$.ajax({
-			url : 'tag/userProfile/uploadImage',
+			url : 'tag/userProfile/uploadImage', /*'?pic='+form+'&userId='+$.session.get('userId'),*/
 			type : 'POST',
-			data : formData,
+			data : fd,
 			enctype : 'multipart/form-data',
 			contentType : false,
 			cache : false,
@@ -71,7 +86,12 @@ $(document).ready(function() {
 					$("#navbar_profile").attr("src", "data:image/png;base64," + response.pic);
 				}
 			},
-			error : function() {
+			error : function(response) {
+				//alert("Profile pic upload failed !!");
+				if(response == 'undefined' || response.pic == null || response.pic == ''){
+					$("#show_profilePic").attr("src", "img/cust/Photo/photo2.jpg");
+					$("#navbar_profile").attr("src", "img/cust/Photo/photo2.jpg");
+				}
 			}
 		});
 		});

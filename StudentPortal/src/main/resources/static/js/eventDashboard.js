@@ -8,13 +8,10 @@ $(document).ready(function() {
 	  			// console.log("Event lst:::"+data.EventDetails[0]);
 	  			// console.log("Evtlstregbyuser:::"+data.EventDetails[1]);
 	  			$.each(data.userDetails, function(key, value) {
-	  			  //  console.log(value.userId);
-	  			 // console.log(value.firstName);
-	  		//	console.log(value.email);
-	  		//	console.log(value.rewpoints);
-	  			  	$.session.set("userId",value.userId);
+	  				$.session.set("userId",value.userId);
 		  			$.session.set("fullName",value.firstName);	
 		  			$.session.set("email",value.email);
+		  			$.session.set("userName",value.userName);
 		  			$("#rew_points").text("Tag Money: " +value.rewpoints);
 	  		
 	  			});
