@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
@@ -246,11 +247,13 @@ public class PaymentController {
 	
 	@RequestMapping("/verifyUserPayment")
 	@ResponseBody
-	public String verifyPayment(String userName, String passWord) {
+	public String verifyPayment(String userName, String passWord,HttpServletRequest request) {
 		String verify = "acknowledged";
 		String returnObj = "";
 		RegisterUserDetails regDetails = studentService.getLogonDetails(userName);
+		String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 		JSONObject obj = new JSONObject();
+		obj.put("url",url);
 		if(regDetails != null) {
 			if(BCrypt.checkpw(passWord, regDetails.getPassword())) {
 				obj.put("firstName", regDetails.getFirstName());

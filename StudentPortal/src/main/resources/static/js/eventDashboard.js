@@ -15,6 +15,7 @@ $(document).ready(function() {
 	  			  	$.session.set("userId",value.userId);
 		  			$.session.set("fullName",value.firstName);	
 		  			$.session.set("email",value.email);
+		  			$.session.set("userName",value.userName);
 		  			$("#rew_points").text("Tag Money: " +value.rewpoints);
 	  		
 	  			});

@@ -712,8 +712,5 @@
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="vendor/bootstrap/js/mdb.min.js"></script>
   <script type="text/javascript" src="vendor/bootstrap/js/session.js"></script>
-  <script type="text/javascript">
-
-  </script>
 </body>
 </html>

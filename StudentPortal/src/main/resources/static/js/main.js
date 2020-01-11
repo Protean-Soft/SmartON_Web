@@ -181,7 +181,7 @@
 	    				        confirm: {
 	    				        	btnClass: 'btn-green',
 	    				        	action: function () {
-		    				        	registerUserData(formData,'premium');
+		    				        	registerUserData(formData,'premium',data.url);
 		    				        }
 	    				        },
 	    				        cancel: {
@@ -214,7 +214,7 @@
     	
     }
     
-    function registerUserData(formData,role){
+    function registerUserData(formData,role,url){
     	$.ajax({
     		url: './registerUser',
     		type: 'POST',
@@ -225,7 +225,7 @@
     		success: function(data){
     			$('#preloader').hide();
     			if(role == 'premium'){
-    				paymentIntegration();
+    				paymentIntegration(url);
     			}else{
     				$('.clearForm').click();
     				customAlert('success','You have tagged yourself successfully.');
@@ -233,13 +233,13 @@
     		},
     		error : function() {
     			if(role == 'premium'){
-    				paymentIntegration();
+    				paymentIntegration(url);
     			}else{
     				$('.clearForm').click();
     				customAlert('success','You have tagged yourself successfully.');
     			}
     			
-    			alert("====registerUserData=====");
+    			//alert("====registerUserData=====");
     		}
     	});
     }
@@ -312,8 +312,10 @@ function clearFormData(selector){
 	});
 }
 
-function paymentIntegration(){
-	var data = 'key=rMKXzU&hash_string=&hash=&txnid=&amount=10000&firstname='+$('#firstName').val()+'&email='+$('#email').val()+'&phone='+$('#mobileNum').val()+'&productinfo=PremiumUser'+'&surl=http://localhost:8080/paymentSuccess&furl=http://localhost:8080/login&service_provider=payu_paisa';
+function paymentIntegration(url){
+	alert(url)
+	var data = 'key=rMKXzU&hash_string=&hash=&txnid=&amount=1&firstname='+$('#firstName').val()+'&email='+$('#email').val()+'&phone='+$('#mobileNum').val()+
+				'&productinfo=PremiumUser'+'&surl='+url+'/paymentSuccess&furl='+ url+'/login&service_provider=payu_paisa';
 	$.ajax({
 		url: './securePay',
 		type: 'POST',
@@ -353,7 +355,8 @@ function verifyUserPayment(){
 				        	text: 'Proceed to pay',
 				        	btnClass: 'btn-green',
 				        	action: function () {
-    				        	var formdata = 'key=rMKXzU&hash_string=&hash=&txnid=&amount=10000&firstname='+data.firstName+'&email='+data.email+'&phone='+data.mobile+'&productinfo=PremiumUser'+'&surl=http://localhost:8080/paymentSuccess&furl=http://localhost:8080/login&service_provider=payu_paisa';
+    				        	var formdata = 'key=rMKXzU&hash_string=&hash=&txnid=&amount=1&firstname='+data.firstName+'&email='+data.email+'&phone='+data.mobile+
+    				        			'&productinfo=PremiumUser'+'&surl='+data.url+'/paymentSuccess&furl='+data.url+'/login&service_provider=payu_paisa';
     				        	$.ajax({
     				        		url: './securePay',
     				        		type: 'POST',

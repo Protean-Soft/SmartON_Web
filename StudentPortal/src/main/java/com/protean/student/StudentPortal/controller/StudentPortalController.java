@@ -87,24 +87,27 @@ public class StudentPortalController {
 		String userName = authentication.getName();
 		List<Object> registerUserDetails = new ArrayList<>();
 		RegisterUserDetails regDetails = studentService.getLogonDetails(userName);
-		//model.addAttribute("studentDetails", regDetails);
-		
-		//model.addAttribute("userName", userName);
-		/*model.addAttribute("fullName", regDetails.getFirstName().substring(0, 1).toUpperCase()
-				+ regDetails.getFirstName().substring(1) + " " + regDetails.getLastName());*/
-		
+		// model.addAttribute("studentDetails", regDetails);
+
+		// model.addAttribute("userName", userName);
+		/*
+		 * model.addAttribute("fullName", regDetails.getFirstName().substring(0,
+		 * 1).toUpperCase() + regDetails.getFirstName().substring(1) + " " +
+		 * regDetails.getLastName());
+		 */
+
 		if (regDetails.getRewpoints() == null) {
 			regDetails.setRewpoints((long) 0);
 		}
 
-		//model.addAttribute("rewardPoints", regDetails.getRewpoints());
+		// model.addAttribute("rewardPoints", regDetails.getRewpoints());
 		String studentName = regDetails.getFirstName().substring(0, 1).toUpperCase()
 				+ regDetails.getFirstName().substring(1) + " " + regDetails.getLastName();
 		String mailId = regDetails.getEmail();
 		long userId = regDetails.getUserId();
 		System.out.println(" ==== Registered user id === " + userId);
-		//model.addAttribute("userId", userId);
-		//model.addAttribute("email", mailId);
+		// model.addAttribute("userId", userId);
+		// model.addAttribute("email", mailId);
 		TransactionDetails transDetails = paymentService.getByMailId(mailId);
 		if (transDetails != null) {
 			if (!transDetails.getStatus().equals("success") && transDetails.getProductinfo().equals("PremiumUser")
@@ -126,44 +129,20 @@ public class StudentPortalController {
 	
 		evt1.add(evt);
 		evt1.add(evtbyUser);
-		/*
-		 * Iterator ir = evt.listIterator(); while (ir.hasNext()) { EventDetails evtdet
-		 * = (EventDetails) ir.next(); System.out.println(evtdet.getEventid() + "====" +
-		 * evtdet.getEventName() + "=======" + evtdet.getEventImage()); if
-		 * (evtdet.getEventImage() != null) { String base64Image =
-		 * common.Covertbase64(evtdet.getEventImage());
-		 * evtdet.setBase64Image(base64Image); } evt1.add(evtdet);
-		 * 
-		 * }
-		 */
-		/*model.addAttribute("attenevts", evtbyUser);
-		model.addAttribute("listOfEvt", evt1);*/
-		
-		/*
-		 * JSONObject userWithEventDetails = new JSONObject();
-		 * userWithEventDetails.put("userId", userId);
-		 * userWithEventDetails.put("userName", userName);
-		 * userWithEventDetails.put("email", mailId);
-		 * userWithEventDetails.put("fullName", studentName);
-		 * userWithEventDetails.put("rewardPoints", regDetails.getRewpoints());
-		 * userWithEventDetails.put("event_list", evt1);
-		 * System.out.println("userWithEventDetails" + userWithEventDetails.toString());
-		 */
-		
 		registerUserDetails.add(regDetails);
-		
-		Map<String,List<Object>> map = new HashMap<>();
+
+		Map<String, List<Object>> map = new HashMap<>();
 		map.put("userDetails", registerUserDetails);
 		map.put("EventDetails", evt1);
-		
+
 		return map;
 	}
-	
+
 	@RequestMapping("/logout")
-	public String logout(){
+	public String logout() {
 		return "login.jsp";
 	}
-	
+
 	/*
 	 * @RequestMapping("/register") public String register(){
 	 * System.out.println("register"); return "register.html"; }
@@ -171,53 +150,55 @@ public class StudentPortalController {
 	
 
 	/* List event details based on event id */
-	@RequestMapping(value="/getEventDetail/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-	//@GetMapping(value = "/getEventDetail/{id}")
-	public String getEventById(@PathVariable Long id,Model model) {
+	@RequestMapping(value = "/getEventDetail/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	// @GetMapping(value = "/getEventDetail/{id}")
+	public String getEventById(@PathVariable Long id, Model model) {
 		System.out.println("Enterd into eventdetail");
-		EventDetails evt=event.getEventById(id);
+		EventDetails evt = event.getEventById(id);
 		model.addAttribute(evt);
-		System.out.println("Response...."+evt);		
+		System.out.println("Response...." + evt);
 		return "confirmation.jsp";
-				
+
 	}
-	
+
 	@RequestMapping("/registerUser")
 	@ResponseBody
-	public String registerUser(RegisterUserDetails registerDetails){
+	public String registerUser(RegisterUserDetails registerDetails) {
 		String password = new BCryptPasswordEncoder().encode(registerDetails.getPassword());
 		registerDetails.setPassword(password);
-		if(registerDetails.getIsPremium()=="premium") {
+		if (registerDetails.getIsPremium() == "premium") {
 			registerDetails.setNoofevtallowed((long) 5);
-		}else {
+		} else {
 			registerDetails.setNoofevtallowed((long) 0);
 		}
-		
-		studentService.registerUser( registerDetails);
+
+		studentService.registerUser(registerDetails);
 		registerDetails = studentService.getUserDetailsByProfileId(registerDetails.getRefcode());
-		if(registerDetails != null) {
+		if (registerDetails != null) {
 			Long rewardPoints = registerDetails.getRewpoints();
-			if(rewardPoints == null) {
+			if (rewardPoints == null) {
 				rewardPoints = 0l;
 			}
 			rewardPoints = rewardPoints + 1000;
-			studentService.updateRewards(rewardPoints,registerDetails.getUserName());
+			studentService.updateRewards(rewardPoints, registerDetails.getUserName());
 		}
-		//studentService.updateRewards(registerDetails.getProfileID());
-		
+		// studentService.updateRewards(registerDetails.getProfileID());
+
 		try {
 			mailSender.sendEmail(registerDetails);
 		} catch (MessagingException e) {
 			System.out.println("sending mail to user is failed " + e.getMessage());
-			
+
 		}
 		return "success";
 	}
-	
+
 	@RequestMapping("/checkValidData")
 	@ResponseBody
-	public String checkValidData(String userName,String email) {
+	public String checkValidData(String userName, String email, HttpServletRequest request) {
+		String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 		JSONObject jsObj = studentService.registerValidityChecker(userName, email);
+		jsObj.append("url", url);
 		return jsObj.toString();
 	}
 	

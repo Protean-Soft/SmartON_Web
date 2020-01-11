@@ -47,6 +47,7 @@
         
         <input type="hidden" id="userId" <%-- value = "<% out.println(session.getAttribute("userId")); %>" --%> />
         <input type="hidden" id="email"<%--  value = "<% out.println(session.getAttribute("userEmail")); %>" --%>>  
+        <input type="hidden" id="userName" />
         <span class="nav-link clearfix d-none d-sm-inline-block" id="fullname">Welcome <%-- <% out.println(session.getAttribute("fullName")); %> --%></span>
         </li>
         <!--<li class="nav-item dropdown">
@@ -81,11 +82,14 @@
 <script type="text/javascript">
  $(document).ready(function(){
 	  
-		
-		
-		/*$("#userId").val(session_userid);
+	  /**
+	  * display user name in navigation bar
+	  */
+	    var session_userid = $.session.get("userId");
+		$("#userId").val(session_userid);
 		$("#email").val($.session.get("email"));
-		$("#fullname").text("Welcome " +$.session.get("fullName"));*/
+		$("#fullname").text("Welcome " +$.session.get("fullName"));
+		$("#userName").val($.session.get("userName"));
 		
 		/**
 		 * ========= FETCH PROFILE PICS ========== 
