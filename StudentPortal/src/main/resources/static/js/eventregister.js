@@ -16,7 +16,7 @@ function getEventdetais(eventId,userId){
 			$("#type").text("Type: "+rowObj[0].eventType);
 			$("#duration").text("Duration: "+rowObj[0].eventDuration);
 			$("#description").text(rowObj[0].event_description);
-			$("#show_eventPic").attr("src", "data:image/png;base64," + rowObj[0].eventImage);
+			$("#show_eventPic").attr("src", "./EventImages/"+rowObj[0].base64Image);
 			$("#attendes").text(rowObj[2]);
 			//$("#noofeventattend").text(rowObj[1]);
 			noofeventattend=rowObj[1];

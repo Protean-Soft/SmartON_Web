@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name="user_details")
 public class RegisterUserDetails {
@@ -91,6 +93,7 @@ public class RegisterUserDetails {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	@Column(name="dob")
 	public Date getUserDob() {

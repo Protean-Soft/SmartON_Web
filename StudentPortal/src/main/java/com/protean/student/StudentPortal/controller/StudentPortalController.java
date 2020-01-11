@@ -192,12 +192,14 @@ System.out.println("Completedddd............");
 				
 	}
 	
-	@RequestMapping("/registerUser")
-	@ResponseBody
-	public String registerUser(RegisterUserDetails registerDetails){
+	@RequestMapping(value="/registerUser")
+    @ResponseBody
+	public String  registerUser(RegisterUserDetails registerDetails){
+		System.out.println("ENtered into***********************" );
 		String password = new BCryptPasswordEncoder().encode(registerDetails.getPassword());
 		registerDetails.setPassword(password);
-		if(registerDetails.getIsPremium()=="premium") {
+		System.out.println("Premium::::::::::::"+registerDetails.getIsPremium());
+		if(registerDetails.getIsPremium()=="premium" ||registerDetails.getIsPremium().equalsIgnoreCase("premium") ) {
 			System.out.println("IF PART");
 			registerDetails.setNoofevtallowed((long) 5);
 		}else {
@@ -205,8 +207,12 @@ System.out.println("Completedddd............");
 			registerDetails.setNoofevtallowed((long) 0);
 		}
 		System.out.println("No of event allowed....."+registerDetails.getNoofevtallowed());
-		studentService.registerUser( registerDetails);
-		registerDetails = studentService.getUserDetailsByProfileId(registerDetails.getRefcode());
+		RegisterUserDetails reg=studentService.registerUser( registerDetails);
+		System.out.println("Registration......"+reg);
+		if(registerDetails.getRefcode()!="" || registerDetails.getRefcode()!=null) {
+			registerDetails = studentService.getUserDetailsByProfileId(registerDetails.getRefcode());
+	
+		
 		if(registerDetails != null) {
 			Long rewardPoints = registerDetails.getRewpoints();
 			if(rewardPoints == null) {
@@ -215,6 +221,7 @@ System.out.println("Completedddd............");
 			rewardPoints = rewardPoints + 1000;
 			
 			studentService.updateRewards(rewardPoints,registerDetails.getUserName());
+		}
 		}
 		//studentService.updateRewards(registerDetails.getProfileID());
 		

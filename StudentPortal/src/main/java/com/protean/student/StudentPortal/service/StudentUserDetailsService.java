@@ -40,9 +40,10 @@ public class StudentUserDetailsService implements UserDetailsService {
 		return new UserDetailsImpl(userDetails);
 	}
 	
-	public void registerUser(RegisterUserDetails registerDetails) {
+	public RegisterUserDetails registerUser(RegisterUserDetails registerDetails) {
 		registerDetails.setProfileID(GenarateProfileID(registerDetails));
 		RegisterUserDetails reg=  registerDao.save(registerDetails);
+		return reg;
 	}
 	
 	public void updateRewards(Long rewardPoints, String userName) {
