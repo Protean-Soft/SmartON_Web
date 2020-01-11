@@ -18,7 +18,7 @@
 	  			for(var i=0;i<rowObj.length;i++){
 					
 	  				samp='<div class="col-md-4"><div class="card card-cascade narrower" style="padding:1%;"> <div class="view view-cascade overlay">';
-	  				samp+='<img  class="card-img-top" src="data:image/png;base64,'+rowObj[i].eventImage+'" alt="Card image cap"><a><div class="mask rgba-white-slight"></div></a></div><div class="card-body card-body-cascade text-center">';
+	  				samp+='<img  class="card-img-top" src="./EventImages/'+rowObj[i].base64Image+'" alt="Card image cap"><a><div class="mask rgba-white-slight"></div></a></div><div class="card-body card-body-cascade text-center">';
 	  				samp+='<h4 class="card-title"><strong>'+rowObj[i].eventName+'</strong></h4>';
 	  				samp+=   '<h5 class="blue-text pb-2"><strong>'+rowObj[i].eventOrgName+'</strong></h5>';
 	  				samp+=  '<p class="card-text">'+rowObj[i].eventDescription+'</p>';

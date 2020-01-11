@@ -219,27 +219,28 @@
     		url: './registerUser',
     		type: 'POST',
     		data: formData,
-    		dataType: 'TEXT',
+    		
     		processData: false,
     		contentType: false,
     		success: function(data){
+    			alert("Success...."+JSON.stringify(data));
     			$('#preloader').hide();
     			if(role == 'premium'){
-    				paymentIntegration();
+    				//paymentIntegration();
     			}else{
     				$('.clearForm').click();
     				customAlert('success','You have tagged yourself successfully.');
     			}
     		},
-    		error : function() {
+    		error : function(data) {
     			if(role == 'premium'){
-    				paymentIntegration();
+    				//paymentIntegration();
     			}else{
     				$('.clearForm').click();
     				customAlert('success','You have tagged yourself successfully.');
     			}
     			
-    			alert("====registerUserData=====");
+    			alert("Errror...."+JSON.stringify(data));
     		}
     	});
     }
