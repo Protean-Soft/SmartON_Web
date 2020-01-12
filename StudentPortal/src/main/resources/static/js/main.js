@@ -196,7 +196,7 @@
     				}else{
     					registerUserData(formData,'guest');
     				}
-    				
+    				    				
     			}else{
     				$('#preloader').hide();
     				if(data.userName == 'invalid'){
@@ -223,24 +223,24 @@
     		processData: false,
     		contentType: false,
     		success: function(data){
-    			alert("Success...."+JSON.stringify(data));
+    			//alert("Success...."+JSON.stringify(data));
     			$('#preloader').hide();
     			if(role == 'premium'){
-    				//paymentIntegration();
+    				paymentIntegration(url);
     			}else{
     				$('.clearForm').click();
     				customAlert('success','You have tagged yourself successfully.');
     			}
     		},
     		error : function(data) {
-    			if(role == 'premium'){
-    				//paymentIntegration();
+    		/*	if(role == 'premium'){
+    				paymentIntegration();
     			}else{
     				$('.clearForm').click();
     				customAlert('success','You have tagged yourself successfully.');
-    			}
+    			}*/
     			
-    			alert("Errror...."+JSON.stringify(data));
+    			alert("Errror in data Contact adminstrator or Try to regisrter again...."+JSON.stringify(data));
     		}
     	});
     }
@@ -367,14 +367,14 @@ function verifyUserPayment(){
     				        		}
     				        	});
     				        }
-				        },
+				        }/*,
 				        cancel: {
 				        	text: 'Continue as guest',
 				        	btnClass: 'btn-orange',
 				        	action: function () {
 				        		$("#logonForm").submit();
     				        }
-				        }
+				        }*/
 				    }
 				});
 			}
