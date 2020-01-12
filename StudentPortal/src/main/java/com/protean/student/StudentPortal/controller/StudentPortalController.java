@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -71,6 +73,9 @@ public class StudentPortalController {
 	
 	@Autowired
 	EventsDetailsRepository   eventDetailsRepository;
+	
+	@Value("${prod.url}")
+	private String PROURL;
 	
 	
 	
@@ -209,7 +214,9 @@ System.out.println("Completedddd............");
 		System.out.println("No of event allowed....."+registerDetails.getNoofevtallowed());
 		RegisterUserDetails reg=studentService.registerUser( registerDetails);
 		System.out.println("Registration......"+reg);
-		if(registerDetails.getRefcode()!="" || registerDetails.getRefcode()!=null) {
+		if(registerDetails.getRefcode()!="" && registerDetails.getRefcode()!=null && !registerDetails.getRefcode().equalsIgnoreCase("")) {
+			
+			System.out.println(":::::::::::::::"+registerDetails.getRefcode()+"===================");
 			registerDetails = studentService.getUserDetailsByProfileId(registerDetails.getRefcode());
 	
 		
@@ -237,9 +244,11 @@ System.out.println("Completedddd............");
 	@RequestMapping("/checkValidData")
 	@ResponseBody
 	public String checkValidData(String userName, String email, HttpServletRequest request) {
+		
+		 System.out.println("URL..................."+PROURL);
 		String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 		JSONObject jsObj = studentService.registerValidityChecker(userName, email);
-		jsObj.append("url", url);
+		jsObj.append("url", PROURL);
 		return jsObj.toString();
 	}
 	
