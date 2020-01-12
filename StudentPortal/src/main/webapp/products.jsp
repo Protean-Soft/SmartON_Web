@@ -99,14 +99,15 @@
       </ul>
       <div class="sidenav-bg mask-strong"></div>
     </div>
+    <%@ include file="navigationbar.jsp" %>
     <!--/. Sidebar navigation -->
     <!-- Navbar -->
-    <nav class="navbar fixed-top navbar-toggleable-md navbar-expand-lg scrolling-navbar double-nav">
-      <!-- SideNav slide-out button -->
+   <!--  <nav class="navbar fixed-top navbar-toggleable-md navbar-expand-lg scrolling-navbar double-nav">
+      SideNav slide-out button
       <div class="float-left">
         <a href="#" data-activates="slide-out" class="button-collapse"><i class="fas fa-bars"></i></a>
       </div>
-      <!-- Breadcrumb-->
+      Breadcrumb
       <div class="breadcrumb-dn mr-auto" style="margin-left: 1%;">
         <a href="#"><img src="img/cust/logoTrans.png" class="img-fluid flex-center" height="50" width="50"></a>
       </div>
@@ -117,7 +118,7 @@
         <li class="nav-item">
          <span class="nav-link clearfix d-none d-sm-inline-block">Welcome Mr Putin </span>
         </li>
-        <!--<li class="nav-item dropdown">
+        <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             Dropdown
@@ -127,7 +128,7 @@
             <a class="dropdown-item" href="#">Another action</a>
             <a class="dropdown-item" href="#">Something else here</a>
           </div>
-        </li>-->
+        </li>
       <li class="nav-item avatar dropdown">
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
@@ -141,7 +142,7 @@
           </div>
       </li>
       </ul>
-    </nav>
+    </nav> -->
     <!-- /.Navbar -->
   </header>
   <!--/.Double navigation-->
@@ -360,7 +361,7 @@
       <div class="col-md-7 col-lg-8">
 
         <!--Copyright-->
-        <p class="text-center text-md-left">Â© 2018 Copyright:
+        <p class="text-center text-md-left">© 2018 Copyright:
           <a href="#">
             <strong> SmartAnt Technologies Private Limited</strong>
           </a>
