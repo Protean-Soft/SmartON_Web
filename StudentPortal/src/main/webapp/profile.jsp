@@ -40,7 +40,7 @@
       <!--Body-->
       <div class="modal-body text-center mb-1">
 
-        <h5 class="mt-1 mb-2"><span><% out.println(session.getAttribute("fullName")); %></span></h5>
+        <h5 class="mt-1 mb-2"><span></span></h5>
 
         <div class="md-form ml-0 mr-0">
           <input type="text" type="text" id="form29" class="form-control form-control-sm validate ml-0">
@@ -99,10 +99,7 @@
     <div class="card-body px-lg-5 pt-0">
 	
         <!-- Form -->
-        <form class="text-center" style="color: #757575;" action="/userDetails" id="userDetailsForm" method="post">
-			<%-- <input type="hidden" id="userId" name="userId" value = <% out.println(session.getAttribute("userId")); %>>
-			<input type="hidden" id="userName" value = <%out.println(session.getAttribute("userName")); %> /> --%>
-			
+        <form class="text-center" style="color: #757575;" action="/tag/userProfile/updateUserDetails" id="userDetailsForm" method="post">
             <div class="form-row">
                 <div class="col">
                     <!-- First name -->
@@ -115,7 +112,7 @@
                     <!-- Last name -->
                     <div class="md-form">
                      	<label for="userName">User Name</label>
-                        <input type="text" id="userName" name="userName" class="form-control" value = <% out.println(session.getAttribute("userName")); %>>                       
+                        <input type="text" id="profile_user_name" name="userName" class="form-control" />                       
                     </div>
                 </div>
             </div>
@@ -216,13 +213,13 @@
 	  <!-- Content -->
 	  <div class="card-body">
 	    <!-- Name -->
-	    <h4 class="card-title"> <% out.println(session.getAttribute("fullName")); %></h4>
+	    <h4 class="card-title" id="card_profile_name"></h4>
 		<form class="md-form" action="tag/userProfile/uploadImage" method="post"  enctype="multipart/form-data" id="profile_form">
-		  <input type="hidden" name = "id" value="${userId }">	
+		  <!-- <input type="hidden" id="card_profile_id" /> 	 -->
 		  <div class="file-field">
 		    <a class="btn-floating purple-gradient mt-0 float-left">
 		      <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
-		      <input type="file" name = "pic" id="profile_pic">
+		      <input type="file" name = "pic" id="profile_pic" />
 		    </a>
 		    <div class="file-path-wrapper">
 		      <input class="file-path validate" type="text" placeholder="Upload your photo">
@@ -418,7 +415,7 @@
 
 </main>
 
-  <!-- jQuery -->
+    <!-- jQuery -->
   <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
   <!-- Bootstrap tooltips -->
   <script src="vendor/bootstrap/js/popper.js"></script>	
@@ -428,12 +425,7 @@
   <script type="text/javascript" src="vendor/bootstrap/js/mdb.min.js"></script>
   <!-- Your custom scripts (optional) -->
   <script type="text/javascript" src="js/userProfile.js"></script>
-  <script type="text/javascript">
+  <script type="text/javascript" src="vendor/bootstrap/js/session.js"></script>
   
-			$(document).ready(function() {
-				$(".button-collapse").sideNav();
-			});
-		</script>
-
 </body>
 </html>

@@ -181,7 +181,7 @@
 	    				        confirm: {
 	    				        	btnClass: 'btn-green',
 	    				        	action: function () {
-		    				        	registerUserData(formData,'premium');
+	    				        		registerUserData(formData,'premium',data.url);
 		    				        }
 	    				        },
 	    				        cancel: {
@@ -214,7 +214,7 @@
     	
     }
     
-    function registerUserData(formData,role){
+    function registerUserData(formData,role,url){
     	$.ajax({
     		url: './registerUser',
     		type: 'POST',
@@ -313,8 +313,9 @@ function clearFormData(selector){
 	});
 }
 
-function paymentIntegration(){
-	var data = 'key=rMKXzU&hash_string=&hash=&txnid=&amount=1&firstname='+$('#firstName').val()+'&email='+$('#email').val()+'&phone='+$('#mobileNum').val()+'&productinfo=PremiumUser'+'&surl=https://www.thetagacademy.com/demo/paymentSuccess&furl=https://www.thetagacademy.com/demo/login&service_provider=payu_paisa';
+function paymentIntegration(url){
+	var data = 'key=rMKXzU&hash_string=&hash=&txnid=&amount=1&firstname='+$('#firstName').val()+'&email='+$('#email').val()+'&phone='+$('#mobileNum').val()+
+	'&productinfo=PremiumUser'+'&surl='+url+'/paymentSuccess&furl='+ url+'/login&service_provider=payu_paisa';
 	$.ajax({
 		url: './securePay',
 		type: 'POST',
@@ -354,7 +355,8 @@ function verifyUserPayment(){
 				        	text: 'Proceed to pay',
 				        	btnClass: 'btn-green',
 				        	action: function () {
-    				        	var formdata = 'key=rMKXzU&hash_string=&hash=&txnid=&amount=1&firstname='+data.firstName+'&email='+data.email+'&phone='+data.mobile+'&productinfo=PremiumUser'+'&surl=https://www.thetagacademy.com/demo/paymentSuccess&furl=https://www.thetagacademy.com/demo/login&service_provider=payu_paisa';
+				        		var formdata = 'key=rMKXzU&hash_string=&hash=&txnid=&amount=1&firstname='+data.firstName+'&email='+data.email+'&phone='+data.mobile+
+			        			'&productinfo=PremiumUser'+'&surl='+data.url+'/paymentSuccess&furl='+data.url+'/login&service_provider=payu_paisa';
     				        	$.ajax({
     				        		url: './securePay',
     				        		type: 'POST',

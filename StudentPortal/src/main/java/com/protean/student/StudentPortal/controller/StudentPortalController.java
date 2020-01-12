@@ -236,8 +236,10 @@ System.out.println("Completedddd............");
 	
 	@RequestMapping("/checkValidData")
 	@ResponseBody
-	public String checkValidData(String userName,String email) {
+	public String checkValidData(String userName, String email, HttpServletRequest request) {
+		String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 		JSONObject jsObj = studentService.registerValidityChecker(userName, email);
+		jsObj.append("url", url);
 		return jsObj.toString();
 	}
 	
