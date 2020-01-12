@@ -64,10 +64,10 @@ public class UserProfileController {
 	 */
 	
 	@GetMapping(value="/userDetails",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
-	public RegisterUserDetails retrieveUserDetailsByName(@RequestParam("userName") String userName,
+	public RegisterUserDetails retrieveUserDetailsByName(@RequestParam("userId") Long userId,
 			Model model) throws InvalidUserDetailsException {
 		
-		RegisterUserDetails userDetails = studentService.getLogonDetails(userName);	
+		RegisterUserDetails userDetails = registrationDao.findByUserId(userId);	
 		if(userDetails != null) {
 			model.addAttribute("userdetails",  userDetails);
 			return userDetails;

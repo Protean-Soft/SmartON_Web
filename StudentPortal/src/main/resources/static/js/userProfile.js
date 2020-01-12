@@ -1,6 +1,9 @@
 $(document).ready(function() {
 	$(".button-collapse").sideNav();
 	
+	var userId =  $.session.get("userId");
+	$('#userid1').val(userId);
+	
 	/**
 	 * =========== LOAD USER DETAILS =============
 	 */
@@ -11,7 +14,7 @@ $(document).ready(function() {
 	
 	if (userName != null) {
 		$.ajax({
-			url : "tag/userProfile/userDetails?userName=" + userName,
+			url : "tag/userProfile/userDetails?userId=" + userId,
 			type : 'GET',
 			contentType : "application/json",
 			dataType: 'json',
@@ -35,19 +38,23 @@ $(document).ready(function() {
 	  /**
 	   * ========== UPDATE USER DETAILS ==========
 	   */
-
+	
 		$("form#userDetailsForm").on("submit",function(){
-			var userId =  $.session.get("userId");//$("#userId").val()
+			//alert("Sucesss....");
+			//$("#userId").val()
+			//alert("Sucesss...."+userId);
 			//alert(userId);
 			var userDetailsForm = $('#userDetailsForm').serialize(); 
-			userDetailsForm +"&userId=" + userId;		
-			alert(JSON.stringify(userDetaisForm));
+			//alert(JSON.stringify(userDetailsForm));
+		
+			//userDetailsForm +"&userId=" + userId;		
+			//alert(JSON.stringify(userDetailsForm));
 			$.ajax({
 				url : 'tag/userProfile/updateUserDetails',
 				type : 'POST',	
 				data : userDetailsForm,
 				success : function(data) {					
-					alert("user details " + JSON.stringify(data));
+					//alert("user details " + JSON.stringify(data));
 					location.reload();
 				},
 				error : function(data) {
@@ -66,12 +73,16 @@ $(document).ready(function() {
 		/*var formData = new FormData($("#profile_form")[0]);
 		var form = new FormData(this.files[0]);
 		alert(JSON.stringify(this.files[0]));*/
-		var form_data = new FormData($('input[name="pic"]'));
+			//alert(JSON.stringify($('input[name="pic"]')));
+		var form_data = $('input[name="pic"]');
+		/*	var form_data = new FormData(document.getElementById("profile_pic"));
+			form_data.append('file', $('#profile_pic')[0].files[0]);
+		profile_pic*/
 		var fd = new FormData();
         var files = $('#profile_pic')[0].files[0];
         fd.append('pic',files);
         fd.append('userId',$.session.get("userId"));
-        alert(JSON.stringify(form_data));
+        //alert(JSON.stringify(form_data));
 		$.ajax({
 			url : 'tag/userProfile/uploadImage', /*'?pic='+form+'&userId='+$.session.get('userId'),*/
 			type : 'POST',

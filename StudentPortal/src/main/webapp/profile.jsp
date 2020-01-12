@@ -99,7 +99,8 @@
     <div class="card-body px-lg-5 pt-0">
 	
         <!-- Form -->
-        <form class="text-center" style="color: #757575;" action="/tag/userProfile/updateUserDetails" id="userDetailsForm" method="post">
+        <form class="text-center" style="color: #757575;"  id="userDetailsForm" >
+        <input type="hidden" id="userid1" name="userId">
             <div class="form-row">
                 <div class="col">
                     <!-- First name -->
@@ -179,8 +180,10 @@
                 <label class="form-check-label" for="materialRegisterFormNewsletter">Subscribe to our newsletter <em>or</em> updates</label>
             </div>
 
+
+			
             <!-- Sign up button -->
-            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" id="updateProfile">Update Profile</button>
+            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"  type="submit" id="updateProfile">Update Profile</button>
 
              <hr>
 
@@ -363,7 +366,7 @@
       <div class="col-md-7 col-lg-8">
 
         <!--Copyright-->
-        <p class="text-center text-md-left">Â© 2018 Copyright:
+        <p class="text-center text-md-left">© 2018 Copyright:
           <a href="#">
             <strong> SmartAnt Technologies Private Limited</strong>
           </a>
