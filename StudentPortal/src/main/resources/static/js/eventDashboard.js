@@ -32,7 +32,8 @@ $(document).ready(function() {
 			var rewardPointVal=rewardPoints.split(":")[1].trim();
 			if (rewardPointVal != "" && rewardPointVal != null && rewardPointVal !="0" ) {
 				console.log(rewardPointVal);
-				$("#navigateReward").attr("href","../offers.jsp")
+
+				$("#navigateReward").attr("href","./offers.jsp")
 			} else {					
 				alert("To enable this feature you need 10000 reward points!!!! ");	
 			}
