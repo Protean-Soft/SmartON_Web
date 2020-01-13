@@ -374,13 +374,6 @@
     <!--Tab panels-->
 
 	</section>
-  
-<div id="mybutton">
-<a class="btn-floating btn-lg btn-default peach-gradient" id="navigateReward"><i class="fas fa-bolt"></i></a><span class="counter"  id="rew_points">Tag Money :${rewardPoints}</span>
-</div>
-
-
-
 </div>
 
 
