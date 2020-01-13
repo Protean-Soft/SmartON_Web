@@ -2,6 +2,16 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
+<head>
+	<style type="text/css">
+		#mybutton {
+			position: fixed;
+			bottom: -4px;
+			right: 10px;
+			z-index:9999
+		}
+</style>
+</head>
 <body>
 <header>
  <!-- Sidebar navigation -->
@@ -126,6 +136,11 @@
   </header>
   <!--/.Double navigation-->
   
+  <div id="mybutton">
+	<a class="btn-floating btn-lg btn-default peach-gradient" id="navigateReward"><i class="fas fa-bolt"></i></a>
+		<span class="counter"  id="rew_points">Tag Money :</span>
+</div>
+
 <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="vendor/bootstrap/js/session.js"></script>
 <script type="text/javascript">
