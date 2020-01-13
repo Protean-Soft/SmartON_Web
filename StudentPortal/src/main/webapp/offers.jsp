@@ -418,6 +418,7 @@
   <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="vendor/bootstrap/js/mdb.min.js"></script>
+  <script type="text/javascript" src="vendor/bootstrap/js/session.js"></script>
     
   <!-- Your custom scripts (optional) -->
   <script type="text/javascript">     

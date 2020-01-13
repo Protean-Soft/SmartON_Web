@@ -243,6 +243,41 @@ public class StudentPortalController {
 		return "success";
 	}
 
+	@RequestMapping("/checkPwdValidUpdate")
+	@ResponseBody
+	public String checkPwdValidUpdate(String oldPwd, String newPwd, Long userID, HttpServletRequest request) {
+
+		/*
+		 * BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		 * encoder.matches(password, user.getPassword());
+		 */
+		String msg="invalid";
+		System.out.println("User id====="+userID);
+		RegisterUserDetails jsObj = studentService.checkPwdValidUpdate(userID);
+		
+		System.out.println("jsObj::::::::::"+jsObj);
+		System.out.println(jsObj.getUserName()+"===="+jsObj.getPassword()+"====="+jsObj.getUserId());
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		System.out.println(encoder.matches(oldPwd, jsObj.getPassword()));
+		System.out.println("Successss....");
+		
+		if(encoder.matches(oldPwd, jsObj.getPassword())) {
+			String password=new BCryptPasswordEncoder().encode(newPwd);
+			int rtndata = studentService.updatePwd(userID,password);
+			if(rtndata==1) {
+				msg="valid";
+			}
+			
+		}else {
+			msg="invalid";
+		}
+		
+		
+		/* jsObj.append("url", PROURL); */
+		return msg;
+	}
+	
+	
 	@RequestMapping("/checkValidData")
 	@ResponseBody
 	public String checkValidData(String userName, String email, HttpServletRequest request) {
@@ -253,6 +288,7 @@ public class StudentPortalController {
 		jsObj.append("url", PROURL);
 		return jsObj.toString();
 	}
+	
 
 	@RequestMapping("/login-error")
 	public String login(HttpServletRequest request, Model model) {
