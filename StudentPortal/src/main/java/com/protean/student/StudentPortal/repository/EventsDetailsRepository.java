@@ -35,7 +35,7 @@ public interface EventsDetailsRepository extends JpaRepository<EventDetails, Lon
 	@Transactional
     @Modifying
     @Query(value = "Select * from event_details e where e.deletedflag = :flag and e.event_date>= CURRENT_TIMESTAMP",nativeQuery = true)	
-	public List<EventDetails> findAllByDeletedflag(@Param("flag") long flag);
+	public List<EventDetails> findAllByDeletedflag(@Param("flag") int flag);
 	
 	@Transactional
     @Modifying
