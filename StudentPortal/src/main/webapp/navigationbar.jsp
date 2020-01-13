@@ -11,6 +11,24 @@
 			z-index:9999
 		}
 </style>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap-datepicker3.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->
+<!-- 	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css"> -->
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery-confirm.css">
+<!--===============================================================================================-->
+
 </head>
 <body>
 <header>
@@ -86,6 +104,81 @@
       </ul>
       <div class="sidenav-bg mask-strong"></div>
     </div>
+    
+    
+    <!--  Change password -->
+    
+    <div class="modal fade" id="changepassword" role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Change Password</h4>
+							<button type="button" class="close clearForm" data-dismiss="modal">&times;</button>
+						</div>
+						<div class="modal-body">
+							<form class="validate-form" id="changepasswordCheck" method="POST" action="registerUser">
+								<div class="row">
+									<div class="col-md-4">
+										<span>Old Password</span>
+									</div>
+									
+									<div class="col-md-4">
+									<div class="rel-input" data-validate = "Old Password is required">
+										<input type="text" class="form-control validate-input1" placeholder="Old Password" value="" id="oldpassword" name="oldpassword">
+									</div>
+									</div>
+								</div>
+								<div class="row"> <div class="col-md-4"></div></div>
+								<div class="row"> <div class="col-md-4"></div></div>
+								<div class="row"> <div class="col-md-4"></div></div>
+								<div class="row"> <div class="col-md-4"></div></div>
+								<div class="row"> <div class="col-md-4"></div></div>
+								<div class="row">
+									<div class="col-md-2">
+										<span>Password</span>
+									</div>
+									<div class="col-md-4">
+									<div class="rel-input" data-validate = "Password is required">
+										<input type="password" class="form-control validate-input1" placeholder="Password" value="" id="password1" name="password">
+										</div>
+									</div>
+									<div class="col-md-2">
+										<span>Confirm Password</span>
+									</div>
+									<div class="col-md-4">
+									<div class="rel-input" data-validate = "Re-enter Password">
+										<input type="password" class="form-control validate-input1" placeholder="Re-enter Password" id="password2" value="">
+										</div>
+									</div>
+								</div>								
+							</form>
+						</div>
+						<div class="modal-footer">
+							<div class="container-login100-form-btn">
+								<div class="wrap-login100-form-btn">
+									<div class="login100-form-bgbtn"></div>
+										<button id="chnangePwd" class="login100-form-btn">Change Password</button>
+								</div>
+							</div>
+							<div class="container-login100-form-btn">
+								<div class="wrap-login100-form-btn">
+									<div class="login100-form-bgbtn"></div>
+										<button onclick="clearFormData('changepasswordCheck');" class="login100-form-btn">Clear</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!--  Chnage of password End -->
+    
+    
+    
+    
+    
+    
+    
     <!--/. Sidebar navigation -->
        <!-- Navbar -->
     <nav class="navbar fixed-top navbar-toggleable-md navbar-expand-lg scrolling-navbar double-nav">
@@ -126,7 +219,7 @@
         </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="./profile.jsp"><i class="far fa-user"></i> My Account</a>
-            <a class="dropdown-item" href="#"><i class="fas fa-key"></i> Change Password</a>
+            <a class="dropdown-item" href="#"    data-toggle="modal" data-target="#changepassword" class="txt2"><i class="fas fa-key"></i> Change Password</a>
             <a class="dropdown-item" href="./login.jsp" onclick="logoff()" id="logoffbutton"><i class="fas fa-fingerprint"></i> Log Off</a>
           </div>
       </li>
@@ -135,14 +228,24 @@
     <!-- /.Navbar -->
   </header>
   <!--/.Double navigation-->
-  
-  <div id="mybutton">
+    <div id="mybutton">
 	<a class="btn-floating btn-lg btn-default peach-gradient" id="navigateReward"><i class="fas fa-bolt"></i></a>
 		<span class="counter"  id="rew_points">Tag Money :</span>
 </div>
+  
+  	<!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="vendor/jquery/jquery-confirm.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<!-- <script src="vendor/bootstrap/js/popper.js"></script> -->
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap-datepicker.min.js"></script>
+<!--===============================================================================================-->
+  
 
-<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="vendor/bootstrap/js/session.js"></script>
+	<script type="text/javascript" src="vendor/bootstrap/js/session.js"></script>
 <script type="text/javascript">
  $(document).ready(function(){
 	  
@@ -181,6 +284,95 @@
 		});	
 
 	 });
+ 
+
+ function hideValidate(input) {
+     var thisAlert = $(input).parent();
+
+     $(thisAlert).removeClass('alert-validate');
+ }
+ function checkValidation(){
+ 	var check = true;
+ 	var input = $('.validate-input1');
+     for(var i=0; i<input.length; i++) {
+         if(validate(input[i]) == false){
+             showValidate(input[i]);
+             check=false;
+         }
+     }
+
+     return check;
+ }
+ function validate (input) {
+     if($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
+         if($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
+             return false;
+         }
+     }
+     else {
+         if($(input).val().trim() == ''){
+             return false;
+         }
+     }
+ }
+ 
+ function showValidate(input) {
+     var thisAlert = $(input).parent();
+
+     $(thisAlert).addClass('alert-validate');
+ }
+ 
+ 
+ 
+ $('#chnangePwd').click(function(){
+ 	$('#changepasswordCheck').find('input[type=text],input[type=password],select').each(function(){
+ 		hideValidate($(this));
+ 	});
+ 	var pwd1=$("#changepasswordCheck #password1").val();
+ 	var pwd2=$("#changepasswordCheck #password2").val();
+ 	console.log(pwd1+"====="+pwd2);
+ 	if(pwd1!=pwd2 && pwd2!=""){
+ 		//$('#password2').parent().attr('data-validate','Username is required');
+ 		$('#password2').parent().attr('data-validate','Old password and new password did Not match!!!');
+		showValidate($('#password2'));
+ 	}
+ 	/* $('#userName').parent().attr('data-validate','Username is required');
+ 	$('#email').parent().attr('data-validate','Valid E-mail is required'); */
+ 	if(checkValidation()){
+ 		validateChangePwd("chnangePwd");
+ 	}
+ 	//$('#preloader').hide();
+ });
+ 
+ 
+ function validateChangePwd(butt){
+alert( $.session.get("userId"));
+ 	$('#preloader').show();
+ 	var newPwd =$("#changepasswordCheck #password1").val();
+ 	var oldPwd = $("#changepasswordCheck #oldpassword").val();
+ 	var userID= $.session.get("userId");
+ 	$.ajax({
+ 		url: './checkPwdValidUpdate',
+ 		type: 'POST',
+ 		data: 'oldPwd='+oldPwd+'&newPwd='+newPwd+'&userID='+userID,
+ 		dataType: 'TEXT',
+ 		success: function(data){
+ 			if(data == 'valid' ){
+ 				alert("Your Password has been changed successfully!!!");
+ 				logoff();
+ 				    				
+ 			}else{
+ 				$('#preloader').hide();
+ 				$('#oldpassword').parent().attr('data-validate','Old Password didnot Match');
+					showValidate($('#oldpassword'));
+ 			}
+ 		}
+ 	});
+ 	
+ 	
+ 
+ }
+ 
  
  function logoff(){
 	 
