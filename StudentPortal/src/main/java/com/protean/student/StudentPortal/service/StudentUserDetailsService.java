@@ -67,6 +67,32 @@ public class StudentUserDetailsService implements UserDetailsService {
 		return jsObj;
 	}
 	
+	public RegisterUserDetails checkPwdValidUpdate(Long Userid) {
+		RegisterUserDetails registerDetails = registerDao.findByUserId(Userid);
+		/*
+		 * RegisterUserDetails registerDetails1 = registerDao.findByEmail(email);
+		 * JSONObject jsObj = new JSONObject(); if(registerDetails != null) {
+		 * jsObj.put("userName", "invalid"); }else { jsObj.put("userName", "valid"); }
+		 * if(registerDetails1 != null) { jsObj.put("email", "invalid"); }else {
+		 * jsObj.put("email", "valid"); }
+		 */
+		return registerDetails;
+	}
+	
+	public int updatePwd(Long Userid,String pwd) {
+		int registerDetails = registerDao.UpdatePassword(Userid,pwd);
+		/*
+		 * RegisterUserDetails registerDetails1 = registerDao.findByEmail(email);
+		 * JSONObject jsObj = new JSONObject(); if(registerDetails != null) {
+		 * jsObj.put("userName", "invalid"); }else { jsObj.put("userName", "valid"); }
+		 * if(registerDetails1 != null) { jsObj.put("email", "invalid"); }else {
+		 * jsObj.put("email", "valid"); }
+		 */
+		return registerDetails;
+	}
+	
+	
+	
 	public RegisterUserDetails getLogonDetails(String userName) {
 		RegisterUserDetails regDetails = registerDao.findByUserName(userName);
 		return regDetails;

@@ -46,4 +46,9 @@ public interface RegistrationDao extends JpaRepository<RegisterUserDetails, Inte
 			@Param("userName") String userName,@Param("mobileNum") String mobileNum,@Param("city") String city,@Param("state") 
 	String state);
 
+	@Transactional
+    @Modifying
+    @Query(value = "update user_details set password=:pwd where userid=:userid",nativeQuery = true)
+	int UpdatePassword(Long userid, String pwd);
+
 }
