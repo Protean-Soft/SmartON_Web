@@ -196,7 +196,7 @@
     				}else{
     					registerUserData(formData,'guest');
     				}
-    				
+    				    				
     			}else{
     				$('#preloader').hide();
     				if(data.userName == 'invalid'){
@@ -223,24 +223,24 @@
     		processData: false,
     		contentType: false,
     		success: function(data){
-    			alert("Success...."+JSON.stringify(data));
+    			//alert("Success...."+JSON.stringify(data));
     			$('#preloader').hide();
     			if(role == 'premium'){
-    				//paymentIntegration();
+    				paymentIntegration(url);
     			}else{
     				$('.clearForm').click();
     				customAlert('success','You have tagged yourself successfully.');
     			}
     		},
     		error : function(data) {
-    			if(role == 'premium'){
-    				//paymentIntegration();
+    		/*	if(role == 'premium'){
+    				paymentIntegration();
     			}else{
     				$('.clearForm').click();
     				customAlert('success','You have tagged yourself successfully.');
-    			}
+    			}*/
     			
-    			alert("Errror...."+JSON.stringify(data));
+    			alert("Errror in data Contact adminstrator or Try to regisrter again...."+JSON.stringify(data));
     		}
     	});
     }
@@ -314,8 +314,11 @@ function clearFormData(selector){
 }
 
 function paymentIntegration(url){
+	console.log("URL:::::::::"+url);
 	var data = 'key=rMKXzU&hash_string=&hash=&txnid=&amount=1&firstname='+$('#firstName').val()+'&email='+$('#email').val()+'&phone='+$('#mobileNum').val()+
 	'&productinfo=PremiumUser'+'&surl='+url+'/paymentSuccess&furl='+ url+'/login&service_provider=payu_paisa';
+	console.log("data::::::::::::"+data);
+	
 	$.ajax({
 		url: './securePay',
 		type: 'POST',
@@ -357,7 +360,8 @@ function verifyUserPayment(){
 				        	action: function () {
 				        		var formdata = 'key=rMKXzU&hash_string=&hash=&txnid=&amount=1&firstname='+data.firstName+'&email='+data.email+'&phone='+data.mobile+
 			        			'&productinfo=PremiumUser'+'&surl='+data.url+'/paymentSuccess&furl='+data.url+'/login&service_provider=payu_paisa';
-    				        	$.ajax({
+    				        	console.log("verifyUserPayment::::::::::"+formdata);
+				        		$.ajax({
     				        		url: './securePay',
     				        		type: 'POST',
     				        		data: formdata,
@@ -367,14 +371,14 @@ function verifyUserPayment(){
     				        		}
     				        	});
     				        }
-				        },
+				        }/*,
 				        cancel: {
 				        	text: 'Continue as guest',
 				        	btnClass: 'btn-orange',
 				        	action: function () {
 				        		$("#logonForm").submit();
     				        }
-				        }
+				        }*/
 				    }
 				});
 			}

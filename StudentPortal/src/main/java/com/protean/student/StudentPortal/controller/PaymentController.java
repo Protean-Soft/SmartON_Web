@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -44,6 +45,9 @@ public class PaymentController {
 	
 	@Autowired
 	PaymentService paymentService;
+	
+	@Value("${prod.url}")
+	private String PROURL;
 	
 	@RequestMapping("/securePay")
 	@ResponseBody
@@ -149,6 +153,7 @@ public class PaymentController {
 	@RequestMapping("/paymentSuccess")
 	public String paymentSuccess(TransactionDetails transactionDetails) {
 		BufferedReader in = null;
+		System.out.println("************************paymentSuccess Start***************************");
 		try {
 			String txnId = session.getAttribute("transactionId").toString();
 			String link = "https://www.payumoney.com/payment/op/getPaymentResponse?merchantKey=rMKXzU&merchantTransactionIds="+txnId;
@@ -195,6 +200,7 @@ public class PaymentController {
 			}
 			session.removeAttribute("transactionId");
 		}
+		System.out.println("************************paymentSuccess End***************************");
 		return "login.jsp";
 	}
 	
@@ -253,7 +259,7 @@ public class PaymentController {
 		RegisterUserDetails regDetails = studentService.getLogonDetails(userName);
 		String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 		JSONObject obj = new JSONObject();
-		obj.put("url",url);
+		obj.put("url",PROURL);
 		if(regDetails != null) {
 			if(BCrypt.checkpw(passWord, regDetails.getPassword())) {
 				obj.put("firstName", regDetails.getFirstName());

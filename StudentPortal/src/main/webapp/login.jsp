@@ -242,9 +242,9 @@
 									<div class="col-md-3" style="margin-top:0.5rem;">
 										<input type="radio" name="isPremium" value="premium" id="premium" checked/>&nbsp;&nbsp; Premium
 									</div>
-									<div class="col-md-3" style="margin-top:0.5rem;">
-										<input type="radio" name="isPremium" value="guest" id="guest"/>&nbsp;&nbsp; Guest
-									</div>
+								<!-- 	<div class="col-md-3" style="margin-top:0.5rem;">
+										<input type="radio" name="isPremium" value="guest"disabled id="guest"/>&nbsp;&nbsp; Guest
+									</div> -->
 								</div>
 								<div class="row">
 										<div class="col-md-2">

@@ -42,6 +42,7 @@
 </head>
 
 <body class="hidden-sn mdb-skin">
+
 <div id='PopUp'></div>
  
  
@@ -303,17 +304,17 @@
     </style>
     
     <!-- Section heading -->
-    <h3 class="font-weight-bold mb-4 pb-2">Our Best Events</h3>
-    <!-- Section description -->
+   <!--  <h3 class="font-weight-bold mb-4 pb-2">Our Best Events</h3>
+    Section description
     <p class="text-muted w-responsive mx-auto mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum quas, eos officia maiores ipsam ipsum dolores reiciendis ad voluptas, animi obcaecati adipisci sapiente mollitia. </p>
     
-      <!--First row-->
+      First row
       <div class="row">
         
-        <!--First column-->
+        First column
         <div class="col-12">
           
-          <!-- Nav tabs -->
+          Nav tabs
           <ul class="nav md-pills flex-center flex-wrap mx-0" role="tablist">
             <li class="nav-item">
               <a class="nav-link active font-weight-bold" data-toggle="tab" href="#panel31" role="tab">ALL</a>
@@ -330,16 +331,16 @@
           </ul>
           
         </div>
-        <!--First column-->
+        First column
 
-    </div>
+    </div> -->
     <!--First row-->
     
     <!--Tab panels-->
     <div class="tab-content">
 
       <!--Panel 1-->
-      <div class="tab-pane fade show in active" id="panel31" role="tabpanel">
+      <div class="tab-pane fade" id="panel31" role="tabpanel">
 		<span id=panel311></span>
       </div>
       <!--Panel 1-->
@@ -347,204 +348,25 @@
       <!--Panel 2-->
       <div class="tab-pane fade" id="panel32" role="tabpanel">
 <!--Carousel Wrapper-->
-		<div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
-
-		  <!--Controls-->
-		  <div class="controls-top">
-		    <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
-		    <a class="btn-floating" href="#multi-item-example" data-slide="next"><i
-			class="fas fa-chevron-right"></i></a>
-		  </div>
-		  <!--/.Controls-->
-
-		  <!--Indicators-->
-		  <ol class="carousel-indicators">
-		    <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
-		    <li data-target="#multi-item-example" data-slide-to="1"></li>
-		    <li data-target="#multi-item-example" data-slide-to="2"></li>
-		  </ol>
-		  <!--/.Indicators-->
-
-		  <!--Slides-->
-		  <div class="carousel-inner" role="listbox">
-
-		    <!--First slide-->
-		    <div class="carousel-item active">
-<c:forEach var="listOfEvents1" items="${listOfEvt}"  varStatus="loopCounter">
-<c:if test="${listOfEvents1.eventType=='WORKSHOPS'}">
-<c:if test="${(loopCounter.index % 3 == 0) && (loopCounter.index !=0)}"></div> <div class="carousel-item"></c:if>
- <div class="col-md-4">
-			<div class="card mb-2">
-			  <img class="card-img-top"
-			    src="data:image/png;base64,<c:out value='${listOfEvents1.base64Image}'/>"
-			    alt="Card image cap">
-			  <div class="card-body">
-			    <h4 class="card-title"><strong><c:out value="${listOfEvents1.eventName}"/></strong></h4>
-			    <%-- <p class="card-text"><c:out value="${listOfEvents1.eventDescription}"/></p> --%>
-		 	    <p class="font-weight-normal"><i class="fas fa-certificate pr-2"></i><span>Category: <c:out value="${listOfEvents1.eventCatogery}"/></span></p>
-	    		<p class="font-weight-normal"><i class="fas fa-book-reader pr-2"></i><span>Type: <c:out value="${listOfEvents1.eventType}"/></span></p>
-	  		  	<p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <fmt:formatDate pattern="dd MMMM yyyy" value="${listOfEvents1.eventDate}" /></span></p>
-			 <%-- <c:if test="${fn:contains(attenevts,listOfEvents.eventid)}"> --%>
-    <c:choose>
-    <c:when test="${fn:contains(attenevts,listOfEvents1.eventid)==true}">
-	    <button class="btn btn-primary" disabled onClick="registerEvent(${listOfEvents1.eventid})">Book Now</button>
-	    </c:when>    
-    <c:otherwise>
-     <a class="btn btn-primary" onClick="registerEvent(${listOfEvents1.eventid})">Book Now</a>
- </c:otherwise>
- </c:choose>
-	 <%--    </c:if> --%>
-			  </div>
-			</div>
-		      </div>
-		      </c:if>
-</c:forEach>
- </div>
-		  
-		    <!--/.Third slide-->
-
-		  </div>
-		  <!--/.Slides-->
-
-		</div>
-		<!--/.Carousel Wrapper-->
-      </div>
+		<span id=panel312></span>
       </div>
       <!--Panel 2-->
 
       <!--Panel 3-->
       <div class="tab-pane fade" id="panel33" role="tabpanel">
 <!--Carousel Wrapper-->
-		<div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
-
-		  <!--Controls-->
-		  <div class="controls-top">
-		    <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
-		    <a class="btn-floating" href="#multi-item-example" data-slide="next"><i
-			class="fas fa-chevron-right"></i></a>
-		  </div>
-		  <!--/.Controls-->
-
-		  <!--Indicators-->
-		  <ol class="carousel-indicators">
-		    <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
-		    <li data-target="#multi-item-example" data-slide-to="1"></li>
-		    <li data-target="#multi-item-example" data-slide-to="2"></li>
-		  </ol>
-		  <!--/.Indicators-->
-
-		  <!--Slides-->
-		  <div class="carousel-inner" role="listbox">
-
-		    <!--First slide-->
-		    <div class="carousel-item active">
-<c:forEach var="listOfEvents1" items="${listOfEvt}"  varStatus="loopCounter">
-<c:if test="${listOfEvents1.eventType=='TECH MEETS'}">
-<c:if test="${(loopCounter.index % 3 == 0) && (loopCounter.index !=0)}"></div> <div class="carousel-item"></c:if>
- <div class="col-md-4">
-			<div class="card mb-2">
-			  <img class="card-img-top"
-			    src="data:image/png;base64,<c:out value='${listOfEvents1.base64Image}'/>"
-			    alt="Card image cap">
-			  <div class="card-body">
-			    <h4 class="card-title"><strong><c:out value="${listOfEvents1.eventName}"/></strong></h4>
-			    <%-- <p class="card-text"><c:out value="${listOfEvents1.eventDescription}"/></p> --%>
-				<p class="font-weight-normal"><i class="fas fa-certificate pr-2"></i><span>Category: <c:out value="${listOfEvents1.eventCatogery}"/></span></p>
-	    		<p class="font-weight-normal"><i class="fas fa-book-reader pr-2"></i><span>Type: <c:out value="${listOfEvents1.eventType}"/></span></p>
-	    		<p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <fmt:formatDate pattern="dd MMMM yyyy" value="${listOfEvents1.eventDate}" /></span></p>
-					 <%-- <c:if test="${fn:contains(attenevts,listOfEvents.eventid)}"> --%>
-    <c:choose>
-    <c:when test="${fn:contains(attenevts,listOfEvents1.eventid)==true}">
-	    <button class="btn btn-primary" disabled onClick="registerEvent(${listOfEvents1.eventid})">Book Now</button>
-	    </c:when>    
-    <c:otherwise>
-     <a class="btn btn-primary" onClick="registerEvent(${listOfEvents1.eventid})">Book Now</a>
- </c:otherwise>
- </c:choose>
-	 <%--    </c:if> --%>
-			  </div>
-			</div>
-		      </div>
-		      </c:if>
-</c:forEach>
- </div>
-		  
-		    <!--/.Third slide-->
-
-		  </div>
-		  <!--/.Slides-->
-
-		</div>
+	<span id=panel313></span>
 		<!--/.Carousel Wrapper-->
-      </div>
+     
       </div>
       <!--Panel 3-->
 
       <!--Panel 4-->
       <div class="tab-pane fade" id="panel34" role="tabpanel">
 <!--Carousel Wrapper-->
-		<div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
-
-		  <!--Controls-->
-		  <div class="controls-top">
-		    <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
-		    <a class="btn-floating" href="#multi-item-example" data-slide="next"><i
-			class="fas fa-chevron-right"></i></a>
-		  </div>
-		  <!--/.Controls-->
-
-		  <!--Indicators-->
-		  <ol class="carousel-indicators">
-		    <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
-		    <li data-target="#multi-item-example" data-slide-to="1"></li>
-		    <li data-target="#multi-item-example" data-slide-to="2"></li>
-		  </ol>
-		  <!--/.Indicators-->
-
-		  <!--Slides-->
-		  <div class="carousel-inner" role="listbox">
-
-		    <!--First slide-->
-		    <div class="carousel-item active">
-<c:forEach var="listOfEvents1" items="${listOfEvt}"  varStatus="loopCounter">
-<c:if test="${listOfEvents1.eventType=='COURSES'}">
-<c:if test="${(loopCounter.index % 3 == 0) && (loopCounter.index !=0)}"></div> <div class="carousel-item"></c:if>
- <div class="col-md-4">
-			<div class="card mb-2">
-			  <img class="card-img-top"
-			    src="data:image/png;base64,<c:out value='${listOfEvents1.base64Image}'/>"
-			    alt="Card image cap">
-			  <div class="card-body">
-			    <h4 class="card-title"><strong><c:out value="${listOfEvents1.eventName}"/></strong></h4>
-			    <%-- <p class="card-text"><c:out value="${listOfEvents1.eventDescription}"/></p> --%>
-		 	    <p class="font-weight-normal"><i class="fas fa-certificate pr-2"></i><span>Category: <c:out value="${listOfEvents1.eventCatogery}"/></span></p>
-	    		<p class="font-weight-normal"><i class="fas fa-book-reader pr-2"></i><span>Type: <c:out value="${listOfEvents1.eventType}"/></span></p>
-	    		<p class="font-weight-normal"><i class="far fa-clock pr-2"></i><span>Date: <fmt:formatDate pattern="dd MMMM yyyy" value="${listOfEvents1.eventDate}" /></span></p>
-					 <%-- <c:if test="${fn:contains(attenevts,listOfEvents.eventid)}"> --%>
-    <c:choose>
-    <c:when test="${fn:contains(attenevts,listOfEvents1.eventid)==true}">
-	    <button class="btn btn-primary" disabled onClick="registerEvent(${listOfEvents1.eventid})">Book Now</button>
-	    </c:when>    
-    <c:otherwise>
-     <a class="btn btn-primary" onClick="registerEvent(${listOfEvents1.eventid})">Book Now</a>
- </c:otherwise>
- </c:choose>
-	 <%--    </c:if> --%>
-			  </div>
-			</div>
-		      </div>
-		      </c:if>
-</c:forEach>
- </div>
-		  
-		    <!--/.Third slide-->
-
-		  </div>
-		  <!--/.Slides-->
-
-		</div>
-		<!--/.Carousel Wrapper-->
-      </div>
+<span id=panel314></span>
+			<!--/.Carousel Wrapper-->
+      
       </div>
       <!--Panel 4-->
 
