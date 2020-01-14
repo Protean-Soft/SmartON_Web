@@ -228,11 +228,13 @@
 	 /**
 	  * display user name in navigation bar
 	  */
+	  console.log("Navigation "+ $.session.get("userId"));
 	    var session_userid = $.session.get("userId");
 		$("#navigation_userid").val(session_userid);
 		$("#email").val($.session.get("email"));
 		$("#fullname").text("Welcome " +$.session.get("fullName"));
 		$("#userName").val($.session.get("userName"));
+		$("#rew_points").text("Tag Money: " + $.session.get("rewardPoints"));
 		
 		/**
 		 * ========= FETCH PROFILE PICS ========== 
@@ -252,7 +254,7 @@
 				}
 			},
 			error : function(response) {
-				alert(JSON.stringify(response));
+				//alert(JSON.stringify(response));
 				if(response == 'undefined' || response.pic == null || response.pic == ''){
 					$("#show_profilePic").attr("src", "img/cust/Photo/photo2.jpg");
 					$("#navbar_profile").attr("src", "img/cust/Photo/photo2.jpg");
