@@ -11,24 +11,6 @@
 			z-index:9999
 		}
 </style>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap-datepicker3.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-<!--===============================================================================================-->
-<!-- 	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css"> -->
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/util.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
-	<link rel="stylesheet" type="text/css" href="css/jquery-confirm.css">
-<!--===============================================================================================-->
-
 </head>
 <body>
 <header>
@@ -188,7 +170,7 @@
       </div>
       <!-- Breadcrumb-->
       <div class="breadcrumb-dn mr-auto" style="margin-left: 1%;">
-        <a href="./index.jsp"><img src="img/cust/logoTrans.png" class="img-fluid flex-center" height="50" width="50"></a>
+        <a href="./index.jsp"><img src="img/cust/logo.jpg" class="img-fluid flex-center" height="50" width="50"></a>
       </div>
       <ul class="nav navbar-nav nav-flex-icons ml-auto">
         <li class="nav-item">
@@ -196,7 +178,7 @@
         </li>
         <li class="nav-item">
         
-        <input type="hidden" id="userId" />
+        <input type="hidden" id="navigation_userid" />
         <input type="hidden" id="email" />  
         <span class="nav-link clearfix d-none d-sm-inline-block" id="fullname">Welcome </span>
         </li>
@@ -228,32 +210,26 @@
     <!-- /.Navbar -->
   </header>
   <!--/.Double navigation-->
-    <div id="mybutton">
-	<a class="btn-floating btn-lg btn-default peach-gradient" id="navigateReward"><i class="fas fa-bolt"></i></a>
-		<span class="counter"  id="rew_points">Tag Money :</span>
-</div>
-  
-  	<!--===============================================================================================-->
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-	<script src="vendor/jquery/jquery-confirm.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/animsition/js/animsition.min.js"></script>
-<!--===============================================================================================-->
-	<!-- <script src="vendor/bootstrap/js/popper.js"></script> -->
-	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap-datepicker.min.js"></script>
-<!--===============================================================================================-->
-  
+	
+	<!-- TAG MONEY FLOAT ICON -->
+	<div id="mybutton">
+		<a class="btn-floating btn-lg btn-default peach-gradient"
+			id="navigateReward"><i class="fas fa-bolt"></i></a> <span
+			class="counter" id="rew_points">Tag Money :</span>
+	</div>
 
+	<!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="vendor/bootstrap/js/session.js"></script>
+	
 <script type="text/javascript">
  $(document).ready(function(){
-	  
+	 //alert("navigation");
 	 /**
 	  * display user name in navigation bar
 	  */
 	    var session_userid = $.session.get("userId");
-		$("#userId").val(session_userid);
+		$("#navigation_userid").val(session_userid);
 		$("#email").val($.session.get("email"));
 		$("#fullname").text("Welcome " +$.session.get("fullName"));
 		$("#userName").val($.session.get("userName"));
@@ -261,10 +237,10 @@
 		/**
 		 * ========= FETCH PROFILE PICS ========== 
 		 */
-		var userID = $("#userId").val();
-		//alert(userID);
+		//var userID = $("#userId").val();
+		
 		$.ajax({
-			url : 'tag/userProfile/getProfilePic?userId=' + userID ,
+			url : 'tag/userProfile/getProfilePic?userId='+session_userid ,
 			type : 'GET',
 			contentType : false,
 			cache : false,
@@ -276,6 +252,7 @@
 				}
 			},
 			error : function(response) {
+				alert(JSON.stringify(response));
 				if(response == 'undefined' || response.pic == null || response.pic == ''){
 					$("#show_profilePic").attr("src", "img/cust/Photo/photo2.jpg");
 					$("#navbar_profile").attr("src", "img/cust/Photo/photo2.jpg");

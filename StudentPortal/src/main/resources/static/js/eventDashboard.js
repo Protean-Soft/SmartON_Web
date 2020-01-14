@@ -1,12 +1,12 @@
 $(document).ready(function() {
+	//alert("event");
+	
+	$("#nav-placeholder").load("navigationbar.jsp");
 		$.ajax({
 	  		url: './getLogonUserDetails',
 	  		type: 'GET',
 	  		success: function(data){
-	  			// console.log(JSON.stringify(data.userDetails));
 	  			callEventsbyType(data.EventDetails[0],data.EventDetails[1]);
-	  			// console.log("Event lst:::"+data.EventDetails[0]);
-	  			// console.log("Evtlstregbyuser:::"+data.EventDetails[1]);
 	  			$.each(data.userDetails, function(key, value) {
 	  				$.session.set("userId",value.userId);
 		  			$.session.set("fullName",value.firstName);	
@@ -17,12 +17,10 @@ $(document).ready(function() {
 	  			});
 	  			 //console.log(data.EventDetails[0]);
 	  			 //console.log(data.EventDetails[1]);
-	  			var session_userid = $.session.get("userId");
-	  			//console.log("session id " + session_userid);
-	  			//console.log("session id " + $.session.get("fullName"));
+	  			/*var session_userid = $.session.get("userId");
 	  			$("#userId").val(session_userid);
 	  			$("#email").val($.session.get("email"));
-	  			$("#fullname").text("Welcome " +$.session.get("fullName"));
+	  			$("#fullname").text("Welcome " +$.session.get("fullName"));*/
 	  			
 	   		}
 	  	});
