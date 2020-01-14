@@ -50,9 +50,10 @@ public class StudentUserDetailsService implements UserDetailsService {
 		registerDao.updateRewards(rewardPoints,userName);
 	}
 	
-	public JSONObject registerValidityChecker(String userName,String email) {
+	public JSONObject registerValidityChecker(String userName,String email, String mobnum) {
 		RegisterUserDetails registerDetails = registerDao.findByUserName(userName);
 		RegisterUserDetails registerDetails1 = registerDao.findByEmail(email);
+		RegisterUserDetails registerDetails2 = registerDao.findByMobileNum(mobnum);
 		JSONObject jsObj = new JSONObject();
 		if(registerDetails != null) {
 			jsObj.put("userName", "invalid");
@@ -63,6 +64,11 @@ public class StudentUserDetailsService implements UserDetailsService {
 			jsObj.put("email", "invalid");
 		}else {
 			jsObj.put("email", "valid");
+		}
+		if(registerDetails2 != null) {
+			jsObj.put("mobnum", "invalid");
+		}else {
+			jsObj.put("mobnum", "valid");
 		}
 		return jsObj;
 	}

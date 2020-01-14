@@ -1,8 +1,7 @@
 $(document).ready(function() {
 	//alert("event");
 	
-		$("#nav-placeholder").load("navigationbar.jsp");
-	
+	$("#nav-placeholder").load("navigationbar.jsp");
 		$.ajax({
 	  		url: './getLogonUserDetails',
 	  		type: 'GET',
@@ -13,7 +12,8 @@ $(document).ready(function() {
 		  			$.session.set("fullName",value.firstName);	
 		  			$.session.set("email",value.email);
 		  			$.session.set("userName",value.userName);
-		  			$.session.set("rewardPoints",value.rewpoints);
+		  			$("#rew_points").text("Tag Money: " +value.rewpoints);
+	  		
 	  			});
 	  			 //console.log(data.EventDetails[0]);
 	  			 //console.log(data.EventDetails[1]);
