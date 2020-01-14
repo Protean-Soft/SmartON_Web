@@ -23,6 +23,8 @@ public interface RegistrationDao extends JpaRepository<RegisterUserDetails, Inte
 	
 	public RegisterUserDetails findByEmail(String email);
 	
+	public RegisterUserDetails findByMobileNum(String mobilrnum);
+	
 	public RegisterUserDetails findByProfileID(String profileID);
 	public RegisterUserDetails findByUserId(Long userId);
 

@@ -164,13 +164,15 @@
     	$('#preloader').show();
     	var userName = $('#userName').val();
     	var email = $('#email').val();
+    	var mobno= $('#mobileNum').val();
     	$.ajax({
     		url: './checkValidData',
     		type: 'POST',
-    		data: 'userName='+userName+'&email='+email,
+    		data: 'userName='+userName+'&email='+email+'&mobnum='+mobno,
     		dataType: 'JSON',
     		success: function(data){
-    			if(data.userName == 'valid' && data.email == 'valid'){
+    			console.log(data);
+    			if(data.userName == 'valid' && data.email == 'valid' && data.mobnum == 'valid'){
     				var formData = new FormData($('#registerForm')[0]);
     				if($('input[name=isPremium]:checked').val() == 'premium'){
 	    				$.confirm({
@@ -206,6 +208,10 @@
     				if(data.email == 'invalid'){
     					$('#email').parent().attr('data-validate','E-mail is already taken');
     					showValidate($('#email'));
+    				}
+    				if(data.mobnum == 'invalid'){
+    					$('#mobileNum').parent().attr('data-validate','Mobile Number is already taken');
+    					showValidate($('#mobileNum'));
     				}
     			}
     		}

@@ -280,11 +280,11 @@ public class StudentPortalController {
 	
 	@RequestMapping("/checkValidData")
 	@ResponseBody
-	public String checkValidData(String userName, String email, HttpServletRequest request) {
+	public String checkValidData(String userName, String email,String mobnum, HttpServletRequest request) {
 
 		System.out.println("URL..................." + PROURL);
 		String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-		JSONObject jsObj = studentService.registerValidityChecker(userName, email);
+		JSONObject jsObj = studentService.registerValidityChecker(userName, email,mobnum);
 		jsObj.append("url", PROURL);
 		return jsObj.toString();
 	}

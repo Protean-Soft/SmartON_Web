@@ -110,6 +110,11 @@
 									</div>
 									</div>
 								</div>
+								<div class="row"> <div class="col-md-4"></div></div>
+								<div class="row"> <div class="col-md-4"></div></div>
+								<div class="row"> <div class="col-md-4"></div></div>
+								<div class="row"> <div class="col-md-4"></div></div>
+								<div class="row"> <div class="col-md-4"></div></div>
 								<div class="row">
 									<div class="col-md-2">
 										<span>Password</span>
@@ -228,7 +233,6 @@
 		$("#email").val($.session.get("email"));
 		$("#fullname").text("Welcome " +$.session.get("fullName"));
 		$("#userName").val($.session.get("userName"));
-		$("#rew_points").text("Tag Money: " + $.session.get("rewardPoints"));
 		
 		/**
 		 * ========= FETCH PROFILE PICS ========== 
