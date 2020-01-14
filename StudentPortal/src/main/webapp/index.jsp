@@ -32,12 +32,6 @@
   border-radius: 4px;
   border-color: #46b8da;
 }
-
-#mybutton {
-  position: fixed;
-  bottom: -4px;
-  right: 10px;
-}
 </style>
 </head>
 
@@ -58,7 +52,11 @@
         	session.setAttribute("userName", userName);
         	session.setAttribute("userEmail", email);
         %>  --%>
-<%@ include file="navigationbar.jsp" %>
+<%-- <%@ include file="navigationbar.jsp" %> --%>
+
+<div id="nav-placeholder">
+
+</div>
 
 <div class="modal fade" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
@@ -68,7 +66,7 @@
 
       <!--Header-->
       <div class="modal-header">
-        <img src="img/cust/Photo/photo2.jpg" alt="avatar" class="rounded-circle img-responsive">
+        	<img src="img/cust/Photo/photo2.jpg" alt="avatar" class="rounded-circle img-responsive">
       </div>
       <!--Body-->
       <div class="modal-body text-center mb-1">
@@ -515,9 +513,6 @@
 
 </main>
    <script type="text/javascript" src="js/eventDashboard.js"></script>
-   
-   
-   
    <!-- jQuery -->
   <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
   <!-- Bootstrap tooltips -->
@@ -527,8 +522,5 @@
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="vendor/bootstrap/js/mdb.min.js"></script>
   <script type="text/javascript" src="vendor/bootstrap/js/session.js"></script>
-  <script type="text/javascript">
-
-  </script>
 </body>
 </html>
