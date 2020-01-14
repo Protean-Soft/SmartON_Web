@@ -1,18 +1,21 @@
 $(document).ready(function() {
 	//alert("event");
 	
-	$("#nav-placeholder").load("navigationbar.jsp");
+	
 		$.ajax({
 	  		url: './getLogonUserDetails',
 	  		type: 'GET',
 	  		success: function(data){
 	  			callEventsbyType(data.EventDetails[0],data.EventDetails[1]);
 	  			$.each(data.userDetails, function(key, value) {
+	  			  console.log("Eventdashboard "+ value.userId);
 	  				$.session.set("userId",value.userId);
 		  			$.session.set("fullName",value.firstName);	
 		  			$.session.set("email",value.email);
 		  			$.session.set("userName",value.userName);
-		  			$("#rew_points").text("Tag Money: " +value.rewpoints);
+		  			/*$("#rew_points").text("Tag Money: " +value.rewpoints);*/
+		  			$.session.set("rewardPoints",value.rewpoints);
+		  			$("#nav-placeholder").load("navigationbar.jsp");
 	  		
 	  			});
 	  			 //console.log(data.EventDetails[0]);
@@ -24,6 +27,8 @@ $(document).ready(function() {
 	  			
 	   		}
 	  	});
+		
+		
 		
 		$("#navigateReward").on('click',function(){
 			var rewardPoints = $("#mybutton").text();
