@@ -415,7 +415,7 @@
  
  
  function validateChangePwd(butt){
-	swal( $.session.get("userId"));
+	//swal( $.session.get("userId"));
  	$('#preloader').show();
  	var newPwd =$("#changepasswordCheck #password1").val();
  	var oldPwd = $("#changepasswordCheck #oldpassword").val();
@@ -441,6 +441,9 @@
  
  
  function logoff(){
+	
+			
+		
 	 
 	 $.ajax({
 			url : '/logout',
