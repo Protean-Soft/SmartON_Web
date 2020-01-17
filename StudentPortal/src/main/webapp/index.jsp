@@ -35,10 +35,7 @@
 </style>
 </head>
 
-<body class="hidden-sn mdb-skin">
-
-<div id='PopUp'></div>
- 
+<body class="hidden-sn mdb-skin"> 
  
 	<%-- 	<%
         	Long userId = (Long)request.getAttribute("userId");
@@ -54,10 +51,8 @@
         %>  --%>
 <%-- <%@ include file="navigationbar.jsp" %> --%>
 
-<div id="nav-placeholder">
-
-</div>
-
+<div id="nav-placeholder"></div>
+<div style="width:100%;display:none;" class="alertDiv"></div>
 <div class="modal fade" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
   <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
@@ -512,7 +507,10 @@
 <!-- Footer -->
 
 </main>
+      
+   
    <script type="text/javascript" src="js/eventDashboard.js"></script>
+   <script type="text/javascript" src="js/sweetAlert.js"></script>
    <!-- jQuery -->
   <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
   <!-- Bootstrap tooltips -->

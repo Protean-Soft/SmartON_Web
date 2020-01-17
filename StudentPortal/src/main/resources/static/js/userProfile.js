@@ -31,7 +31,7 @@ $(document).ready(function() {
 					}
 				});
 			} else {
-				alert('UserName invalid.. ');
+				swal('UserName invalid','Warning');
 			}
 		
 	
@@ -58,7 +58,7 @@ $(document).ready(function() {
 					location.reload();
 				},
 				error : function(data) {
-					alert(JSON.stringify(data));
+					swal(JSON.stringify(data),"");
 				}
 
 			});

@@ -105,7 +105,7 @@ function registerEvent(){
 			//$("#show_profilePic").attr("src", "data:image/png;base64," + response.pic);
 		},
 		error : function() {
-			customAlert("fail","Please Contact Adminstrator...");
+			swal("Warning","Please Contact Adminstrator");
 			//alert("Limit exceed*******************");
 		}
 	});
@@ -128,10 +128,10 @@ function Callmainpage(){
 		async: false,
 		success : function(reponse) {
 		$('#payFormDiv').html(reponse);
-			alert("Successs:::::"+reponse);
+			swal("Successs",reponse);
 		},
 		error : function() {
-			alert("Limit exceed*******************");
+			swal("Limit exceed","");
 		}
 		});
 }

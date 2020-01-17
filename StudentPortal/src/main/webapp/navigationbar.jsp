@@ -4,12 +4,43 @@
 <html>
 <head>
 	<style type="text/css">
-		#mybutton {
-			position: fixed;
-			bottom: -4px;
-			right: 10px;
-			z-index:9999
-		}
+#mybutton {
+	position: fixed;
+	bottom: -4px;
+	right: 10px;
+	z-index: 9999
+}
+
+.modal-body .form-horizontal .col-sm-2, .modal-body .form-horizontal .col-sm-10
+	{
+	width: 100%
+}
+
+.modal-body .form-horizontal .control-label {
+	text-align: left;
+}
+
+.modal-body .form-horizontal .col-sm-offset-2 {
+	margin-left: 15px;
+}
+
+#chnangePwd{
+	font-family: Poppins-Medium;
+    font-size: 16px;
+    color: #fff;
+    line-height: 1.2;
+    text-transform: uppercase;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    width: 100%;
+    height: 50px;
+}
 </style>
 </head>
 <body>
@@ -90,7 +121,7 @@
     
     <!--  Change password -->
     
-    <div class="modal fade" id="changepassword" role="dialog">
+    <!-- <div class="modal fade" id="changepassword" role="dialog">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -110,11 +141,7 @@
 									</div>
 									</div>
 								</div>
-								<div class="row"> <div class="col-md-4"></div></div>
-								<div class="row"> <div class="col-md-4"></div></div>
-								<div class="row"> <div class="col-md-4"></div></div>
-								<div class="row"> <div class="col-md-4"></div></div>
-								<div class="row"> <div class="col-md-4"></div></div>
+								
 								<div class="row">
 									<div class="col-md-2">
 										<span>Password</span>
@@ -152,10 +179,60 @@
 					</div>
 				</div>
 			</div>
-			
+ -->			
 			<!--  Chnage of password End -->
     
     
+   <div class="modal" tabindex="-1" role="dialog" id="changepassword">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Change Password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form" id="changepasswordCheck" method="POST" action="registerUser">
+                  <div class="form-group">
+                    <label  class="col-md-6 control-label" for="inputPassword3">Old Password</label>
+                    <div class="col-md-8">
+                    	<div class="rel-input" data-validate = "Old Password is required">
+                        	<input type="password" class="form-control validate-input1" id="oldpassword" 
+                        	   name="oldpassword" placeholder="Old Password"/>
+                    	</div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-6 control-label" for="inputPassword3" >New Password</label>
+                    <div class="col-md-8">
+                    	<div class="rel-input" data-validate = "Password is required">
+                        	<input type="password" class="form-control validate-input1" 
+                        	       id="password1" placeholder="Password"/>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-6 control-label" for="inputPassword3" >Re-enter Password</label>
+                    <div class="col-md-8">
+                        <input type="password" class="form-control validate-input1"
+                            id="password2" placeholder="Password"/>
+                    </div>
+                  </div>
+                  <!-- <div class="form-group">	
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button type="submit" class="btn btn-default">Sign in</button>
+                    </div>
+                  </div> -->
+                </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="chnangePwd" class="btn btn-primary">Change Password</button>
+      </div>
+    </div>
+  </div>
+</div>
     
     
     
@@ -221,6 +298,7 @@
 	<!--===============================================================================================-->
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="vendor/bootstrap/js/session.js"></script>
+	<script src="vendor/jquery/jquery-confirm.js"></script>
 	
 <script type="text/javascript">
  $(document).ready(function(){
@@ -259,6 +337,18 @@
 					$("#show_profilePic").attr("src", "img/cust/Photo/photo2.jpg");
 					$("#navbar_profile").attr("src", "img/cust/Photo/photo2.jpg");
 				}
+			}
+		});
+
+		$("#navigateReward").on('click',function(){
+			var rewardPoints = $("#mybutton").text();
+			var rewardPointVal=rewardPoints.split(":")[1].trim();
+			if (rewardPointVal != "" && rewardPointVal != null && rewardPointVal !="0" ) {
+				console.log(rewardPointVal);
+
+				$("#navigateReward").attr("href","./offers.jsp")
+			} else {					
+				swal("warning","To enable this feature you need 10000 reward points!!!! ");	
 			}
 		});	
 
@@ -325,7 +415,7 @@
  
  
  function validateChangePwd(butt){
-alert( $.session.get("userId"));
+	swal( $.session.get("userId"));
  	$('#preloader').show();
  	var newPwd =$("#changepasswordCheck #password1").val();
  	var oldPwd = $("#changepasswordCheck #oldpassword").val();
@@ -337,19 +427,16 @@ alert( $.session.get("userId"));
  		dataType: 'TEXT',
  		success: function(data){
  			if(data == 'valid' ){
- 				alert("Your Password has been changed successfully!!!");
+ 				swal("Warning","Your Password has been changed successfully!!!");
  				logoff();
  				    				
  			}else{
  				$('#preloader').hide();
- 				$('#oldpassword').parent().attr('data-validate','Old Password didnot Match');
+ 				$('#oldpassword').parent().attr('data-validate','Old Password did not Match');
 					showValidate($('#oldpassword'));
  			}
  		}
- 	});
- 	
- 	
- 
+ 	}); 
  }
  
  
@@ -372,7 +459,7 @@ alert( $.session.get("userId"));
 	  			$.session.set("userName",value.userName); */
 			},
 			error : function(response) {
-				alert("Error in logout");
+				swal("Warning","Error in logout");
 			}
 		});	
 	 
