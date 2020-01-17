@@ -73,7 +73,7 @@ public class StudentUserDetailsService implements UserDetailsService {
 		return jsObj;
 	}
 	
-	public RegisterUserDetails checkPwdValidUpdate(Long Userid) {
+	public RegisterUserDetails getByUserid(Long Userid) {
 		RegisterUserDetails registerDetails = registerDao.findByUserId(Userid);
 		/*
 		 * RegisterUserDetails registerDetails1 = registerDao.findByEmail(email);
@@ -154,13 +154,39 @@ public class StudentUserDetailsService implements UserDetailsService {
 		ImageModel studentPic =  imageRepository.findByStudentId(studentId);
 		System.out.println("student pic : " + studentPic.getPic());
 		return studentPic;
+  	}
+	
+	
+	public String validateUserdetails(RegisterUserDetails userDetails) {
+	
+		String msg="VALIDDATA";
+		if(userDetails.getUserId()!=null ) {
+		RegisterUserDetails studetails= registerDao.findByUserId(userDetails.getUserId());
+		if(!studetails.getUserName().equalsIgnoreCase(userDetails.getUserName())) {
+			RegisterUserDetails registerDetails = registerDao.findByUserName(userDetails.getUserName());
+			if(registerDetails!=null)
+				msg="INVALIDUSERNAME";
+		}
+		if(!studetails.getEmail().equalsIgnoreCase(userDetails.getEmail())){
+			RegisterUserDetails registerDetails = registerDao.findByEmail(userDetails.getEmail());
+			if(registerDetails!=null)
+				msg="INVALIDEMAIL";
+		}
+		if(!studetails.getMobileNum().equalsIgnoreCase(userDetails.getMobileNum())) {
+			RegisterUserDetails registerDetails = registerDao.findByMobileNum(userDetails.getMobileNum());
+			if(registerDetails!=null)
+				msg="INVALIDMOBNUM";		
+		}
+		
+		}
+		return msg;
+		
 	}
-
-	public Integer updateUserDetailsData(RegisterUserDetails updateUserDetails) {
+  	public Integer updateUserDetailsData(RegisterUserDetails updateUserDetails) {
 
 		return registerDao.updateUserDetails(updateUserDetails.getUserId(), updateUserDetails.getFirstName(),
 				updateUserDetails.getLastName(), updateUserDetails.getUserName(), updateUserDetails.getMobileNum(),
-				updateUserDetails.getCity(), updateUserDetails.getState());
+				updateUserDetails.getCity(), updateUserDetails.getState(),updateUserDetails.getCollege());
 	}
 	
 }
