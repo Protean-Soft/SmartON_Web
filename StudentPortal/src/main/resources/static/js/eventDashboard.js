@@ -1,7 +1,4 @@
 $(document).ready(function() {
-	//alert("event");
-	
-	
 		$.ajax({
 	  		url: './getLogonUserDetails',
 	  		type: 'GET',
@@ -15,32 +12,12 @@ $(document).ready(function() {
 		  			$.session.set("userName",value.userName);
 		  			/*$("#rew_points").text("Tag Money: " +value.rewpoints);*/
 		  			$.session.set("rewardPoints",value.rewpoints);
-		  			$("#nav-placeholder").load("navigationbar.jsp");
-	  		
+		  			$("#nav-placeholder").load("navigationbar.jsp");	
+		  			//alert($.session.get("fullName"));
 	  			});
-	  			 //console.log(data.EventDetails[0]);
-	  			 //console.log(data.EventDetails[1]);
-	  			/*var session_userid = $.session.get("userId");
-	  			$("#userId").val(session_userid);
-	  			$("#email").val($.session.get("email"));
-	  			$("#fullname").text("Welcome " +$.session.get("fullName"));*/
-	  			
 	   		}
-	  	});
+	  	});		
 		
-		
-		
-		$("#navigateReward").on('click',function(){
-			var rewardPoints = $("#mybutton").text();
-			var rewardPointVal=rewardPoints.split(":")[1].trim();
-			if (rewardPointVal != "" && rewardPointVal != null && rewardPointVal !="0" ) {
-				console.log(rewardPointVal);
-
-				$("#navigateReward").attr("href","./offers.jsp")
-			} else {					
-				alert("To enable this feature you need 10000 reward points!!!! ");	
-			}
-		});
 	});
 
 function callEventsbyType(listevt,reglistevt){
@@ -508,7 +485,7 @@ function getAllProducts(){
 		  
 		},
 		error : function() {
-			alert("Limit exceed*******************");
+			swal("Limit exceed","");
 		}
 		});
 	
@@ -531,10 +508,10 @@ function sendfeedback(){
 		async: false,
 		success : function(reponse) {
 			
-			alert("Success");
+			swal("","Success");
 		},
 		error : function() {
-			alert("Error*******************");
+			swal("","Warning");
 		}
 	});
 	$('#preloader').show();

@@ -227,7 +227,7 @@
                 </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Clear</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" id="chnangePwd" class="btn btn-primary">Change Password</button>
       </div>
     </div>
@@ -338,6 +338,18 @@
 					$("#navbar_profile").attr("src", "img/cust/Photo/photo2.jpg");
 				}
 			}
+		});
+
+		$("#navigateReward").on('click',function(){
+			var rewardPoints = $("#mybutton").text();
+			var rewardPointVal=rewardPoints.split(":")[1].trim();
+			if (rewardPointVal != "" && rewardPointVal != null && rewardPointVal !="0" ) {
+				console.log(rewardPointVal);
+
+				$("#navigateReward").attr("href","./offers.jsp")
+			} else {					
+				swal("warning","To enable this feature you need 10000 reward points!!!! ");	
+			}
 		});	
 
 	 });
@@ -403,7 +415,7 @@
  
  
  function validateChangePwd(butt){
-	alert( $.session.get("userId"));
+	swal( $.session.get("userId"));
  	$('#preloader').show();
  	var newPwd =$("#changepasswordCheck #password1").val();
  	var oldPwd = $("#changepasswordCheck #oldpassword").val();
@@ -415,7 +427,7 @@
  		dataType: 'TEXT',
  		success: function(data){
  			if(data == 'valid' ){
- 				alert("Your Password has been changed successfully!!!");
+ 				swal("Warning","Your Password has been changed successfully!!!");
  				logoff();
  				    				
  			}else{
@@ -424,10 +436,7 @@
 					showValidate($('#oldpassword'));
  			}
  		}
- 	});
- 	
- 	
- 
+ 	}); 
  }
  
  
@@ -450,7 +459,7 @@
 	  			$.session.set("userName",value.userName); */
 			},
 			error : function(response) {
-				alert("Error in logout");
+				swal("Warning","Error in logout");
 			}
 		});	
 	 
