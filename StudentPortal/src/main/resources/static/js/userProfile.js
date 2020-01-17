@@ -35,35 +35,7 @@ $(document).ready(function() {
 			}
 		
 	
-	  /**
-	   * ========== UPDATE USER DETAILS ==========
-	   */
 	
-		$("form#userDetailsForm").on("submit",function(){
-			//alert("Sucesss....");
-			//$("#userId").val()
-			//alert("Sucesss...."+userId);
-			//alert(userId);
-			var userDetailsForm = $('#userDetailsForm').serialize(); 
-			//alert(JSON.stringify(userDetailsForm));
-		
-			//userDetailsForm +"&userId=" + userId;		
-			//alert(JSON.stringify(userDetailsForm));
-			$.ajax({
-				url : 'tag/userProfile/updateUserDetails',
-				type : 'POST',	
-				data : userDetailsForm,
-				success : function(data) {					
-					//alert("user details " + JSON.stringify(data));
-					location.reload();
-				},
-				error : function(data) {
-					swal(JSON.stringify(data),"");
-				}
-
-			});
-		});
-		
 		/** 
 		 * ========== PROFILE PICTURE CHANGE ===========
 		 * 
@@ -127,3 +99,40 @@ $(document).ready(function() {
 		});	*/	
 
 });
+
+
+
+
+/**
+ * ========== UPDATE USER DETAILS ==========
+ */
+
+	function updateuserDetails(){
+
+		var userDetailsForm = $('#userDetailsForm').serialize(); 
+		$.ajax({
+			url : 'tag/userProfile/updateUserDetails',
+			type : 'POST',	
+			data : userDetailsForm,
+			dataType: 'TEXT',
+			success : function(data) {					
+				alert("user details " + data);
+				if(data=="INVALIDUSERNAME"){
+					swal("UserName Already Taken","Warning");
+				}else if(data=="INVALIDEMAIL"){
+					swal("Email ID Already Taken","Warning");
+				}else if(data=="INVALIDMOBNUM"){
+					swal("Mobile Number Already Taken","Warning");
+				}else if(data=="SUCCESS"){
+					swal("Details Updated successfully","");
+					location.reload();
+				}  
+			},
+			error : function(data) {
+				swal(JSON.stringify(data),"");
+			}
+
+		});
+	}
+	
+
