@@ -60,7 +60,7 @@
 	  			
 	   		},
 	   		error : function() {
-				alert("Limit exceed*******************");
+				swal("Limit exceed","");
 			}
 	  	});
 	});
@@ -261,7 +261,7 @@ function callEventsbyType(listevt,reglistevt){
 			    slidefinal+=' </div> <!--/.Slides--></div>';
 			    
 			    final=slidemain+slidevar+slidefinal;
-					alert("content "+slidemain+slidevar+slidefinal);
+					//alert("content "+slidemain+slidevar+slidefinal);
 			    $('#panel311').html(final);
 					
 			
@@ -347,7 +347,7 @@ function getAllProducts(){
 			'</div></div>'+
 		  '<div class="row" style="padding:1%;">'+
 		   ' </div>';
-			alert(page);
+			//alert(page);
 			setTimeout(function(){ 
 				$("#allProd").html(test);
 			
@@ -356,7 +356,7 @@ function getAllProducts(){
 		  
 		},
 		error : function() {
-			alert("Limit exceed*******************");
+			swal("Limit exceed","Warning");
 		}
 		});
 	
@@ -379,14 +379,13 @@ function sendfeedback(){
 		async: false,
 		success : function(reponse) {
 			
-			allert("Success");
+			swal("","Success");
 		},
 		error : function() {
-			alert("Error*******************");
+			swal("","Warning");
 		}
 	});
 	$('#preloader').show();
-	
 
 }
 
