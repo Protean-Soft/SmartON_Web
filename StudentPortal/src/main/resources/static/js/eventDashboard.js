@@ -502,9 +502,7 @@ function sendfeedback(){
 		url : './StudentPortal/Event/sendfeedback',
 		type: 'POST',
 		data: formData,
-		dataType: 'TEXT',
-		/*processData: false,
-		contentType: false,	*/ 	
+		dataType: 'TEXT',	
 		async: false,
 		success : function(reponse) {
 			

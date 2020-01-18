@@ -81,6 +81,7 @@
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap-datepicker.min.js"></script>
 <!--===============================================================================================-->
+<script type="text/javascript" src="js/sweetAlert.js"></script>
 	<script src="js/main.js"></script>
 	
 </body>
