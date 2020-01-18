@@ -253,7 +253,7 @@ public class StudentPortalController {
 		 */
 		String msg="invalid";
 		System.out.println("User id====="+userID);
-		RegisterUserDetails jsObj = studentService.checkPwdValidUpdate(userID);
+		RegisterUserDetails jsObj = studentService.getByUserid(userID);
 		
 		System.out.println("jsObj::::::::::"+jsObj);
 		System.out.println(jsObj.getUserName()+"===="+jsObj.getPassword()+"====="+jsObj.getUserId());

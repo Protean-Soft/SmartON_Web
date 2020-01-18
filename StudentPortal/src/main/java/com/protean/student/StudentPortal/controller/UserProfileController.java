@@ -85,19 +85,28 @@ public class UserProfileController {
 	 */
 	
 	@PostMapping(value="/updateUserDetails",produces = MediaType.APPLICATION_JSON_VALUE)
-	public Integer updateDetails (@RequestParam("userId") Long userId,@RequestParam("collegeName") String collegeName,
-			@RequestParam("userName") String userName,@RequestParam("firstName") String firstName,
-			@RequestParam("lastName") String lastName,@RequestParam("email") String email,
-			@RequestParam("phoneNo") String mobileNum,@RequestParam("city") String city,@RequestParam("state") String state
-			,ModelAndView view) {
-		System.out.println(userId + userName + email);
-		RegisterUserDetails userDetails = new RegisterUserDetails(userId,firstName,lastName,userName,mobileNum,city,state);
-		int response = studentService.updateUserDetailsData(userDetails);	
-		if(response == 1) {
-			return response;
-		} else {
-			return 0;
+	public String updateDetails (RegisterUserDetails userDetails) {
+		String msg = null;
+		System.out.println(userDetails.getUserId() +"===="+userDetails.getEmail() +"===="+userDetails.getUserId()+"==="+userDetails.getMobileNum()+"===="+userDetails.getCollege());
+	//	RegisterUserDetails userDetails = new RegisterUserDetails(userId,firstName,lastName,userName,mobileNum,city,state);
+		if(userDetails.getUserId()!=null ) {
+			 msg=studentService.validateUserdetails(userDetails);
+			if(msg.equalsIgnoreCase("VALIDDATA") || msg.equals("VALIDDATA")) {
+				int response = studentService.updateUserDetailsData(userDetails);
+				if(response == 1) { 
+					msg= "SUCCESS";
+				} else {
+						msg="ERROR";
+						}
+			}
+			
 		}
+		System.out.println("Message::::::::::::::"+msg);
+		return msg;
+			
+		/*
+		 * if(response == 1) { return response; } else { return 0; }
+		 */
 	}
 	
 	
