@@ -51,7 +51,7 @@
         <!-- Logo -->
         <li>
           <div class="logo-wrapper waves-light">
-            <a href="#"><img src="img/cust/logoTrans.png" class="img-fluid flex-center" height="150" width="150" style="margin-left: 15%;"></a>
+            <a href="#"><img src="img/cust/logo.jpg" class="img-fluid flex-center" height="150" width="150" style="margin-left: 15%;"></a>
           </div>
         </li>
         <!--/. Logo -->
@@ -452,20 +452,12 @@
 			cache : false,
 			processData : false,	 	
 			success : function(response) {
-				//alert("Success..."+response);
 				$.session.clear();
-				//alert("Success...");
-				//$("#logoffbutton").attr("href","./login.jsp")
-			/* 	$.session.set("userId",value.userId);
-	  			$.session.set("fullName",value.firstName);	
-	  			$.session.set("email",value.email);
-	  			$.session.set("userName",value.userName); */
 			},
 			error : function(response) {
 				swal("Warning","Error in logout");
 			}
-		});	
-	 
+		});		 
  }
  
 </script>
