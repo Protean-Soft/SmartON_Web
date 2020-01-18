@@ -425,6 +425,7 @@
   <script type="text/javascript" src="js/viewallproducts.js"></script>
   <script type="text/javascript" src="vendor/bootstrap/js/session.js"></script>
   <script src="js/addons/rating.min.js"></script>   
+  <script type="text/javascript" src="js/sweetAlert.js"></script>
   <!-- Your custom scripts (optional) -->
   <script type="text/javascript">
 	$(".button-collapse").sideNav();
