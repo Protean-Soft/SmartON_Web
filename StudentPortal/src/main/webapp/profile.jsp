@@ -106,7 +106,7 @@
                     <!-- First name -->
                     <div class="md-form">                        
                         <label for="collegeName">College Name</label>
-                        <input type="text" id="collegeName" name="collegeName" class="form-control">
+                        <input type="text" id="collegeName" name="college" class="form-control">
                     </div>
                 </div>
                 <div class="col">
@@ -144,7 +144,7 @@
             <!-- Phone number -->
             <div class="md-form">
             	<label for="phoneNo">Phone Number</label>
-                <input type="text" id="phoneNo" name="phoneNo" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock">                
+                <input type="text" id="phoneNo" name="mobileNum" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock">                
                 <!--<small id="materialRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">
                     Optional - for two step authentication
                 </small>-->
@@ -183,7 +183,7 @@
 
 			
             <!-- Sign up button -->
-            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"  type="submit" id="updateProfile">Update Profile</button>
+            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" onclick="updateuserDetails()" type="submit" id="updateProfile">Update Profile</button>
 
              <hr>
 
