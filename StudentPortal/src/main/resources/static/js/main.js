@@ -247,7 +247,7 @@
     				customAlert('success','You have tagged yourself successfully.');
     			}*/
     			
-    			alert("Errror in data Contact adminstrator or Try to regisrter again...."+JSON.stringify(data));
+    			//alert("Errror in data Contact adminstrator or Try to regisrter again...."+JSON.stringify(data));
     		}
     	});
     }
