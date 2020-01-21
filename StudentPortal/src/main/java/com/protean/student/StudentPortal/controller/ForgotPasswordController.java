@@ -3,6 +3,7 @@ package com.protean.student.StudentPortal.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +26,9 @@ public class ForgotPasswordController {
 	@Autowired
 	MailSenderService mailSender;
 
+	@Value("${prod.url}")
+	private String PROURL;
+	
 	/**
 	 * send reset url to email
 	 * 
@@ -42,7 +46,7 @@ public class ForgotPasswordController {
 		if (regObj != null) {
 			String appUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 			// send mail
-			mailSender.sendEmail(email, appUrl);
+			mailSender.sendEmail(email, PROURL);
 		} else {
 			isValid = "invalid";
 		}
