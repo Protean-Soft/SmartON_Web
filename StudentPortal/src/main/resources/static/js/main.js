@@ -221,7 +221,7 @@
     }
     
     function registerUserData(formData,role,url){
-    	alert("Register user data ");
+    console.log("Register user data ");
     	$.ajax({
     		url: './registerUser',
     		type: 'POST',
@@ -230,7 +230,7 @@
     		processData: false,
     		contentType: false,
     		success: function(data){
-    			//alert("Success...."+JSON.stringify(data));
+    		console.log("Success...."+JSON.stringify(data));
     			$('#preloader').hide();
     			if(role == 'premium'){
     				paymentIntegration(url);
@@ -321,10 +321,10 @@ function clearFormData(selector){
 }
 
 function paymentIntegration(url){
-	alert("URL:::::::::"+url);
+	console.log("URL:::::::::"+url);
 	var data = 'key=rMKXzU&hash_string=&hash=&txnid=&amount=1&firstname='+$('#firstName').val()+'&email='+$('#email').val()+'&phone='+$('#mobileNum').val()+
 	'&productinfo=PremiumUser'+'&surl='+url+'/paymentSuccess&furl='+ url+'/login&service_provider=payu_paisa';
-	alert("data::::::::::::"+data);
+	//alert("data::::::::::::"+data);
 	
 	$.ajax({
 		url: './securePay',
@@ -367,7 +367,7 @@ function verifyUserPayment(){
 				        	action: function () {
 				        		var formdata = 'key=rMKXzU&hash_string=&hash=&txnid=&amount=1&firstname='+data.firstName+'&email='+data.email+'&phone='+data.mobile+
 			        			'&productinfo=PremiumUser'+'&surl='+data.url+'/paymentSuccess&furl='+data.url+'/login&service_provider=payu_paisa';
-    				        	alert("verifyUserPayment::::::::::"+formdata);
+    				        	console.log("verifyUserPayment::::::::::"+formdata);
 				        		$.ajax({
     				        		url: './securePay',
     				        		type: 'POST',
