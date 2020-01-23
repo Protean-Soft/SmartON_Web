@@ -29,10 +29,13 @@ public class RegisterUserDetails {
 	private String isPremium;
 	private String city;
 	private String state;
-	private String profileID;
+	private String profileID;	
 	private String refcode;
 	private Long rewpoints;
 	private Long noofevtallowed;
+	
+	@Column(name = "reset_token")
+	private String resetToken;
 
 	public RegisterUserDetails() {
 		super();
@@ -170,5 +173,13 @@ public class RegisterUserDetails {
 	}
 	public void setNoofevtallowed(Long noofevtallowed) {
 		this.noofevtallowed = noofevtallowed;
+	}
+	
+	public String getResetToken() {
+		return resetToken;
+	}
+
+	public void setResetToken(String resetToken) {
+		this.resetToken = resetToken;
 	}
 }

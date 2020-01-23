@@ -78,12 +78,17 @@ public class MailSenderService {
 	 * @param appUrl
 	 */
 
-	public void sendEmail(String email, String appUrl) {
+	public void sendEmail(String email, String appUrl,String resetToken) {
 		SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
 		passwordResetEmail.setTo(email);
 		passwordResetEmail.setSubject("Password Reset Request");
+		/*
+		 * passwordResetEmail.setText( "To reset your password, click the link below:\n"
+		 * + appUrl + "/reset?email='" + email + "'");
+		 */
+		
 		passwordResetEmail.setText(
-				"To reset your password, click the link below:\n" + appUrl + "/reset?email='" + email + "'");
+				"To reset your password, click the link below:\n" + appUrl + "/reset?token=" + resetToken );
 
 		jms.send(passwordResetEmail);
 

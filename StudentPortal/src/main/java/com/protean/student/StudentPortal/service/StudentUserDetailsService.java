@@ -2,6 +2,7 @@ package com.protean.student.StudentPortal.service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -21,7 +22,7 @@ import com.protean.student.StudentPortal.repository.RegistrationDao;
 import com.protean.student.StudentPortal.repository.StudentDao;
 
 @Service
-public class StudentUserDetailsService implements UserDetailsService {
+public class StudentUserDetailsService implements UserDetailsService,UserService {
 	
 	@Autowired
 	private StudentDao studentDao;
@@ -187,6 +188,17 @@ public class StudentUserDetailsService implements UserDetailsService {
 		return registerDao.updateUserDetails(updateUserDetails.getUserId(), updateUserDetails.getFirstName(),
 				updateUserDetails.getLastName(), updateUserDetails.getUserName(), updateUserDetails.getMobileNum(),
 				updateUserDetails.getCity(), updateUserDetails.getState(),updateUserDetails.getCollege());
+	}
+
+	
+	@Override
+	public Optional<RegisterUserDetails> findUserByResetToken(String resetToken) {
+		return registerDao.findByResetToken(resetToken);
+	}
+
+	@Override
+	public void saveUser(RegisterUserDetails user) {
+		registerDao.save(user);		
 	}
 	
 }

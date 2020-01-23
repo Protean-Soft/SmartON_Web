@@ -78,26 +78,6 @@ $(document).ready(function() {
 			}
 		});
 		});
-
-		
-		/**
-		 * ========= FETCH PROFILE PICS ========== 
-		 */
-		/**var userId = $("#userId").val();
-		$.ajax({
-			url : 'tag/userProfile/getProfilePic?userId=' + userId ,
-			type : 'GET',
-			contentType : false,
-			cache : false,
-			processData : false,	 	
-			success : function(response) {
-				$("#navbar_profile").attr("src", "data:image/png;base64," + response.pic);
-				$("#show_profilePic").attr("src", "data:image/png;base64," + response.pic);
-			},
-			error : function() {
-			}
-		});	*/	
-
 });
 
 

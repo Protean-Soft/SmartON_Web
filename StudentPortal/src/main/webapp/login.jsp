@@ -335,5 +335,7 @@
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
 	<script type="text/javascript" src="vendor/bootstrap/js/session.js"></script>
+	<script type="text/javascript" src="js/sweetAlert.js"></script>
+	<script src="js/reset_password.js"></script>
 </body>
 </html>

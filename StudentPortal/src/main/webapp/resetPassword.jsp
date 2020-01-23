@@ -31,11 +31,11 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-				<form class="login100-form resetForm" action="resetsubmit" method="POST">
+				<form class="login100-form resetForm"  method="POST">
 					<span class="login100-form-title p-b-49">
 						<img src="images/PROTEANSOFT_SHORTLOGO.jpg" alt="Product Logo" style="max-height:40px;max-width:40px;">&nbsp;&nbsp;Tag #
 					</span>
-					<input type="text" id="user_email" value="${email}" />
+					<input type="hidden" id="resetToken" value="${resetToken}" />
 						<br/>
 						<br/>
 					<div class="wrap-input100 validate-input m-b-23">
@@ -62,14 +62,7 @@
 				</form>
 			</div>
 		</div>
-		<div class="copyright" id="copyright">
-			&copy;
-			<script>
-				document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
-			</script>, Powered by
-			<a href="https://www.proteansoft.in" target="_blank">Proteansoft</a>.
-		</div>
-	
+		<%@ include file="footer.jsp" %>	
 	</div>
 	
 	<!--===============================================================================================-->
@@ -82,7 +75,7 @@
 	<script src="vendor/bootstrap/js/bootstrap-datepicker.min.js"></script>
 <!--===============================================================================================-->
 <script type="text/javascript" src="js/sweetAlert.js"></script>
-	<script src="js/main.js"></script>
-	
+	<!--  <script src="js/main.js"></script>-->
+	<script src="js/reset_password.js"></script>
 </body>
 </html>

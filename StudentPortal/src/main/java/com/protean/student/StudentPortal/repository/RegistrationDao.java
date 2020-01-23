@@ -1,5 +1,7 @@
 package com.protean.student.StudentPortal.repository;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,6 +29,8 @@ public interface RegistrationDao extends JpaRepository<RegisterUserDetails, Inte
 	
 	public RegisterUserDetails findByProfileID(String profileID);
 	public RegisterUserDetails findByUserId(Long userId);
+	
+	Optional<RegisterUserDetails> findByResetToken(String resetToken);
 
 	@Transactional
     @Modifying
