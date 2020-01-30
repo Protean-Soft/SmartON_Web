@@ -13,8 +13,7 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap-datepicker3.css">
-<!--===============================================================================================-->
+
 	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
@@ -31,7 +30,7 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-				<form class="login100-form resetForm"  method="POST">
+				<form class="login100-form resetForm"  method="POST" action="resetsubmit">
 					<span class="login100-form-title p-b-49">
 						<img src="images/PROTEANSOFT_SHORTLOGO.jpg" alt="Product Logo" style="max-height:40px;max-width:40px;">&nbsp;&nbsp;Tag #
 					</span>
@@ -40,7 +39,7 @@
 						<br/>
 					<div class="wrap-input100 validate-input m-b-23">
 						
-						<input id="newPassword" type="text" name="new_password" placeholder="New Password">
+						<input id="newPassword" type="text" name="newpassword" placeholder="New Password">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 					<br>

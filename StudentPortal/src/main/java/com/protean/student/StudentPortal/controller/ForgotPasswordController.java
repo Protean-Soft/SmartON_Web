@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,14 +15,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.protean.student.StudentPortal.model.RegisterUserDetails;
 import com.protean.student.StudentPortal.service.MailSenderService;
 import com.protean.student.StudentPortal.service.StudentUserDetailsService;
 import com.protean.student.StudentPortal.service.UserService;
 
-@Controller
+@RestController
 public class ForgotPasswordController {
 
 	@Autowired
@@ -84,12 +87,11 @@ public class ForgotPasswordController {
 	}
 
 	// Process reset password form
-	@RequestMapping(value = "/resetsubmit", method = RequestMethod.POST)
-	@ResponseBody
-	public ModelAndView setNewPassword(ModelAndView model,@RequestParam("newPassword") String password,
+	@RequestMapping(value = "/resetsubmit", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ModelAndView setNewPassword(ModelAndView model,@RequestParam("password") String password,
 			@RequestParam("token") String token) {
 		
-		System.out.println("TOKEN : : " + token);
+		System.out.println("TOKEN : : " + token + "new password "+ password);
 		
 		// Find the user associated with the reset token
 		Optional<RegisterUserDetails> user = userService.findUserByResetToken(token);
@@ -102,24 +104,15 @@ public class ForgotPasswordController {
 			resetUser.setResetToken(null);
 			userService.saveUser(resetUser);
 			System.out.println("Redirect ..........................");
-			model.addObject("success","Password successfully updated");
+			
+			model.addObject("positive","Password successfully updated");
+			return model;
 		} else {
 			System.out.println(" ======= Invalid rest link ====== ");
 			model.addObject("errorMessage", "Oops!  This is an invalid password reset link.");
-
+			model.setViewName("login.jsp");
 		}
 		System.out.println("MODEL  : " + model.toString());
 		return model;
-		
-		/*
-		 * if (userEmail != null) { String newPassword = new
-		 * BCryptPasswordEncoder().encode(password); userDetails.setEmail(userEmail);
-		 * userDetails.setPassword(newPassword);
-		 * studentService.updateUserCredentials(userDetails);
-		 * model.addAttribute("message", "Password successfully reset..."); } else {
-		 * model.addAttribute("message", "Password reset failed."); } return
-		 * "login.jsp";
-		 */
 	}
-
 }

@@ -37,40 +37,42 @@ $('#reset').on("click", function(e) {
 	var resetToken = $("#resetToken").val();
 	if(newPassword == confirmPassword){		
 		$.ajax({
-    		url: './resetsubmit?newPassword='+newPassword+'&token='+resetToken,
+    		url: './resetsubmit?password='+newPassword+'&token='+resetToken,
     		type: 'POST',
-    		dataType: 'TEXT',
-    		processData: false,
-    		contentType: false,
-    		success: function(data){    			
-    			if(data.success == "Password successfully updated"){
-	    	    	swal("Success","Password changed successfully","success");
-	    	    	e.preventDefault();    	    	
-	    	    	window.location="login.jsp";
-	    	    	return false;
-    			} else {
-    				 swal({ 
-       				  title: "Error",
-       				   text: data.errorMessage,
-       				    type: "error" 
-       				  },
-       				  function(){
-       				      window.location.href = 'login.jsp';
-       				});
-    			}
-    		},error : function(data){
-    			
-    			
-    			swal("Failed",data.errorMessage,"failed");
-    			//e.preventDefault();  
-    			//window.location="login.jsp";
-    			//return false;
+    		//data:'newpassword='+newPassword+'&token='+resetToken,
+    		dataType: 'JSON',
+    		success: function(data){    
+    			alert("SUCCESS");
+    			swal({
+					title : "Success",
+					text : "Password changed successfully",
+					type : "success"
+				}).then(function() {
+					location.href = "login.jsp";
+				});
+    			return fasle;
+    		},error:function(data){
+    			alert("ERROR");
+    			swal({
+					title : "Error",
+					text : data,
+					type : "error"
+				}).then(function() {
+					location.href = "login.jsp";
+				});
+    			return false;
     		}
     	});
 	} else{
+				swal({
+					title : "Mismatch",
+					text : "Password mismatch..",
+					type : "failed"
+				}).then(function() {
+					location.href = "login.jsp";
+				});
+		// swal("Failed","Password mismatch...","failed")
+		// window.location="login.jsp";
 		return false;
-		swal("Failed","Password mismatch...","failed")
-		window.location="login.jsp";
-		
 	}
 });
