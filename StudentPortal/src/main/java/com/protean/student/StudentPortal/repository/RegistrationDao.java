@@ -23,6 +23,8 @@ public interface RegistrationDao extends JpaRepository<RegisterUserDetails, Inte
 	
 	public RegisterUserDetails findByEmail(String email);
 	
+	public RegisterUserDetails findByMobileNum(String mobilrnum);
+	
 	public RegisterUserDetails findByProfileID(String profileID);
 	public RegisterUserDetails findByUserId(Long userId);
 
@@ -40,11 +42,11 @@ public interface RegistrationDao extends JpaRepository<RegisterUserDetails, Inte
 	@Transactional
 	@Modifying
 	@Query(value= "UPDATE user_details set firstname=:firstName,lastname=:lastName,username =:userName, mobile=:mobileNum,"
-			+ "city =:city,state =:state where userId=:userId",nativeQuery=true)
+			+ "city =:city,state =:state,college=:college where userId=:userId",nativeQuery=true)
 	
 	Integer updateUserDetails(@Param("userId") long userId,@Param("firstName") String firstName,@Param("lastName") String lastName,
 			@Param("userName") String userName,@Param("mobileNum") String mobileNum,@Param("city") String city,@Param("state") 
-	String state);
+	String state,@Param("college") String college);
 
 	@Transactional
     @Modifying

@@ -1,41 +1,23 @@
 $(document).ready(function() {
-	//alert("event");
-	
-	$("#nav-placeholder").load("navigationbar.jsp");
 		$.ajax({
 	  		url: './getLogonUserDetails',
 	  		type: 'GET',
 	  		success: function(data){
 	  			callEventsbyType(data.EventDetails[0],data.EventDetails[1]);
 	  			$.each(data.userDetails, function(key, value) {
+	  			  console.log("Eventdashboard "+ value.userId);
 	  				$.session.set("userId",value.userId);
 		  			$.session.set("fullName",value.firstName);	
 		  			$.session.set("email",value.email);
 		  			$.session.set("userName",value.userName);
-		  			$("#rew_points").text("Tag Money: " +value.rewpoints);
-	  		
+		  			/*$("#rew_points").text("Tag Money: " +value.rewpoints);*/
+		  			$.session.set("rewardPoints",value.rewpoints);
+		  			$("#nav-placeholder").load("navigationbar.jsp");	
+		  			//alert($.session.get("fullName"));
 	  			});
-	  			 //console.log(data.EventDetails[0]);
-	  			 //console.log(data.EventDetails[1]);
-	  			/*var session_userid = $.session.get("userId");
-	  			$("#userId").val(session_userid);
-	  			$("#email").val($.session.get("email"));
-	  			$("#fullname").text("Welcome " +$.session.get("fullName"));*/
-	  			
 	   		}
-	  	});
+	  	});		
 		
-		$("#navigateReward").on('click',function(){
-			var rewardPoints = $("#mybutton").text();
-			var rewardPointVal=rewardPoints.split(":")[1].trim();
-			if (rewardPointVal != "" && rewardPointVal != null && rewardPointVal !="0" ) {
-				console.log(rewardPointVal);
-
-				$("#navigateReward").attr("href","./offers.jsp")
-			} else {					
-				alert("To enable this feature you need 10000 reward points!!!! ");	
-			}
-		});
 	});
 
 function callEventsbyType(listevt,reglistevt){
@@ -503,7 +485,7 @@ function getAllProducts(){
 		  
 		},
 		error : function() {
-			alert("Limit exceed*******************");
+			swal("Limit exceed","");
 		}
 		});
 	
@@ -520,16 +502,14 @@ function sendfeedback(){
 		url : './StudentPortal/Event/sendfeedback',
 		type: 'POST',
 		data: formData,
-		dataType: 'TEXT',
-		/*processData: false,
-		contentType: false,	*/ 	
+		dataType: 'TEXT',	
 		async: false,
 		success : function(reponse) {
 			
-			alert("Success");
+			swal("","Success");
 		},
 		error : function() {
-			alert("Error*******************");
+			swal("","Warning");
 		}
 	});
 	$('#preloader').show();

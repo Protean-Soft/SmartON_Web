@@ -68,7 +68,8 @@ function registerEvent(){
 	$("#conformationbtn").attr("disabled", true)
 	console.log(formData);
 	confmsg="Thank you for booking. Instructions to join next Event";
-	var confmsg2="You have booked "+noofeventattend+"of Event(s), Still you can book "+parseInt(5-noofeventattend)+" of Event(s) for this renewal.";
+	
+	var confmsg2="You have booked "+parseInt(noofeventattend+1)+"of Event(s), Still you can book "+parseInt(4-noofeventattend)+" of Event(s) for this renewal.";
 	$.ajax({
 		url : './StudentPortal/Event/addEventRegistrationDetail',
 		type: 'POST',
@@ -104,10 +105,11 @@ function registerEvent(){
 			//$("#show_profilePic").attr("src", "data:image/png;base64," + response.pic);
 		},
 		error : function() {
-			alert("Limit exceed*******************");
+			swal("Warning","Please Contact Adminstrator");
+			//alert("Limit exceed*******************");
 		}
 	});
-	$('#preloader').show();
+	$('#preloader').hide();
 	
 }
 function regcomplete(){
@@ -126,10 +128,10 @@ function Callmainpage(){
 		async: false,
 		success : function(reponse) {
 		$('#payFormDiv').html(reponse);
-			alert("Successs:::::"+reponse);
+			swal("Successs",reponse);
 		},
 		error : function() {
-			alert("Limit exceed*******************");
+			swal("Limit exceed","");
 		}
 		});
 }

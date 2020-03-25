@@ -84,7 +84,7 @@
 					</div>
 					<div class="text-right p-t-8">
 						<span>
-							Version 1.0
+							Version 1.3.0
 						</span>
 					</div>
 					<!--

@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -27,45 +26,6 @@
   
 <%@ include file="navigationbar.jsp" %>
 
-<div class="modal fade" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
-    <!--Content-->
-    <div class="modal-content">
-
-      <!--Header-->
-      <div class="modal-header">
-        <img src="img/cust/Photo/photo2.jpg" alt="avatar" class="rounded-circle img-responsive">
-      </div>
-      <!--Body-->
-      <div class="modal-body text-center mb-1">
-
-        <h5 class="mt-1 mb-2"><span></span></h5>
-
-        <div class="md-form ml-0 mr-0">
-          <input type="text" type="text" id="form29" class="form-control form-control-sm validate ml-0">
-          <label data-error="wrong" data-success="right" for="form29" class="ml-0">Your Email</label>
-        </div>
-
-        <div class="md-form ml-0 mr-0">
-          <input type="text" type="text" id="form29" class="form-control form-control-sm validate ml-0">
-          <label data-error="wrong" data-success="right" for="form29" class="ml-0">Your subject</label>
-        </div>
-
-        <div class="md-form ml-0 mr-0">
-          <input type="text" type="text" id="form29" class="md-textarea form-control" rows="4">
-          <label data-error="wrong" data-success="right" for="form29" class="ml-0">Your Message</label>
-        </div>
-
-        <div class="text-center mt-4">
-          <button class="btn btn-unique">Send Message <i class="fas fa-sign-in ml-1"></i></button>
-        </div>
-      </div>
-
-    </div>
-    <!--/.Content-->
-  </div>
-</div>
 
 
 <main style="padding-top: 5%; background-image: url(img/cust/Banner/bg7.jpg); background-attachment: fixed;">
@@ -99,14 +59,14 @@
     <div class="card-body px-lg-5 pt-0">
 	
         <!-- Form -->
-        <form class="text-center" style="color: #757575;"  id="userDetailsForm" >
+        <form class="text-center" style="color: #757575;" method="post"  id="userDetailsForm" >
         <input type="hidden" id="userid1" name="userId">
             <div class="form-row">
                 <div class="col">
                     <!-- First name -->
                     <div class="md-form">                        
                         <label for="collegeName">College Name</label>
-                        <input type="text" id="collegeName" name="collegeName" class="form-control">
+                        <input type="text" id="collegeName" name="college" class="form-control">
                     </div>
                 </div>
                 <div class="col">
@@ -144,7 +104,7 @@
             <!-- Phone number -->
             <div class="md-form">
             	<label for="phoneNo">Phone Number</label>
-                <input type="text" id="phoneNo" name="phoneNo" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock">                
+                <input type="text" id="phoneNo" name="mobileNum" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock">                
                 <!--<small id="materialRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">
                     Optional - for two step authentication
                 </small>-->
@@ -183,7 +143,7 @@
 
 			
             <!-- Sign up button -->
-            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"  type="submit" id="updateProfile">Update Profile</button>
+            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" onclick="updateuserDetails()" type="submit" id="updateProfile">Update Profile</button>
 
              <hr>
 
@@ -429,6 +389,6 @@
   <!-- Your custom scripts (optional) -->
   <script type="text/javascript" src="js/userProfile.js"></script>
   <script type="text/javascript" src="vendor/bootstrap/js/session.js"></script>
-  
+  <script type="text/javascript" src="js/sweetAlert.js"></script>
 </body>
 </html>

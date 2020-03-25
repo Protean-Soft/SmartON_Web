@@ -164,13 +164,15 @@
     	$('#preloader').show();
     	var userName = $('#userName').val();
     	var email = $('#email').val();
+    	var mobno= $('#mobileNum').val();
     	$.ajax({
     		url: './checkValidData',
     		type: 'POST',
-    		data: 'userName='+userName+'&email='+email,
+    		data: 'userName='+userName+'&email='+email+'&mobnum='+mobno,
     		dataType: 'JSON',
     		success: function(data){
-    			if(data.userName == 'valid' && data.email == 'valid'){
+    			console.log(data);
+    			if(data.userName == 'valid' && data.email == 'valid' && data.mobnum == 'valid'){
     				var formData = new FormData($('#registerForm')[0]);
     				if($('input[name=isPremium]:checked').val() == 'premium'){
 	    				$.confirm({
@@ -207,6 +209,10 @@
     					$('#email').parent().attr('data-validate','E-mail is already taken');
     					showValidate($('#email'));
     				}
+    				if(data.mobnum == 'invalid'){
+    					$('#mobileNum').parent().attr('data-validate','Mobile Number is already taken');
+    					showValidate($('#mobileNum'));
+    				}
     			}
     		}
     	});
@@ -215,6 +221,7 @@
     }
     
     function registerUserData(formData,role,url){
+    console.log("Register user data ");
     	$.ajax({
     		url: './registerUser',
     		type: 'POST',
@@ -223,7 +230,7 @@
     		processData: false,
     		contentType: false,
     		success: function(data){
-    			//alert("Success...."+JSON.stringify(data));
+    		console.log("Success...."+JSON.stringify(data));
     			$('#preloader').hide();
     			if(role == 'premium'){
     				paymentIntegration(url);
@@ -240,7 +247,7 @@
     				customAlert('success','You have tagged yourself successfully.');
     			}*/
     			
-    			alert("Errror in data Contact adminstrator or Try to regisrter again...."+JSON.stringify(data));
+    			//alert("Errror in data Contact adminstrator or Try to regisrter again...."+JSON.stringify(data));
     		}
     	});
     }
@@ -317,7 +324,7 @@ function paymentIntegration(url){
 	console.log("URL:::::::::"+url);
 	var data = 'key=rMKXzU&hash_string=&hash=&txnid=&amount=1&firstname='+$('#firstName').val()+'&email='+$('#email').val()+'&phone='+$('#mobileNum').val()+
 	'&productinfo=PremiumUser'+'&surl='+url+'/paymentSuccess&furl='+ url+'/login&service_provider=payu_paisa';
-	console.log("data::::::::::::"+data);
+	//alert("data::::::::::::"+data);
 	
 	$.ajax({
 		url: './securePay',

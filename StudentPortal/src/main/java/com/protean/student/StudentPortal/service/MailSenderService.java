@@ -1,15 +1,18 @@
 package com.protean.student.StudentPortal.service;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.protean.student.StudentPortal.model.EventDetails;
+import com.protean.student.StudentPortal.model.MailRequest;
 import com.protean.student.StudentPortal.model.RegisterUserDetails;
 
 @Service
@@ -22,6 +25,11 @@ public class MailSenderService {
 	public MailSenderService(JavaMailSender javaMailSender) {
 		this.jms = javaMailSender;
 	}
+	@Autowired
+	private EmailService service;
+	
+	@Value("${spring.mail.username}")
+	private String frommailid;
 
 	public void sendEmail(RegisterUserDetails registerUserDetails) throws MessagingException {
 		SimpleMailMessage msg = new SimpleMailMessage();
@@ -85,24 +93,44 @@ public class MailSenderService {
 	public void sendEmailRegisterevent(RegisterUserDetails userinfo,EventDetails evtdet) throws MessagingException {
 		if(userinfo.getFirstName()!="" && userinfo.getEmail()!="" && userinfo.getNoofevtallowed()!=null &&  evtdet.getEventName()!="" && evtdet.getEventVenue()!="" && evtdet.getEventDate()!=null) {
 			
+			Map<String, Object> model = new HashMap<>();
+			
+			model.put("eventName", evtdet.getEventName());
+			model.put("eventDescription", evtdet.getEvent_description());
+			model.put("eventVenue", evtdet.getEventVenue());
+			model.put("eventDate", evtdet.getEventDate());
+			model.put("name", userinfo.getFirstName());
+			model.put("orgName", evtdet.getEventOrgName());
+			
+			MailRequest request= new MailRequest();
+			request.setName(userinfo.getFirstName());
+			request.setFrom(frommailid);
+			request.setSubject("Thank you for registering this Event #");
+			request.setTo(userinfo.getEmail());
+			System.out.println(service.sendEmail(request, model));
+			
+			
 		
-		SimpleMailMessage msg = new SimpleMailMessage();
-		msg.setTo(userinfo.getEmail());
-
-		msg.setSubject("Thank You for Register in Event #");
-
-		String body = "Hi "+userinfo.getFirstName()+" \r\n"
-				+"You have successfully registered for "+evtdet.getEventName()+" with was venued at "+evtdet.getEventVenue()+" on "+evtdet.getEventDate()+"\r\n"
-
-		+"Please be on time for your event. \r\n\r\n\r\n"
-
-		+"Thanks & Regards\r\n"
-
-		+"Team TagAcademy\r\n";
-		
-
-		msg.setText(body);
-		jms.send(msg);
+			/*
+			 * SimpleMailMessage msg = new SimpleMailMessage();
+			 * msg.setTo(userinfo.getEmail());
+			 * 
+			 * msg.setSubject("Thank You for Register in Event #");
+			 * 
+			 * String body = "Hi "+userinfo.getFirstName()+" \r\n"
+			 * +"You have successfully registered for "+evtdet.getEventName()
+			 * +" with was venued at "+evtdet.getEventVenue()+" on "+evtdet.getEventDate()+
+			 * "\r\n"
+			 * 
+			 * +"Please be on time for your event. \r\n\r\n\r\n"
+			 * 
+			 * +"Thanks & Regards\r\n"
+			 * 
+			 * +"Team TagAcademy\r\n";
+			 * 
+			 * 
+			 * msg.setText(body); jms.send(msg);
+			 */
 	}
 
 	}
